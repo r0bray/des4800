@@ -1,0 +1,303 @@
+/* ===========================
+   CSS Variables
+   =========================== */
+:root {
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --gray: #6b7280;
+  --gray-light: #f3f4f6;
+  --gray-dark: #1f2937;
+  --border-color: #e5e7eb;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Typography */
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-4xl: 3rem;
+  
+  /* Container */
+  --container-max-width: 1200px;
+}
+
+/* ===========================
+   Reset & Base Styles
+   =========================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: #ffffff;
+  color: var(--gray-dark);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===========================
+   Layout
+   =========================== */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+/* ===========================
+   Typography
+   =========================== */
+h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--gray-dark);
+  margin-bottom: var(--spacing-sm);
+}
+
+h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--gray-dark);
+  margin-bottom: var(--spacing-xs);
+}
+
+p {
+  font-size: var(--font-size-lg);
+  line-height: 1.75;
+  color: var(--gray);
+  margin-bottom: var(--spacing-md);
+}
+
+/* ===========================
+   Components
+   =========================== */
+.card {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: var(--spacing-md);
+  margin: var(--spacing-sm) 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+  display: inline-block;
+  background: var(--gray-light);
+  color: var(--gray-dark);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0.25rem;
+}
+
+.badge.primary {
+  background: var(--accent);
+  color: white;
+}
+
+.badge-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ===========================
+   Links
+   =========================== */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+
+/* ===========================
+   Footer
+   =========================== */
+footer {
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+  padding: var(--spacing-lg);
+  text-align: center;
+  color: var(--gray);
+  font-size: 0.875rem;
+}
+
+/* ===========================
+   Responsive Breakpoints
+   =========================== */
+
+/* Large Desktop: 1440px and above */
+@media (min-width: 1440px) {
+  :root {
+    --container-max-width: 1400px;
+    --font-size-4xl: 3.5rem;
+    --spacing-xl: 4rem;
+  }
+  
+  main {
+    padding: var(--spacing-xl);
+  }
+  
+  h1 {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+/* Desktop: 1024px to 1439px */
+@media (max-width: 1439px) and (min-width: 1024px) {
+  :root {
+    --container-max-width: 1000px;
+    --font-size-4xl: 3rem;
+  }
+  
+  main {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Tablet: 768px to 1023px */
+@media (max-width: 1023px) and (min-width: 768px) {
+  :root {
+    --container-max-width: 100%;
+    --font-size-3xl: 2rem;
+    --font-size-4xl: 2.5rem;
+    --spacing-lg: 1.5rem;
+  }
+  
+  main {
+    padding: var(--spacing-md);
+  }
+  
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  p {
+    font-size: var(--font-size-base);
+  }
+  
+  .card {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Mobile: 480px to 767px */
+@media (max-width: 767px) and (min-width: 480px) {
+  :root {
+    --container-max-width: 100%;
+    --font-size-3xl: 1.75rem;
+    --font-size-4xl: 2rem;
+    --spacing-lg: 1rem;
+    --spacing-md: 1rem;
+  }
+  
+  main {
+    padding: var(--spacing-sm);
+  }
+  
+  h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  h2 {
+    font-size: var(--font-size-lg);
+  }
+  
+  p {
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+  }
+  
+  .card {
+    padding: var(--spacing-sm);
+    margin: 0.75rem 0;
+  }
+  
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+  }
+}
+
+/* Small Mobile: below 480px */
+@media (max-width: 479px) {
+  :root {
+    --container-max-width: 100%;
+    --font-size-3xl: 1.5rem;
+    --font-size-4xl: 1.75rem;
+    --spacing-lg: 1rem;
+    --spacing-md: 0.75rem;
+  }
+  
+  main {
+    padding: var(--spacing-sm);
+  }
+  
+  h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  h2 {
+    font-size: var(--font-size-base);
+  }
+  
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .card {
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+  }
+  
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    margin: 0.15rem;
+  }
+  
+  footer {
+    padding: var(--spacing-sm);
+    font-size: 0.75rem;
+  }
+}
+
