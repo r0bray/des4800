@@ -378,8 +378,9 @@ footer {
 }
 
 .footer-nav a {
-  color: var(--gray);
+  color: var(--accent);
   font-size: 0.9rem;
+  text-decoration: none;
   transition: color 0.2s ease;
   display: inline-flex;
   align-items: center;
@@ -387,7 +388,8 @@ footer {
 }
 
 .footer-nav a:hover {
-  color: var(--accent);
+  color: var(--accent-dark);
+  text-decoration: underline;
 }
 
 .footer-bottom {
