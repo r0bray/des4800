@@ -1,0 +1,11 @@
+name = "des4800-robray-net-site-production"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "./dist"
+
+# R2 bucket for static assets
+# Note: ASSETS is reserved, using STATIC_BUCKET instead
+[[r2_buckets]]
+binding = "STATIC_BUCKET"
+bucket_name = "static-robray-net"
+preview_bucket_name = "static-robray-net"
+

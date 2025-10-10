@@ -1,0 +1,6 @@
+# This directory contains static images that will be uploaded to R2
+# Images placed here are uploaded via:
+#   - Manual: ./scripts/upload-images.sh
+#   - Auto-watch: ./scripts/watch-images.sh
+#   - Git push: Automatically via GitHub Actions
+

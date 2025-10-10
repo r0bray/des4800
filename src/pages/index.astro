@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="DES4800 - Cloudflare Workers + R2">
+  <h1>Welcome to DES4800 - Physical Product Design</h1>
+  
+  <p>
+    This site is built with Astro and deployed on Cloudflare's edge network.
+  </p>
+  
+  <div class="card">
+    <h2 style="margin-bottom: 1rem; color: var(--gray-dark);">Infrastructure</h2>
+    <div>
+      <span class="badge primary">Cloudflare Workers</span>
+      <span class="badge">R2 Object Storage</span>
+      <span class="badge">Edge Computing</span>
+      <span class="badge">Astro SSR</span>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h2 style="margin-bottom: 1rem; color: var(--gray-dark);">Configuration</h2>
+    <ul style="list-style: none; line-height: 2;">
+      <li>🌐 <strong>Domain:</strong> des4800.robray.net</li>
+      <li>⚡ <strong>Worker:</strong> des4800-robray-net-site-production</li>
+      <li>🪣 <strong>R2 Bucket:</strong> static-robray-net</li>
+      <li>📦 <strong>Assets CDN:</strong> static.robray.net</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <h2 style="margin-bottom: 1rem; color: var(--gray-dark);">Getting Started</h2>
+    <p>Edit <code style="background: var(--gray-light); padding: 0.25rem 0.5rem; border-radius: 0.25rem;">src/pages/index.astro</code> to customize this page.</p>
+  </div>
+</Layout>
+

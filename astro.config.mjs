@@ -1,0 +1,22 @@
+import { defineConfig } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
+
+// https://astro.build/config
+export default defineConfig({
+  output: 'server',
+  adapter: cloudflare({
+    mode: 'directory',
+    imageService: 'passthrough'
+  }),
+  site: 'https://des4800.robray.net',
+  vite: {
+    build: {
+      assetsInlineLimit: 0,
+    },
+  },
+  build: {
+    assets: '_astro',
+    assetsPrefix: 'https://static.robray.net',
+  }
+});
+

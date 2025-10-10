@@ -1,0 +1,81 @@
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '.github/SECRETS.md'
+      - 'DEPLOYMENT.md'
+      - 'ARCHITECTURE.md'
+      - 'QUICKSTART.md'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy Code to Cloudflare Workers
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload built assets (_astro) to R2
+        run: |
+          echo "📦 Uploading compiled assets to R2..."
+          if [ -d "dist/_astro" ]; then
+            for file in dist/_astro/*; do
+              if [ -f "$file" ]; then
+                filename=$(basename "$file")
+                echo "  Uploading: _astro/$filename"
+                npx wrangler r2 object put static-robray-net/_astro/$filename --file="$file" --remote
+              fi
+            done
+            echo "✅ Built assets uploaded"
+          else
+            echo "⚠️  No _astro directory found"
+          fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Upload favicon to R2
+        run: |
+          if [ -f "dist/favicon.svg" ]; then
+            echo "📄 Uploading favicon.svg..."
+            npx wrangler r2 object put static-robray-net/favicon.svg --file=dist/favicon.svg --remote
+            echo "✅ Favicon uploaded"
+          fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=des4800-robray-net-site-production
+
+      - name: Deployment Summary
+        run: |
+          echo "✨ Deployment Complete!"
+          echo ""
+          echo "🌐 Site: https://des4800.robray.net"
+          echo "📦 Assets: https://static.robray.net"
+          echo ""
+          echo "Note: Static images in public/images/ should be uploaded separately using:"
+          echo "  ./scripts/upload-images.sh"
+
