@@ -1,9 +1,7 @@
 ---
 title: "Advanced Modeling Techniques"
 description: "Explore advanced techniques for creating complex 3D models in Plasticity."
-publishDate: 2025-01-20
-author: "DES4800"
-tags: ["advanced", "techniques", "modeling"]
+author: "Rob Ray"
 ---
 
 # Advanced Modeling Techniques

@@ -1,9 +1,7 @@
 ---
 title: "Workflow Tips & Tricks"
 description: "Optimize your Plasticity workflow with these essential tips and keyboard shortcuts."
-publishDate: 2025-01-25
-author: "DES4800"
-tags: ["workflow", "tips", "productivity"]
+author: "Rob Ray"
 ---
 
 # Workflow Tips & Tricks

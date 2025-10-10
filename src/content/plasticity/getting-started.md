@@ -1,9 +1,7 @@
 ---
 title: "Getting Started with Plasticity"
 description: "Learn the basics of Plasticity 3D modeling software and start creating your first designs."
-publishDate: 2025-01-15
-author: "DES4800"
-tags: ["tutorial", "basics", "3d-modeling"]
+author: "Rob Ray"
 ---
 
 # Getting Started with Plasticity
@@ -25,8 +23,9 @@ Plasticity is a modern 3D modeling tool that combines the best of NURBS modeling
 ## Getting Started
 
 1. Download and install Plasticity
-2. Familiarize yourself with the interface
-3. Learn the basic keyboard shortcuts
-4. Start with simple shapes
-5. Practice, practice, practice!
+2. Contact Plasticity Support for an academic license token.
+3. Familiarize yourself with the interface
+4. Learn the basic keyboard shortcuts
+5. Start with simple shapes
+6. Practice, practice, practice!
 

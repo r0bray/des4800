@@ -5,10 +5,8 @@ const plasticityCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    publishDate: z.date(),
     author: z.string().optional(),
     image: z.string().optional(),
-    tags: z.array(z.string()).optional(),
   }),
 });
 

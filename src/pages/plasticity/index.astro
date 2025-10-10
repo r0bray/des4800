@@ -1,12 +1,24 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { statSync } from 'node:fs';
+import { join } from 'node:path';
 
 const plasticityPosts = await getCollection('plasticity');
 
-// Sort posts by date (newest first)
-const sortedPosts = plasticityPosts.sort((a, b) => 
-  b.data.publishDate.getTime() - a.data.publishDate.getTime()
+// Get file modification dates and attach to posts
+const postsWithDates = plasticityPosts.map((post) => {
+  const filePath = join(process.cwd(), 'src', 'content', 'plasticity', `${post.slug}.md`);
+  const stats = statSync(filePath);
+  return {
+    ...post,
+    lastModified: stats.mtime
+  };
+});
+
+// Sort posts by last modified date (newest first)
+const sortedPosts = postsWithDates.sort((a, b) => 
+  b.lastModified.getTime() - a.lastModified.getTime()
 );
 ---
 
@@ -24,20 +36,13 @@ const sortedPosts = plasticityPosts.sort((a, b) =>
             <a href={`/plasticity/${post.slug}/`}>{post.data.title}</a>
           </h2>
           <p class="post-date">
-            {post.data.publishDate.toLocaleDateString('en-US', {
+            Last updated: {post.lastModified.toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric'
             })}
           </p>
           <p class="post-description">{post.data.description}</p>
-          {post.data.tags && (
-            <div class="post-tags">
-              {post.data.tags.map((tag) => (
-                <span class="tag">{tag}</span>
-              ))}
-            </div>
-          )}
         </div>
         <div class="post-card-footer">
           <a href={`/plasticity/${post.slug}/`} class="read-more">

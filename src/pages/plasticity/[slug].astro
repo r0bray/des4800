@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
+import { statSync } from 'node:fs';
+import { join } from 'node:path';
 
 // Get the slug from the URL
 const { slug } = Astro.params;
@@ -13,6 +15,11 @@ if (!post) {
   return Astro.redirect('/404');
 }
 
+// Get file modification date
+const filePath = join(process.cwd(), 'src', 'content', 'plasticity', `${slug}.md`);
+const stats = statSync(filePath);
+const lastModified = stats.mtime;
+
 const { Content } = await post.render();
 ---
 
@@ -22,8 +29,8 @@ const { Content } = await post.render();
       <a href="/plasticity/" class="back-link">← Back to Plasticity</a>
       <h1>{post.data.title}</h1>
       <div class="post-meta">
-        <time datetime={post.data.publishDate.toISOString()}>
-          {post.data.publishDate.toLocaleDateString('en-US', {
+        <time datetime={lastModified.toISOString()}>
+          Last updated: {lastModified.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
@@ -33,13 +40,6 @@ const { Content } = await post.render();
           <span class="post-author">by {post.data.author}</span>
         )}
       </div>
-      {post.data.tags && (
-        <div class="post-tags">
-          {post.data.tags.map((tag) => (
-            <span class="tag">{tag}</span>
-          ))}
-        </div>
-      )}
     </header>
 
     <div class="post-content">
