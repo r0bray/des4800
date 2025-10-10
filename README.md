@@ -69,7 +69,7 @@ See [IMAGES.md](./IMAGES.md) for complete image management guide.
    ```
 
 2. **DNS Configuration**:
-   - Add A record for `des4800.robray.net` pointing to Cloudflare Workers
+   - Add CNAME record for `des4800.robray.net` pointing to Cloudflare Workers
    - Add CNAME record for `static.robray.net` pointing to R2 bucket
 
 ### Deploy to Cloudflare Workers
@@ -273,5 +273,3 @@ Git remote uses the `r0braygithub` host alias defined in `~/dotfiles/ssh_config`
 ---
 
 **Made with** ⚡ **Astro** • 🦄 **Cloudflare** • 🔐 **1Password**
-
-
