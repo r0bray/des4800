@@ -167,6 +167,7 @@ The R2 bucket `static-robray-net` needs to be configured with:
 In your Cloudflare DNS for `robray.net`:
 
 1. Add a CNAME or A record for `des4800`:
+use a
    - Type: CNAME (or A record)
    - Name: des4800
    - Target: Your Cloudflare Workers domain
