@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const plasticityPosts = await getCollection('plasticity');
+
+// Sort posts by date (newest first)
+const sortedPosts = plasticityPosts.sort((a, b) => 
+  b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+---
+
+<Layout title="Plasticity - DES4800">
+  <div class="page-header">
+    <h1>Plasticity</h1>
+    <p>3D modeling tutorials, tips, and techniques for product design.</p>
+  </div>
+
+  <div class="posts-grid">
+    {sortedPosts.map((post) => (
+      <article class="post-card">
+        <div class="post-card-content">
+          <h2 class="post-title">
+            <a href={`/plasticity/${post.slug}/`}>{post.data.title}</a>
+          </h2>
+          <p class="post-date">
+            {post.data.publishDate.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </p>
+          <p class="post-description">{post.data.description}</p>
+          {post.data.tags && (
+            <div class="post-tags">
+              {post.data.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )}
+        </div>
+        <div class="post-card-footer">
+          <a href={`/plasticity/${post.slug}/`} class="read-more">
+            Read More →
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+</Layout>
+
