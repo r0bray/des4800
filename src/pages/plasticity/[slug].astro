@@ -1,16 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { getEntry } from 'astro:content';
 
-export async function getStaticPaths() {
-  const plasticityPosts = await getCollection('plasticity');
-  return plasticityPosts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+// Get the slug from the URL
+const { slug } = Astro.params;
+
+// Fetch the post by slug
+const post = await getEntry('plasticity', slug as string);
+
+// Handle 404 if post doesn't exist
+if (!post) {
+  return Astro.redirect('/404');
 }
 
-const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
