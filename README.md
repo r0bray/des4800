@@ -68,7 +68,7 @@ See [IMAGES.md](./IMAGES.md) for complete image management guide.
    ```
 
 2. **DNS Configuration**:
-   - Add A record for `des4800.robray.net` pointing to Cloudflare Workers
+   - Add CNAME record for `des4800.robray.net` pointing to Cloudflare Workers
    - Add CNAME record for `static.robray.net` pointing to R2 bucket
 
 ### Deploy to Cloudflare Workers
@@ -91,7 +91,7 @@ Or use a script to batch upload (see below).
 
 ### Automated Deployment Script
 
-Create a `scripts/deploy.sh` file:
+The project includes a `scripts/deploy.sh` file:
 
 ```bash
 #!/bin/bash
@@ -166,9 +166,8 @@ The R2 bucket `static-robray-net` needs to be configured with:
 
 In your Cloudflare DNS for `robray.net`:
 
-1. Add a CNAME or A record for `des4800`:
-use a
-   - Type: CNAME (or A record)
+1. **Main site** (`des4800.robray.net`):
+   - Type: CNAME
    - Name: des4800
    - Target: Your Cloudflare Workers domain
 
@@ -210,6 +209,3 @@ This setup uses Cloudflare Pages (which runs on Workers) for deployment. The `wr
 - [Cloudflare Workers Docs](https://developers.cloudflare.com/workers/)
 - [Cloudflare R2 Docs](https://developers.cloudflare.com/r2/)
 - [Wrangler CLI Docs](https://developers.cloudflare.com/workers/wrangler/)
-
-# Test SSH
-✅ SSH authentication working
