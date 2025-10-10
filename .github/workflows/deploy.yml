@@ -5,11 +5,14 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
       - '.github/SECRETS.md'
       - 'DEPLOYMENT.md'
       - 'ARCHITECTURE.md'
       - 'QUICKSTART.md'
+      - 'IMAGES.md'
+      - 'CHEATSHEET.md'
+      - 'SETUP-COMPLETE.md'
+      - 'SETUP-DNS-CORS.md'
   workflow_dispatch:
 
 jobs:
