@@ -70,6 +70,12 @@ h1 {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: var(--spacing-md);
+  color: var(--gray-dark);
+}
+
+/* h1 as link gets gradient */
+a h1,
+h1 a {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

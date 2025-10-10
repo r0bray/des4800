@@ -22,8 +22,8 @@ Plasticity is a modern 3D modeling tool that combines the best of NURBS modeling
 
 ## Getting Started
 
-1. Download and install Plasticity
-2. Contact Plasticity Support for an academic license token.
+1. Download and install Plasticity at https://plasticity.xyz.
+2. Contact Plasticity support at contact@plasticity.xyz for an academic license token.
 3. Familiarize yourself with the interface
 4. Learn the basic keyboard shortcuts
 5. Start with simple shapes
