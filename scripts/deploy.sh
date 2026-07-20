@@ -41,7 +41,7 @@ echo ""
 
 # Deploy to Cloudflare Workers
 echo "🌐 Deploying to Cloudflare Workers (des4800-robray-net-site-production)..."
-wrangler pages deploy dist
+wrangler deploy
 echo ""
 
 echo "✨ Deployment complete!"

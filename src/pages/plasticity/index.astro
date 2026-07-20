@@ -1,24 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { statSync } from 'node:fs';
-import { join } from 'node:path';
+
+export const prerender = true;
 
 const plasticityPosts = await getCollection('plasticity');
 
-// Get file modification dates and attach to posts
-const postsWithDates = plasticityPosts.map((post) => {
-  const filePath = join(process.cwd(), 'src', 'content', 'plasticity', `${post.slug}.md`);
-  const stats = statSync(filePath);
-  return {
-    ...post,
-    lastModified: stats.mtime
-  };
-});
-
-// Sort posts by last modified date (newest first)
-const sortedPosts = postsWithDates.sort((a, b) => 
-  b.lastModified.getTime() - a.lastModified.getTime()
+const sortedPosts = [...plasticityPosts].sort(
+  (a, b) =>
+    (b.data.lastModified?.getTime() ?? 0) - (a.data.lastModified?.getTime() ?? 0),
 );
 ---
 
@@ -33,10 +23,10 @@ const sortedPosts = postsWithDates.sort((a, b) =>
       <article class="post-card">
         <div class="post-card-content">
           <h2 class="post-title">
-            <a href={`/plasticity/${post.slug}/`}>{post.data.title}</a>
+            <a href={`/plasticity/${post.id}/`}>{post.data.title}</a>
           </h2>
           <p class="post-date">
-            Last updated: {post.lastModified.toLocaleDateString('en-US', {
+            Last updated: {(post.data.lastModified ?? new Date(0)).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric'
@@ -45,7 +35,7 @@ const sortedPosts = postsWithDates.sort((a, b) =>
           <p class="post-description">{post.data.description}</p>
         </div>
         <div class="post-card-footer">
-          <a href={`/plasticity/${post.slug}/`} class="read-more">
+          <a href={`/plasticity/${post.id}/`} class="read-more">
             Read More →
           </a>
         </div>
@@ -53,4 +43,3 @@ const sortedPosts = postsWithDates.sort((a, b) =>
     ))}
   </div>
 </Layout>
-

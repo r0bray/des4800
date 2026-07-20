@@ -1,26 +1,26 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getEntry } from 'astro:content';
-import { statSync } from 'node:fs';
-import { join } from 'node:path';
+import { getCollection, getEntry, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
 
-// Get the slug from the URL
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('plasticity');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+  }));
+}) satisfies GetStaticPaths;
+
 const { slug } = Astro.params;
+const post = await getEntry('plasticity', slug!);
 
-// Fetch the post by slug
-const post = await getEntry('plasticity', slug as string);
-
-// Handle 404 if post doesn't exist
 if (!post) {
   return Astro.redirect('/404');
 }
 
-// Get file modification date
-const filePath = join(process.cwd(), 'src', 'content', 'plasticity', `${slug}.md`);
-const stats = statSync(filePath);
-const lastModified = stats.mtime;
-
-const { Content } = await post.render();
+const { Content } = await render(post);
+const lastModified = post.data.lastModified ?? new Date(0);
 ---
 
 <Layout title={`${post.data.title} - Plasticity - DES4800`}>
@@ -47,4 +47,3 @@ const { Content } = await post.render();
     </div>
   </article>
 </Layout>
-
