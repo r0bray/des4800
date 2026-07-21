@@ -170,7 +170,7 @@ a {
 
 a:hover {
   color: var(--accent-dark);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* ===========================
@@ -396,7 +396,7 @@ footer {
 
 .footer-nav a:hover {
   color: var(--accent-dark);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .footer-bottom {
@@ -679,8 +679,7 @@ footer {
 
 .post-content a[href^="#"] {
   color: var(--accent-dark);
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+  text-decoration: none;
 }
 
 .post-content a[href^="#"]:hover {
@@ -703,4 +702,35 @@ footer {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.post-content .video-reference {
+  margin: var(--spacing-md) 0 var(--spacing-xl);
+  padding: var(--spacing-md);
+  background: var(--gray-light);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent);
+  border-radius: 0.5rem;
+}
+
+.post-content .video-reference-label {
+  margin-bottom: var(--spacing-xs);
+  color: var(--accent-dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.post-content .video-reference-title {
+  margin-bottom: var(--spacing-sm);
+  color: var(--gray-dark);
+  font-weight: 600;
+}
+
+.post-content .video-reference .video-embed {
+  margin: 0;
+  background: #000000;
+  border: 0;
+  border-radius: 0.25rem;
 }

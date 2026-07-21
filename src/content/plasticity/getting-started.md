@@ -4,32 +4,38 @@ description: "Learn the basics of Plasticity 3D modeling software and start crea
 author: "Rob Ray"
 ---
 
-Welcome to the world of 3D modeling with Plasticity! This powerful CAD software is designed for designers who need precision and speed.
+Welcome to 3D modeling in CAD with Plasticity!
 
-Use the links below to jump to a section on this page, or watch the embedded tutorials as you go.
+Use the links below to jump to a section on this page and watch the embedded tutorials as you go.
 
 ## On this page
 
 - [What is Plasticity?](#what-is-plasticity)
-- [Install and license](#install-and-license)
-- [Interface overview](#interface-overview)
+- [NURBS vs Mesh Modeling](#nurbs-vs-mesh-modeling)
+- [Install and license](#step-1-install-plasticity-and-apply-for-an-academic-license)
+- [Interface overview](#plasticity-interface-overview)
 - [First modeling exercise](#first-modeling-exercise)
 - [Key features](#key-features)
 - [Next steps](#next-steps)
 
 ## What is Plasticity?
 
-Plasticity is a modern 3D modeling tool that combines the best of NURBS modeling with an intuitive interface. Perfect for industrial design, product design, and concept development.
+Plasticity is a modern 3D modeling CAD tool that combines [NURBS](https://doc.plasticity.xyz/cad-essentials/nurbs-overview) modeling with a pretty intuitive interface. Plasticity is great for product design and concept development. Many people coming from design fields and Blender backgrounds find Plasticity easier to use than other CAD tools such as Autodesk Fusion, OnShape, Solidworks, or FreeCAD.
+
+## NURBS vs Mesh Modeling
+
+NURBS (Non-Uniform Rational B-Splines) and mesh modeling are two different ways of describing 3D form. Mesh tools like Blender represent surfaces as a network of polygons—triangles and quads—which is excellent for organic sculpting, animation, and rendering, but edges are approximate and can get faceted when you zoom in or export for manufacturing. NURBS, which Plasticity and [Rhino](https://www.rhino3d.com/) use, define surfaces with precise mathematical curves, so dimensions stay exact, fillets and offsets stay clean, and models translate reliably to CAD, CAM, and fabrication. In short: meshes are great for gaming and sculptural work. NURBS are better when you need accuracy for product design and making physical parts. If you'd like to learn more, check out [this video about NURBS](https://www.youtube.com/watch?v=5nkqVgxfTMQ).
 
 ## Step 1: Install Plasticity and apply for an academic license
 
 1. Download and install Plasticity at [plasticity.xyz](https://plasticity.xyz).
-2. Using your univerisity email address, contact Plasticity support at [contact@plasticity.xyz](mailto:contact@plasticity.xyz) for an academic license token. NOTE: This is not an automated process so plan for this step to a few days.
-3. Launch the app and enter your license when prompted.
+2. Use your _university email address_ to contact Plasticity support at [contact@plasticity.xyz](mailto:contact@plasticity.xyz) for an academic license token. 🚨 This is not an automated process so this could take a few days. _Do not wait until the last minute_.
+3. Launch the app and get started with the free 30 day trial.
+4. When you get your academic license from Plasticity support, enter your license token.
 
-## Interface overview
+## Plasticity interface overview
 
-Watch this beginner overview of the UI, shortcuts, and modeling workflow, then skim the notes below.
+Watch this beginner overview of the UI, shortcuts, and modeling workflow.
 
 <div class="video-embed">
   <iframe
