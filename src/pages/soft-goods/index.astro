@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = true;
+
+const topics = [
+  {
+    title: 'Cloth',
+    slug: 'cloth',
+    description:
+      'Fabric types, weights, grain, and how material choice affects structure, drape, and durability in soft-goods making.',
+  },
+  {
+    title: 'Sewing Machines',
+    slug: 'sewing-machines',
+    description:
+      'Studio machine basics, setup, safe operation, and which stitches and tools support product design prototypes.',
+  },
+  {
+    title: 'Thread',
+    slug: 'thread',
+    description:
+      'Choosing the right thread for strength, stretch, and finish—centered on Gütermann Mara, Mara rPET, and Tera.',
+  },
+  {
+    title: 'Notions',
+    slug: 'notions',
+    description:
+      'Needles, zippers, fasteners, elastic, and other hardware that turn fabric assemblies into reliable soft goods.',
+  },
+];
+---
+
+<Layout
+  title="Soft Goods - DES4800"
+  description="Cloth, sewing machines, thread, and notions for product design soft-goods work."
+>
+  <div class="page-header page-header--left">
+    <h1>Soft Goods</h1>
+    <p>
+      Soft goods move product design into cloth and construction. This section covers materials and tools of the sewing
+      studio—what you cut, what you stitch with, and the notions that hold it all together. Start with thread, machines,
+      fabric, and notions, then bring those choices into studio prototypes and wearables.
+    </p>
+  </div>
+
+  <div class="posts-grid">
+    {topics.map((topic) => (
+      <article class="post-card">
+        <a
+          href={`/soft-goods/${topic.slug}/`}
+          class="post-card-media"
+          aria-label={`${topic.title} image placeholder`}
+        >
+          <span class="post-card-media-label">Image coming soon</span>
+        </a>
+        <div class="post-card-content">
+          <h2 class="post-title">
+            <a href={`/soft-goods/${topic.slug}/`}>{topic.title}</a>
+          </h2>
+          <p class="post-description">{topic.description}</p>
+        </div>
+        <div class="post-card-footer">
+          <a href={`/soft-goods/${topic.slug}/`} class="read-more">
+            Learn more →
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+</Layout>
