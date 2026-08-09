@@ -470,6 +470,15 @@ footer {
   margin: 0 auto;
 }
 
+.page-header--left {
+  text-align: left;
+}
+
+.page-header--left p {
+  margin: 0;
+  max-width: 48rem;
+}
+
 /* Posts Grid */
 .posts-grid {
   display: grid;
@@ -492,6 +501,29 @@ footer {
 .post-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.post-card-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  background:
+    linear-gradient(135deg, #e8e8ed 0%, #f3f4f6 48%, #dddde5 100%);
+  border-bottom: 1px solid var(--border-color);
+  text-decoration: none;
+  color: var(--gray);
+}
+
+.post-card-media:hover {
+  color: var(--gray-dark);
+}
+
+.post-card-media-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 .post-card-content {
