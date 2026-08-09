@@ -664,6 +664,27 @@ footer {
   margin-bottom: var(--spacing-md);
 }
 
+.post-content .content-figure {
+  margin: var(--spacing-md) 0 var(--spacing-lg);
+  max-width: 28rem;
+}
+
+.post-content .content-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: #fafafa;
+}
+
+.post-content .content-figure figcaption {
+  margin-top: var(--spacing-xs);
+  font-size: 0.9rem;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
 .post-content .table-wrap {
   width: 100%;
   overflow-x: auto;
