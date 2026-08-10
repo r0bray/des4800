@@ -3,7 +3,12 @@ import Layout from '../../layouts/Layout.astro';
 
 export const prerender = true;
 
-const topics = [
+const topics: {
+  title: string;
+  slug: string;
+  description: string;
+  image?: string;
+}[] = [
   {
     title: 'Cloth',
     slug: 'cloth',
@@ -19,14 +24,15 @@ const topics = [
   {
     title: 'Thread',
     slug: 'thread',
+    image: '/images/soft-goods/gutermann-mara-70.jpg',
     description:
-      'Choosing the right thread for strength, stretch, and finish—centered on Gütermann Mara, Mara rPET, and Tera.',
+      'Choosing the right thread for strength, stretch, and finish. We will figure out thread sizing numbers and look at Gütermann Mara, Mara rPET, and Tera.',
   },
   {
     title: 'Notions',
     slug: 'notions',
     description:
-      'Needles, zippers, fasteners, elastic, and other hardware that turn fabric assemblies into reliable soft goods.',
+      'Needles, zippers, fasteners, elastic, and other hardware that turn fabric assemblies into soft goods.',
   },
 ];
 ---
@@ -38,9 +44,9 @@ const topics = [
   <div class="page-header page-header--left">
     <h1>Soft Goods</h1>
     <p>
-      Soft goods move product design into cloth and construction. This section covers materials and tools of the sewing
-      studio—what you cut, what you stitch with, and the notions that hold it all together. Start with thread, machines,
-      fabric, and notions, then bring those choices into studio prototypes and wearables.
+      Soft goods are a huge and exciting category in product design. This section covers materials and tools of the sewing
+      studio: what you cut, what you stitch with, and the notions that you use to put it all together. We'll start with thread, machines,
+      fabric, and notions, then bring that knowledge into our product design studio prototypes and wearables.
     </p>
   </div>
 
@@ -49,10 +55,14 @@ const topics = [
       <article class="post-card">
         <a
           href={`/soft-goods/${topic.slug}/`}
-          class="post-card-media"
-          aria-label={`${topic.title} image placeholder`}
+          class:list={['post-card-media', { 'post-card-media--has-image': topic.image }]}
+          aria-label={topic.image ? topic.title : `${topic.title} image placeholder`}
         >
-          <span class="post-card-media-label">Image coming soon</span>
+          {topic.image ? (
+            <img src={topic.image} alt="" loading="lazy" />
+          ) : (
+            <span class="post-card-media-label">Gutermann Mara 70 thread example</span>
+          )}
         </a>
         <div class="post-card-content">
           <h2 class="post-title">
