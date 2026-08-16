@@ -80,5 +80,5 @@ jobs:
           echo "📦 Assets: https://static.robray.net"
           echo ""
           echo "Note: Static images in public/images/ should be uploaded separately using:"
-          echo "  ./scripts/upload-images.sh"
+          echo "  npm run upload:images"
 

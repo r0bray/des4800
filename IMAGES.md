@@ -16,7 +16,7 @@ Static images are stored separately in the R2 bucket and served via CDN at `http
 
 ### 1. Add Images to Directory
 
-Place your images in `public/images/`:
+Place your local source images in `public/images/`. This directory is intended as a local staging area for uploads to R2 and should not be used for committed image assets:
 
 ```bash
 # Example structure
@@ -94,15 +94,19 @@ Leave this running in a terminal. When you add/modify images in `public/images/`
 
 **Requirements**: Requires `fswatch` (installs automatically via Homebrew on macOS)
 
-### Method 3: Git Push (Automatic)
+### Method 3: Local upload scripts
 
-Best for: Production workflow, team collaboration
+Best for: the normal workflow in this repo
 
-1. Add images to `public/images/`
-2. Commit and push to `main` branch
-3. GitHub Actions automatically uploads them
+Use the local upload commands directly after adding or updating files in `public/images/`:
 
-The workflow triggers only when files in `public/images/` change.
+```bash
+npm run upload:images
+# or
+npm run upload:image public/images/path/to/file.jpg
+```
+
+Because `public/images/` is a local staging area, image files there should not be relied on as committed repository assets.
 
 ## Workflow Examples
 
@@ -119,10 +123,9 @@ npm run upload:image public/images/hero/hero.jpg
 # In src/pages/index.astro:
 <img src="https://static.robray.net/images/hero/hero.jpg" alt="Hero" />
 
-# 4. Commit (optional - for version control)
-git add public/images/hero/hero.jpg
-git commit -m "Add hero image"
-git push
+# 4. Reference the uploaded CDN image in code
+# Example:
+# <img src="https://static.robray.net/images/hero/hero.jpg" alt="Hero" />
 ```
 
 ### Batch Upload During Development
@@ -255,28 +258,21 @@ const CDN = 'https://static.robray.net/images';
 </picture>
 ```
 
-## GitHub Actions Integration
+### GitHub Actions Integration
 
-### Automatic Image Upload
+The primary image workflow for this repo is local upload via `npm run upload:images` or `npm run upload:image ...` after placing files in `public/images/`.
 
-When you push changes to `main` that include `public/images/**`, the `upload-images.yml` workflow runs:
+### Upload trigger
 
-```yaml
-# Triggers on:
-- Push to main branch
-- Changes in public/images/**
-- Manual workflow dispatch
+Images are uploaded when you run the local upload commands:
+
+```bash
+npm run upload:images
+# or
+npm run upload:image public/images/path/to/file.jpg
 ```
 
-### Manual Trigger
-
-You can also manually trigger image uploads from GitHub:
-
-1. Go to **Actions** tab
-2. Select "Upload Images to R2"
-3. Click "Run workflow"
-4. Select branch
-5. Click "Run workflow"
+That local upload step is the intended trigger for publishing files from `public/images/` to `https://static.robray.net/images/`.
 
 ## Advanced Usage
 

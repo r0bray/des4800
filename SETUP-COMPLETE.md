@@ -23,9 +23,8 @@ Your DES4800 Astro website is fully configured with separate workflows for code 
   - `scripts/watch-images.sh` - File watcher
 
 ### ✅ Deployment Automation
-- **Two GitHub Actions workflows**:
-  1. `deploy.yml` - Deploys code changes
-  2. `upload-images.yml` - Uploads images
+- **GitHub Actions workflows**:
+  1. `deploy.yml` - Deploys code changes and uploads built assets
 
 - **Deployment scripts**:
   - `scripts/deploy.sh` - Full deployment
@@ -132,13 +131,11 @@ Run npm run watch:images → Add/edit image in public/images/
                                 Uploads to R2 immediately
 ```
 
-**Method 3: Git Push (Production)**
+**Method 3: Local Upload (Production)**
 ```
-Add image to public/images/ → Git commit and push to main
+Add image to public/images/ → Run npm run upload:images
                                         ↓
-                            GitHub Actions detects image changes
-                                        ↓
-                                Uploads images to R2
+                             Upload script sends files to R2
                                         ↓
                         Available at static.robray.net/images/
 ```
@@ -235,8 +232,7 @@ des4800/
 │   └── setup-r2.sh            # R2 bucket setup
 │
 ├── .github/workflows/
-│   ├── deploy.yml          # Code deployment automation
-│   └── upload-images.yml   # Image upload automation
+│   └── deploy.yml          # Code deployment automation
 │
 ├── Documentation/
 │   ├── README.md           # Main docs
