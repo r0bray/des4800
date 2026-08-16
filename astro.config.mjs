@@ -5,8 +5,7 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   output: 'server',
   adapter: cloudflare({
-    mode: 'directory',
-    imageService: 'passthrough'
+    imageService: 'passthrough',
   }),
   site: 'https://des4800.robray.net',
   vite: {
@@ -17,6 +16,5 @@ export default defineConfig({
   build: {
     assets: '_astro',
     assetsPrefix: 'https://static.robray.net',
-  }
+  },
 });
-

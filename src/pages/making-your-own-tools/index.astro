@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = true;
+
+const miniProjects = [
+  {
+    title: 'Making Your Own Measuring Tools',
+    slug: 'measuring-tools',
+    description:
+      'Design and fabricate custom measuring tools for the studio, including fixtures and guides that improve accuracy when you mark, cut, and assemble physical work.',
+  },
+  {
+    title: 'Making Your Own Screwdriver Set',
+    slug: 'screwdriver-set',
+    description:
+      'Plan, model, and build a personal screwdriver set, focusing on handle ergonomics, bit storage, materials, and making tools you will actually use at the bench.',
+  },
+];
+---
+
+<Layout
+  title="Making Your Own Tools - DES4800"
+  description="Design and build custom measuring tools and a screwdriver set for product design studio work."
+>
+  <div class="page-header page-header--left">
+    <h1>Making Your Own Tools</h1>
+    <p>
+      Tools shape how you design. In this project sequence you design and fabricate tools for your own studio practice. You'll start with measuring aids and a personal screwdriver set. Each mini-project moves from need and concept through digital modeling and hands-on making so you understand both the product and the process.
+    </p>
+  </div>
+
+  <div class="posts-grid">
+    {miniProjects.map((project) => (
+      <article class="post-card">
+        <a
+          href={`/making-your-own-tools/${project.slug}/`}
+          class="post-card-media"
+          aria-label={`${project.title} image placeholder`}
+        >
+          <span class="post-card-media-label">Image coming soon</span>
+        </a>
+        <div class="post-card-content">
+          <h2 class="post-title">
+            <a href={`/making-your-own-tools/${project.slug}/`}>{project.title}</a>
+          </h2>
+          <p class="post-description">{project.description}</p>
+        </div>
+        <div class="post-card-footer">
+          <a href={`/making-your-own-tools/${project.slug}/`} class="read-more">
+            View project →
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+</Layout>

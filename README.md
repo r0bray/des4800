@@ -43,7 +43,7 @@ This builds the site for production in the `dist/` directory.
 
 ### Working with Images
 
-Place static images in `public/images/` and upload to R2:
+Place local source images in `public/images/` and upload them to R2. The contents of `public/images/` are intended to stay local and are gitignored, except for directory docs/placeholders:
 
 ```bash
 # Upload all images immediately
@@ -56,7 +56,9 @@ npm run upload:image public/images/logo.png
 npm run watch:images
 ```
 
-See [IMAGES.md](./IMAGES.md) for complete image management guide.
+Use the uploaded CDN paths in Astro, for example `https://static.robray.net/images/...`.
+
+See [IMAGES.md](./IMAGES.md) for the complete image management guide.
 
 ## 📦 Deployment
 
