@@ -15,6 +15,7 @@ Upload a single image:
 ```
 
 Watch for changes and auto-upload:
+
 ```bash
 ./scripts/watch-images.sh
 ```
@@ -75,4 +76,3 @@ To "update" an image:
 1. Delete the old version: `npx wrangler r2 object delete static-robray-net/images/old.jpg`
 2. Upload the new version: `./scripts/upload-single-image.sh public/images/old.jpg`
 3. Or use a versioned filename: `logo-v2.png`
-

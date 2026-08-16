@@ -2,6 +2,7 @@
 
 To enable automated deployments via GitHub Actions, add these secrets to your repository:
 
+
 ## Required Secrets
 
 1. **CLOUDFLARE_API_TOKEN**
@@ -48,4 +49,3 @@ The workflow will automatically:
 - Build the Astro site
 - Upload assets to R2
 - Deploy to Cloudflare Workers
-
