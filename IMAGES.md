@@ -92,6 +92,16 @@ This is the recommended first step for a collaborator who just cloned the repo a
 
 If the manifest seems incomplete, refresh it from R2 first with `npm run update:images-manifest:r2`.
 
+### `npm run sync:images:latest` — Refresh manifest and pull latest from R2
+
+```bash
+npm run sync:images:latest
+```
+
+This first rebuilds `public/images-manifest.json` from the current contents of the R2 bucket, then downloads those images into `public/images/`. This is the safest command when you want the latest shared image set.
+
+`npm run dev` and `npm run preview` now attempt to run this automatically before starting their local servers, print a clear success or warning message, and still start Astro if the R2 sync step fails.
+
 ### `npm run sync:images:delete` — Exact mirror from R2
 
 ```bash

@@ -31,7 +31,17 @@ npm install
 npm run dev
 ```
 
-This starts the development server at `http://localhost:4321`
+This now attempts to refresh `public/images-manifest.json` from R2, sync the latest shared images into `public/images/`, and then starts the development server at `http://localhost:4321`.
+
+If Cloudflare is unavailable or your token is missing, you'll see a warning and dev will still start with your existing local images.
+
+If you want to refresh images without starting dev:
+
+```bash
+npm run sync:images:latest
+```
+
+`npm run preview` now follows the same best-effort image-sync pattern before starting the local preview server.
 
 ### Build
 

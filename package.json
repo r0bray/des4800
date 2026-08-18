@@ -3,10 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
+    "dev": "bash ./scripts/dev-with-image-sync.sh",
+    "start": "bash ./scripts/dev-with-image-sync.sh",
     "build": "astro check && astro build",
-    "preview": "astro preview",
+    "preview": "bash ./scripts/preview-with-image-sync.sh",
     "astro": "astro",
     "deploy": "npm run build && wrangler deploy",
     "upload:images": "./scripts/upload-images.sh",
@@ -15,6 +15,7 @@
     "update:images-manifest:r2": "node ./scripts/rebuild-images-manifest-from-r2.mjs",
     "sync:images": "bash ./scripts/sync-images-from-r2.sh",
     "sync:images:delete": "bash ./scripts/sync-images-from-r2.sh --delete",
+    "sync:images:latest": "npm run update:images-manifest:r2 && npm run sync:images",
     "watch:images": "./scripts/watch-images.sh",
     "deploy:full": "./scripts/deploy.sh"
   },
