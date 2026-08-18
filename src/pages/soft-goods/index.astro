@@ -1,81 +1,112 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getSoftGoodsPages } from '../../data/soft-goods';
 
 export const prerender = true;
 
-const topics: {
-  title: string;
-  slug: string;
-  description: string;
-  image?: string;
-}[] = [
-  {
-    title: 'Cloth',
-    slug: 'cloth',
-    description:
-      'Fabric types, weights, grain, and how material choice affects structure, drape, and durability in soft-goods making.',
-  },
-  {
-    title: 'Sewing Machines',
-    slug: 'sewing-machines',
-    description:
-      'Studio machine basics, setup, safe operation, and which stitches and tools support product design prototypes.',
-  },
-  {
-    title: 'Thread',
-    slug: 'thread',
-    image: '/images/soft-goods/gutermann-mara-70.jpg',
-    description:
-      'Choosing the right thread for strength, stretch, and finish. We will figure out thread sizing numbers and look at Gütermann Mara, Mara rPET, and Tera.',
-  },
-  {
-    title: 'Notions',
-    slug: 'notions',
-    description:
-      'Needles, zippers, fasteners, elastic, and other hardware that turn fabric assemblies into soft goods.',
-  },
-];
+const skills = getSoftGoodsPages('skills');
+const thingsToUse = getSoftGoodsPages('tools');
+const showDraftBadge = import.meta.env.DEV;
 ---
 
 <Layout
   title="Soft Goods - DES4800"
-  description="Cloth, sewing machines, thread, and notions for product design soft-goods work."
+  description="Skills, materials, and tools for product design soft-goods work."
 >
   <div class="page-header page-header--left">
     <h1>Soft Goods</h1>
     <p>
-      Soft goods are a huge and exciting category in product design. This section covers materials and tools of the sewing
+      Soft goods are a huge and exciting category in product design. This section covers materials and tools of a soft goods design
       studio: what you cut, what you stitch with, and the notions that you use to put it all together. We'll start with thread, machines,
       fabric, and notions, then bring that knowledge into our product design studio prototypes and wearables.
     </p>
   </div>
 
-  <div class="posts-grid">
-    {topics.map((topic) => (
-      <article class="post-card">
-        <a
-          href={`/soft-goods/${topic.slug}/`}
-          class:list={['post-card-media', { 'post-card-media--has-image': topic.image }]}
-          aria-label={topic.image ? topic.title : `${topic.title} image placeholder`}
-        >
-          {topic.image ? (
-            <img src={topic.image} alt="" loading="lazy" />
-          ) : (
-            <span class="post-card-media-label">Gutermann Mara 70 thread example</span>
-          )}
-        </a>
-        <div class="post-card-content">
-          <h2 class="post-title">
-            <a href={`/soft-goods/${topic.slug}/`}>{topic.title}</a>
-          </h2>
-          <p class="post-description">{topic.description}</p>
-        </div>
-        <div class="post-card-footer">
-          <a href={`/soft-goods/${topic.slug}/`} class="read-more">
-            Learn more →
-          </a>
-        </div>
-      </article>
-    ))}
-  </div>
+  <section class="content-section" aria-labelledby="skills-to-learn">
+    <div class="content-section-header">
+      <h2 id="skills-to-learn">Skills to Learn</h2>
+      <p>Core sewing and soft-goods techniques for studio prototypes and wearables.</p>
+    </div>
+    {skills.length > 0 ? (
+      <div class="posts-grid">
+        {skills.map((topic) => (
+          <article class="post-card">
+            <a
+              href={`/soft-goods/${topic.slug}/`}
+              class:list={['post-card-media', { 'post-card-media--has-image': topic.image }]}
+              aria-label={topic.image ? topic.title : `${topic.title} image placeholder`}
+            >
+              {topic.image ? (
+                <img src={topic.image} alt="" loading="lazy" />
+              ) : (
+                <span class="post-card-media-label">Image coming soon</span>
+              )}
+            </a>
+            <div class="post-card-content">
+              <h3 class="post-title">
+                <a href={`/soft-goods/${topic.slug}/`}>
+                  {topic.title}
+                  {showDraftBadge && topic.status === 'draft' && (
+                    <span class="status-badge status-badge--draft">Draft</span>
+                  )}
+                </a>
+              </h3>
+              <p class="post-description">{topic.description}</p>
+            </div>
+            <div class="post-card-footer">
+              <a href={`/soft-goods/${topic.slug}/`} class="read-more">
+                Learn more →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="content-section-empty">No published skills yet.</p>
+    )}
+  </section>
+
+  <section class="content-section" aria-labelledby="things-to-use">
+    <div class="content-section-header">
+      <h2 id="things-to-use">Things to Use</h2>
+      <p>Materials, machines, thread, and notions you’ll reach for in the sewing studio.</p>
+    </div>
+    {thingsToUse.length > 0 ? (
+      <div class="posts-grid">
+        {thingsToUse.map((topic) => (
+          <article class="post-card">
+            <a
+              href={`/soft-goods/${topic.slug}/`}
+              class:list={['post-card-media', { 'post-card-media--has-image': topic.image }]}
+              aria-label={topic.image ? topic.title : `${topic.title} image placeholder`}
+            >
+              {topic.image ? (
+                <img src={topic.image} alt="" loading="lazy" />
+              ) : (
+                <span class="post-card-media-label">Image coming soon</span>
+              )}
+            </a>
+            <div class="post-card-content">
+              <h3 class="post-title">
+                <a href={`/soft-goods/${topic.slug}/`}>
+                  {topic.title}
+                  {showDraftBadge && topic.status === 'draft' && (
+                    <span class="status-badge status-badge--draft">Draft</span>
+                  )}
+                </a>
+              </h3>
+              <p class="post-description">{topic.description}</p>
+            </div>
+            <div class="post-card-footer">
+              <a href={`/soft-goods/${topic.slug}/`} class="read-more">
+                Learn more →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="content-section-empty">No published materials yet.</p>
+    )}
+  </section>
 </Layout>
