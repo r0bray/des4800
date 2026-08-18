@@ -82,13 +82,17 @@ The full deployment script automatically uploads everything in `public/images/` 
 
 ### `npm run sync:images` — Download shared images
 
-Downloads every image listed in `public/images-manifest.json` from R2 into local `public/images/`:
+Downloads every image listed in `public/images-manifest.json` from R2 into local `public/images/`. When the manifest includes remote `etag` values from R2, existing local files are skipped only if their local MD5 hash matches the remote object `etag`. If no `etag` is available, sync falls back to comparing file sizes.
 
 ```bash
 npm run sync:images
 ```
 
 This is the recommended first step for a collaborator who just cloned the repo and needs the non-git image assets.
+
+If you want to redownload everything even when files already exist locally, use `npm run sync:images:force`.
+
+To get hash-aware comparisons, refresh the manifest from R2 first with `npm run update:images-manifest:r2` or use `npm run sync:images:latest`.
 
 If the manifest seems incomplete, refresh it from R2 first with `npm run update:images-manifest:r2`.
 
@@ -98,9 +102,27 @@ If the manifest seems incomplete, refresh it from R2 first with `npm run update:
 npm run sync:images:latest
 ```
 
-This first rebuilds `public/images-manifest.json` from the current contents of the R2 bucket, then downloads those images into `public/images/`. This is the safest command when you want the latest shared image set.
+This first rebuilds `public/images-manifest.json` from the current contents of the R2 bucket, including remote object sizes and `etag` values when available, then downloads those images into `public/images/`. This is the safest command when you want the latest shared image set.
 
 `npm run dev` and `npm run preview` now attempt to run this automatically before starting their local servers, print a clear success or warning message, and still start Astro if the R2 sync step fails.
+
+### `npm run sync:images:status` — Show missing/changed/up-to-date files
+
+```bash
+npm run sync:images:status
+```
+
+Reports which manifest-listed files are missing locally, which appear changed, and which are up to date, without downloading anything.
+
+When the manifest includes remote `etag` values, status uses local MD5 vs remote `etag`. Otherwise it falls back to file size.
+
+### `npm run sync:images:force` — Redownload all manifest files
+
+```bash
+npm run sync:images:force
+```
+
+Same as `sync:images`, but does not skip files that already exist locally.
 
 ### `npm run sync:images:delete` — Exact mirror from R2
 
@@ -124,7 +146,7 @@ Scans local `public/images/` and rewrites `public/images-manifest.json`. Run thi
 npm run update:images-manifest:r2
 ```
 
-Queries the Cloudflare R2 bucket directly and rewrites `public/images-manifest.json` from the actual remote objects under `images/`. Use this if you know R2 contains more files than the current manifest.
+Queries the Cloudflare R2 bucket directly and rewrites `public/images-manifest.json` from the actual remote objects under `images/`, including object sizes and `etag` values when available. Use this if you know R2 contains more files than the current manifest or you want sync to detect changed remote files more accurately.
 
 ### `npm run upload:images` — Upload all images
 
@@ -151,7 +173,9 @@ Fastest option when you've changed just one file.
 npm run watch:images
 ```
 
-Runs a file watcher on `public/images/`. Any file you add or modify is automatically uploaded to R2. Great for active design work.
+Runs a file watcher on `public/images/`. Any image file you add or modify is automatically uploaded to R2, and `public/images-manifest.json` is refreshed locally. Great for active design work.
+
+`npm run dev` now starts this watcher automatically in the background.
 
 **Requirements:** Requires `fswatch` (auto-installed via Homebrew on macOS if missing).
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 BUCKET_NAME="static-robray-net"
 IMAGES_DIR="public/images"
@@ -19,22 +20,34 @@ if ! command -v fswatch &> /dev/null; then
   brew install fswatch
 fi
 
+should_ignore_file() {
+  filename=$(basename "$1")
+  [ "$filename" = ".DS_Store" ] || [ "$filename" = "Thumbs.db" ] || [ "$filename" = ".gitkeep" ] || [ "$filename" = "README.md" ]
+}
+
 # Function to upload a file
 upload_file() {
   file="$1"
-  
+
   # Only process actual files (not directories)
   if [ ! -f "$file" ]; then
     return
   fi
-  
+
+  if should_ignore_file "$file"; then
+    return
+  fi
+
   # Get relative path
   relative_path="${file#$IMAGES_DIR/}"
-  filename=$(basename "$file")
-  
+
   echo "[$(date '+%H:%M:%S')] 📸 Detected: $relative_path"
+  echo "  📝 Refreshing image manifest..."
+  if ! node ./scripts/update-images-manifest.mjs >/dev/null; then
+    echo "  ⚠️  Failed to update public/images-manifest.json"
+  fi
   echo "  Uploading to R2..."
-  
+
   # Upload to R2
   if npx wrangler r2 object put "$BUCKET_NAME/images/$relative_path" --file="$file" --remote 2>/dev/null; then
     echo "  ✅ Uploaded: https://static.robray.net/images/$relative_path"

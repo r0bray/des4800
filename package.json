@@ -14,8 +14,11 @@
     "update:images-manifest": "node ./scripts/update-images-manifest.mjs",
     "update:images-manifest:r2": "node ./scripts/rebuild-images-manifest-from-r2.mjs",
     "sync:images": "bash ./scripts/sync-images-from-r2.sh",
+    "sync:images:status": "bash ./scripts/image-sync-status.sh",
+    "sync:images:force": "bash ./scripts/sync-images-from-r2.sh --force",
     "sync:images:delete": "bash ./scripts/sync-images-from-r2.sh --delete",
     "sync:images:latest": "npm run update:images-manifest:r2 && npm run sync:images",
+    "sync:images:latest:force": "npm run update:images-manifest:r2 && npm run sync:images:force",
     "watch:images": "./scripts/watch-images.sh",
     "deploy:full": "./scripts/deploy.sh"
   },

@@ -36,7 +36,7 @@ if (!apiToken) {
 }
 
 async function listAllObjects() {
-  const keys = [];
+  const entries = [];
   let cursor = null;
 
   while (true) {
@@ -73,7 +73,11 @@ async function listAllObjects() {
       const relativePath = object.key.slice(prefix.length);
       const basename = path.posix.basename(relativePath);
       if (!relativePath || ignoredBasenames.has(basename)) continue;
-      keys.push(relativePath);
+      entries.push({
+        path: relativePath,
+        size: typeof object.size === 'number' ? object.size : null,
+        etag: typeof object.etag === 'string' ? object.etag.replace(/^\"|\"$/g, '') : null,
+      });
     }
 
     const nextCursor = data.result_info?.cursor;
@@ -83,9 +87,10 @@ async function listAllObjects() {
     cursor = nextCursor;
   }
 
-  return keys;
+  return entries;
 }
 
-const keys = Array.from(new Set(await listAllObjects())).sort((a, b) => a.localeCompare(b));
-fs.writeFileSync(manifestPath, `${JSON.stringify(keys, null, 2)}\n`);
-console.log(`Updated public/images-manifest.json from R2 with ${keys.length} image(s)`);
+const manifest = Array.from(new Map((await listAllObjects()).map((entry) => [entry.path, entry])).values())
+  .sort((a, b) => a.path.localeCompare(b.path));
+fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+console.log(`Updated public/images-manifest.json from R2 with ${manifest.length} image(s)`);

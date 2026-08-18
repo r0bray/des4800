@@ -31,9 +31,9 @@ npm install
 npm run dev
 ```
 
-This now attempts to refresh `public/images-manifest.json` from R2, sync the latest shared images into `public/images/`, and then starts the development server at `http://localhost:4321`.
+This now attempts to refresh `public/images-manifest.json` from R2, sync the latest shared images into `public/images/`, start an automatic upload watcher for `public/images/`, and then start the development server at `http://localhost:4321`.
 
-If Cloudflare is unavailable or your token is missing, you'll see a warning and dev will still start with your existing local images.
+If Cloudflare is unavailable or your token is missing, you'll see a warning and dev will still start with your existing local images. If the watcher cannot start, dev still continues without auto-upload.
 
 If you want to refresh images without starting dev:
 
@@ -59,8 +59,14 @@ Place local source images in `public/images/`. This directory is gitignored (onl
 # Rebuild the image manifest from the current R2 bucket contents
 npm run update:images-manifest:r2
 
-# Pull the shared image set down from R2
+# See what is missing, changed, or already up to date
+npm run sync:images:status
+
+# Pull the shared image set down from R2 (skips unchanged files)
 npm run sync:images
+
+# Force a full redownload from R2
+npm run sync:images:force
 
 # Pull and delete local image files that no longer exist in R2
 npm run sync:images:delete
