@@ -154,6 +154,7 @@ export const softGoodsPages: SoftGoodsPage[] = [
     slug: 'sewing-machines',
     section: 'tools',
     status: 'draft',
+    image: 'https://static.robray.net/images/soft-goods/henry-ford-sewing-machine.jpg',
     description:
       'Studio machine basics, setup, safe operation, and which stitches and tools support product design prototypes.',
     body: 'Sewing machines turn cut parts into sewn assemblies. Studio work depends on setup, needle and stitch choice, and safe operation as much as on pattern design. This page will expand with machine types, setup checklists, and prototype-friendly techniques.',
