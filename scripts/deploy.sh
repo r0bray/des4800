@@ -8,6 +8,9 @@ echo ""
 echo "📦 Building site..."
 npm run build
 echo "✅ Build complete"
+
+# Exclude worker files from public assets
+echo "_worker.js" > dist/.assetsignore
 echo ""
 
 # Upload assets to R2
@@ -29,7 +32,7 @@ echo ""
 # Upload public assets if any
 if [ -d "dist" ]; then
   echo "📁 Uploading public assets..."
-  for file in dist/*.svg dist/*.ico dist/*.png dist/*.jpg 2>/dev/null; do
+  for file in dist/*.svg dist/*.ico dist/*.png dist/*.jpg; do
     if [ -f "$file" ]; then
       filename=$(basename "$file")
       echo "  Uploading: $filename"
@@ -39,9 +42,23 @@ if [ -d "dist" ]; then
 fi
 echo ""
 
+# Upload images to R2
+if [ -d "public/images" ]; then
+  echo "🖼️  Uploading images to R2..."
+  find public/images -type f | while read file; do
+    relative_path="${file#public/images/}"
+    echo "  Uploading: $relative_path"
+    npx wrangler r2 object put static-robray-net/images/$relative_path --file="$file" --remote
+  done
+  echo "✅ Images uploaded to R2"
+else
+  echo "⚠️  No public/images directory found - skipping image upload"
+fi
+echo ""
+
 # Deploy to Cloudflare Workers
 echo "🌐 Deploying to Cloudflare Workers (des4800-robray-net-site-production)..."
-wrangler deploy
+npx wrangler deploy
 echo ""
 
 echo "✨ Deployment complete!"

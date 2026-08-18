@@ -1,312 +1,260 @@
 # Deployment Guide
 
-Complete step-by-step guide to deploy your Astro site to Cloudflare Workers with R2 assets.
+Complete guide to deploying the DES4800 Astro site to Cloudflare Workers with R2 static assets.
 
 ## Prerequisites
 
 Before deploying, ensure you have:
 
-1. **Cloudflare Account**: With Workers and R2 enabled
-2. **Wrangler CLI**: Installed and authenticated
-3. **Node.js**: Version 18 or higher
-4. **Domain**: robray.net configured in Cloudflare DNS
+1. **Node.js 20+**: Check with `node --version`
+2. **Cloudflare Account**: With Workers and R2 enabled
+3. **Wrangler authenticated**: Run `npx wrangler login` (opens browser OAuth)
+4. **Domain**: `robray.net` configured in Cloudflare DNS
 
-## Step 1: Install Dependencies
-
-```bash
-npm install
-```
-
-This installs:
-- Astro 4.x
-- @astrojs/cloudflare adapter
-- Wrangler CLI
-- TypeScript
-
-## Step 2: Authenticate Wrangler
-
-If you haven't already, authenticate with Cloudflare:
+### Authenticate Wrangler (first time only)
 
 ```bash
 npx wrangler login
 ```
 
-This opens a browser window to authorize the CLI.
+This opens a browser window for OAuth. Once authorized, your credentials are stored locally and you won't need to repeat this.
 
-## Step 3: Create R2 Bucket
+---
 
-Run the setup script or create manually:
+## DNS / Domain Configuration
 
-```bash
-# Option A: Use the setup script
-./scripts/setup-r2.sh
+These are one-time setup steps. Skip if already configured.
 
-# Option B: Manually create
-npx wrangler r2 bucket create static-robray-net
-```
+### Worker Custom Domain for `des4800.robray.net`
 
-Verify the bucket was created:
+The main site is served by a Cloudflare Worker. To route your custom subdomain to it:
 
-```bash
-npx wrangler r2 bucket list
-```
+1. Go to **Cloudflare Dashboard** → **Workers & Pages**
+2. Open the Worker named `des4800-robray-net-site-production`
+3. Go to **Settings** → **Domains & Routes**
+4. Click **Add Custom Domain**
+5. Enter `des4800.robray.net`
+6. Click **Add Domain** — Cloudflare will automatically create the DNS record and issue an SSL certificate
 
-## Step 4: Configure R2 Custom Domain
+> **Note:** Do not create a manual CNAME record. The Worker custom domain setup handles DNS automatically.
 
-1. Go to Cloudflare Dashboard
-2. Navigate to **R2** → **static-robray-net** → **Settings**
-3. Scroll to **Custom Domains**
+### R2 Custom Domain for `static.robray.net`
+
+Static assets and images are served from the R2 bucket via a custom domain:
+
+1. Go to **Cloudflare Dashboard** → **R2**
+2. Open the bucket `static-robray-net`
+3. Go to **Settings** → **Custom Domains**
 4. Click **Connect Domain**
 5. Enter `static.robray.net`
-6. Click **Continue**
-7. Cloudflare will automatically:
-   - Create the necessary DNS records
-   - Issue an SSL certificate
-   - Configure the domain
+6. Click **Continue** — Cloudflare will create the DNS record and issue an SSL certificate
 
-**Note**: It may take a few minutes for the domain to become active.
+> **Note:** It may take a few minutes for the domain to become active.
 
-## Step 5: Configure Main Site DNS
+---
 
-Add a record for your main site:
+## Standard Deployment
 
-### Option A: Using Cloudflare Pages (Recommended)
-
-1. After first deployment, Cloudflare Pages will provide a URL like:
-   `des4800-robray-net-site-production.pages.dev`
-
-2. Add a CNAME record:
-   - **Type**: CNAME
-   - **Name**: des4800
-   - **Target**: `des4800-robray-net-site-production.pages.dev`
-   - **Proxy status**: Proxied (orange cloud)
-
-### Option B: Using Workers Custom Domain
-
-1. Go to **Workers & Pages** → **des4800-robray-net-site-production**
-2. Go to **Settings** → **Domains & Routes**
-3. Click **Add Custom Domain**
-4. Enter `des4800.robray.net`
-5. Cloudflare will automatically create the DNS record
-
-## Step 6: Initial Build
-
-Build the site locally to verify everything works:
+### Full Deployment (recommended)
 
 ```bash
-npm run build
+npm run deploy:full
 ```
 
-This will:
-- Run TypeScript checks
-- Build the Astro site
-- Output to `dist/` directory
+This runs `scripts/deploy.sh`, which does the following in order:
 
-## Step 7: Deploy
+1. **Builds the site** — runs `npm run build`, outputs to `dist/`
+2. **Uploads `_astro` assets** — uploads all compiled CSS/JS from `dist/_astro/` to `static-robray-net/_astro/` in R2
+3. **Uploads public assets** — uploads `favicon.svg` and other public files to R2
+4. **Uploads images** — uploads everything in `public/images/` to `static-robray-net/images/` in R2
+5. **Deploys the Worker** — runs `npx wrangler deploy`, pushing `dist/_worker.js` to Cloudflare
 
-### Option A: Full Deployment (Recommended)
-
-Use the deployment script which handles everything:
+### Quick Deploy (code only, no image upload)
 
 ```bash
-./scripts/deploy.sh
+npm run deploy
 ```
 
-This script will:
-1. Build the site
-2. Upload assets to R2
-3. Deploy the Worker
+Equivalent to `npm run build && wrangler deploy`. Use this when you have no image changes and want a faster deployment.
 
-### Option B: Manual Deployment
+---
 
-If you prefer manual control:
+## Manual Deployment Steps
+
+If you need fine-grained control:
 
 ```bash
-# 1. Build the site
+# 1. Build
 npm run build
 
-# 2. Upload assets to R2
+# 2. Upload compiled CSS/JS assets
 for file in dist/_astro/*; do
   filename=$(basename "$file")
-  npx wrangler r2 object put static-robray-net/_astro/$filename --file="$file"
+  npx wrangler r2 object put "static-robray-net/_astro/$filename" --file="$file"
 done
 
 # 3. Upload favicon
 npx wrangler r2 object put static-robray-net/favicon.svg --file=dist/favicon.svg
 
-# 4. Deploy to Cloudflare Pages
-npx wrangler pages deploy dist
+# 4. Upload images
+for file in public/images/**/*; do
+  [ -f "$file" ] || continue
+  key="${file#public/}"
+  npx wrangler r2 object put "static-robray-net/$key" --file="$file"
+done
+
+# 5. Deploy the Worker
+npx wrangler deploy
 ```
 
-### First Time Deployment
+---
 
-On your first deployment, Wrangler will ask:
+## GitHub Actions (Automatic Deployment)
 
-```
-? Enter the name of your new project: › 
-```
+Pushes to the `main` branch trigger automatic deployment via `.github/workflows/deploy.yml`.
 
-Enter: `des4800-robray-net-site-production`
+**What the workflow does:**
+1. Installs Node dependencies
+2. Builds the Astro site
+3. Uploads `_astro` CSS/JS to R2
+4. Uploads `favicon.svg` to R2
+5. Deploys the Worker with `wrangler deploy`
 
-```
-? Enter the production branch name: ›
-```
+**Trigger:** Push to `main` (doc-only changes are excluded via path filters)
 
-Enter: `main` (or your default branch)
+**Required secrets** (already configured in the repository):
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
 
-## Step 8: Verify Deployment
+> **Note:** The GitHub Actions workflow does not upload images. Images live in `public/images/`, which is gitignored. Use `npm run deploy:full` or `npm run upload:images` locally to push images to R2. See [IMAGES.md](./IMAGES.md).
 
-After deployment completes:
+---
 
-1. **Check the Worker**:
+## Verify Deployment
+
+After deploying:
+
+1. **Check the Worker status:**
    ```bash
-   npx wrangler pages list
+   npx wrangler whoami
+   npx wrangler r2 object list static-robray-net
    ```
 
-2. **Test the site**:
+2. **Test the live site:**
    - Visit https://des4800.robray.net
    - Open browser DevTools → Network tab
-   - Verify assets load from https://static.robray.net
+   - Confirm assets load from https://static.robray.net
 
-3. **Check asset loading**:
-   - Look for requests to `static.robray.net/_astro/*`
-   - Verify 200 status codes
-
-## Troubleshooting
-
-### Assets Return 404
-
-**Problem**: CSS/JS files not loading from static.robray.net
-
-**Solutions**:
-1. Verify R2 bucket exists: `npx wrangler r2 bucket list`
-2. Check assets were uploaded: 
+3. **Check R2 assets:**
    ```bash
    npx wrangler r2 object list static-robray-net
    ```
-3. Verify custom domain is active in R2 settings
-4. Check bucket has public access enabled
 
-### Worker Not Found
+---
 
-**Problem**: des4800.robray.net returns 404 or "Worker not found"
+## Troubleshooting
 
-**Solutions**:
-1. Verify deployment succeeded: `npx wrangler pages list`
-2. Check DNS record is correct and proxied
-3. Wait a few minutes for DNS propagation
-4. Try accessing via `.pages.dev` URL first
+### Assets return 404 (CSS/JS not loading)
 
-### CORS Errors
+**Cause:** Built assets weren't uploaded to R2.
 
-**Problem**: Browser console shows CORS errors for assets
+```bash
+# Check what's in the bucket
+npx wrangler r2 object list static-robray-net
 
-**Solutions**:
-1. In R2 bucket settings, configure CORS:
-   ```json
-   [
-     {
-       "AllowedOrigins": ["https://des4800.robray.net"],
-       "AllowedMethods": ["GET", "HEAD"],
-       "AllowedHeaders": ["*"],
-       "MaxAgeSeconds": 3600
-     }
-   ]
-   ```
+# Re-upload assets manually
+for file in dist/_astro/*; do
+  npx wrangler r2 object put "static-robray-net/_astro/$(basename $file)" --file="$file"
+done
+```
 
-### Build Fails
+### Site returns "Worker not found" or 404
 
-**Problem**: `npm run build` fails with TypeScript errors
+**Cause:** Worker not deployed, or custom domain not configured.
 
-**Solutions**:
-1. Clear cache: `rm -rf .astro node_modules/.astro`
-2. Reinstall: `npm install`
-3. Check `tsconfig.json` is correct
-4. Verify all `.astro` files have correct syntax
+```bash
+# Check Wrangler auth
+npx wrangler whoami
+
+# Re-deploy
+npx wrangler deploy
+```
+
+Then verify the custom domain is set in **Workers & Pages → des4800-robray-net-site-production → Settings → Domains & Routes**.
+
+### Build fails
+
+```bash
+# Clear caches and reinstall
+rm -rf .astro node_modules/.astro
+npm install
+
+# Check for Astro/TypeScript errors
+npm run astro check
+
+# Rebuild
+npm run build
+```
+
+### Wrangler not authenticated
+
+```bash
+npx wrangler login
+# Then retry deployment
+npm run deploy:full
+```
+
+### CORS errors for assets
+
+Configure CORS on the R2 bucket in Cloudflare Dashboard → R2 → `static-robray-net` → Settings → CORS Policy:
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://des4800.robray.net"],
+    "AllowedMethods": ["GET", "HEAD"],
+    "AllowedHeaders": ["*"],
+    "MaxAgeSeconds": 3600
+  }
+]
+```
+
+---
 
 ## Production Checklist
 
-Before going live, verify:
-
-- [ ] R2 bucket created and accessible
-- [ ] Custom domain `static.robray.net` configured on R2
-- [ ] DNS records for `des4800.robray.net` configured
-- [ ] Assets uploaded to R2
-- [ ] Worker deployed successfully
-- [ ] SSL certificates active (automatic with Cloudflare)
-- [ ] Site accessible at https://des4800.robray.net
-- [ ] Assets loading from https://static.robray.net
+- [ ] Wrangler authenticated (`npx wrangler login`)
+- [ ] R2 bucket `static-robray-net` exists
+- [ ] Custom domain `static.robray.net` configured on R2 bucket
+- [ ] Custom domain `des4800.robray.net` configured on Worker
+- [ ] `npm run deploy:full` completed successfully
+- [ ] Site loads at https://des4800.robray.net
+- [ ] Assets (CSS/JS) load from https://static.robray.net
 - [ ] No console errors in browser DevTools
 
-## Continuous Deployment
-
-For automated deployments, consider:
-
-1. **GitHub Actions**: Set up a workflow to deploy on push
-2. **Cloudflare Pages Git Integration**: Connect your repository
-3. **Wrangler Actions**: Use official Cloudflare GitHub Action
-
-Example GitHub Actions workflow:
-
-```yaml
-name: Deploy to Cloudflare
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: npm install
-      - run: npm run build
-      - name: Upload to R2
-        run: ./scripts/deploy.sh
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-```
+---
 
 ## Useful Commands
 
 ```bash
-# Check deployment status
-npx wrangler pages list
+# Auth
+npx wrangler login
+npx wrangler whoami
 
-# View logs
-npx wrangler pages logs des4800-robray-net-site-production
-
-# List R2 objects
+# R2
+npx wrangler r2 bucket list
 npx wrangler r2 object list static-robray-net
+npx wrangler r2 object list static-robray-net --prefix=images/
+npx wrangler r2 object delete static-robray-net/images/old-file.jpg
 
-# Delete an R2 object
-npx wrangler r2 object delete static-robray-net/_astro/filename.js
-
-# Deploy specific directory
-npx wrangler pages deploy dist --project-name=des4800-robray-net-site-production
+# Worker logs (real-time)
+npx wrangler tail des4800-robray-net-site-production
 ```
 
-## Cost Estimation
+---
 
-Cloudflare pricing (as of 2024):
+## Related Documentation
 
-- **Workers**: Free tier includes 100,000 requests/day
-- **R2**: 
-  - Free tier: 10 GB storage, 1M Class A operations/month, 10M Class B operations/month
-  - After free tier: $0.015/GB/month, minimal operation costs
-- **Pages**: Free (included with Workers)
-
-For a typical small site:
-- **Expected cost**: $0/month (within free tier)
-
-## Support
-
-For issues:
-- Astro: https://docs.astro.build
-- Cloudflare Workers: https://discord.gg/cloudflaredev
-- Wrangler: https://github.com/cloudflare/workers-sdk
-
+- [IMAGES.md](./IMAGES.md) — Image management and upload guide
+- [CHEATSHEET.md](./CHEATSHEET.md) — Quick command reference
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — How the system works

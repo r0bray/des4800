@@ -1,7 +1,7 @@
 name = "des4800-robray-net-site-production"
 compatibility_date = "2025-05-21"
 compatibility_flags = ["nodejs_compat"]
-main = "@astrojs/cloudflare/entrypoints/server"
+main = "dist/_worker.js"
 
 [assets]
 directory = "./dist"
