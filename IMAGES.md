@@ -1,175 +1,99 @@
-# Image Upload Guide
+# Image Management Guide
 
-Complete guide for managing static images with R2 bucket storage.
+How to add, upload, and use images in the DES4800 site.
 
 ## Overview
 
-Static images are stored separately in the R2 bucket and served via CDN at `https://static.robray.net/images/`. This approach:
+Images are managed with a simple local-to-CDN workflow:
 
-- ✅ Separates content from code
-- ✅ Enables instant image updates without redeployment
-- ✅ Provides global CDN distribution
-- ✅ Reduces deployment bundle size
-- ✅ No egress fees
+1. **Store locally** in `public/images/` (local staging area, gitignored)
+2. **Upload to R2** bucket `static-robray-net`
+3. **Serve from CDN** at `https://static.robray.net/images/...`
+
+This keeps image files out of git, reduces repo size, and gives you global CDN delivery with no egress fees.
+
+> ⚠️ `public/images/` is gitignored. **Do not commit image files.** Only `README.md` and `.gitkeep` are tracked in that directory.
+
+---
 
 ## Quick Start
 
-### 1. Add Images to Directory
+### 1. Add your image
 
-Place your images in `public/images/`:
+Copy or move the image into `public/images/` (use subdirectories to stay organized):
 
 ```bash
-# Example structure
-public/images/
-├── logo.png
-├── hero/
-│   └── banner.jpg
-└── products/
-    ├── item-1.jpg
-    └── item-2.jpg
+cp ~/Downloads/hero.jpg public/images/heroes/
 ```
 
 ### 2. Upload to R2
 
-**Option A: Upload all images**
+**If you're deploying anyway**, just run the full deploy — images are included automatically:
+
 ```bash
-npm run upload:images
-# or
-./scripts/upload-images.sh
+npm run deploy:full
 ```
 
-**Option B: Upload single image**
-```bash
-npm run upload:image public/images/logo.png
-# or
-./scripts/upload-single-image.sh public/images/logo.png
-```
-
-**Option C: Watch and auto-upload**
-```bash
-npm run watch:images
-# or
-./scripts/watch-images.sh
-```
-
-This starts a file watcher that automatically uploads images when you add or modify them.
-
-### 3. Use in Astro
-
-```astro
----
-const CDN_URL = 'https://static.robray.net';
----
-
-<img src={`${CDN_URL}/images/logo.png`} alt="Logo" />
-<img src={`${CDN_URL}/images/hero/banner.jpg`} alt="Hero" />
-```
-
-## Upload Methods
-
-### Method 1: Manual Upload (Immediate)
-
-Best for: Quick uploads, one-time images, immediate updates
+**If you only need to upload images** (no code deployment):
 
 ```bash
 # Upload all images
 npm run upload:images
 
-# Upload specific image
-npm run upload:image public/images/new-logo.png
-
-# Upload from outside project (downloads, etc)
-./scripts/upload-single-image.sh ~/Downloads/photo.jpg
+# Upload a single image
+npm run upload:image public/images/heroes/hero.jpg
 ```
 
-### Method 2: Watch Mode (Development)
+### 3. Use in Astro
 
-Best for: Active development, frequent image changes
+Reference the CDN URL directly:
+
+```astro
+<img src="https://static.robray.net/images/heroes/hero.jpg" alt="Hero" />
+```
+
+---
+
+## Upload Options
+
+### `npm run deploy:full` (recommended)
+
+The full deployment script automatically uploads everything in `public/images/` to R2 as part of the deployment. You don't need a separate image upload step if you're deploying anyway.
+
+### `npm run upload:images` — Upload all images
+
+Uploads the entire contents of `public/images/` to R2:
+
+```bash
+npm run upload:images
+```
+
+Use this when you've added or updated multiple images without deploying code.
+
+### `npm run upload:image` — Upload a single image
+
+```bash
+npm run upload:image public/images/logos/logo.png
+npm run upload:image public/images/heroes/banner.jpg
+```
+
+Fastest option when you've changed just one file.
+
+### `npm run watch:images` — Watch mode (development)
 
 ```bash
 npm run watch:images
 ```
 
-Leave this running in a terminal. When you add/modify images in `public/images/`, they're automatically uploaded to R2.
+Runs a file watcher on `public/images/`. Any file you add or modify is automatically uploaded to R2. Great for active design work.
 
-**Requirements**: Requires `fswatch` (installs automatically via Homebrew on macOS)
+**Requirements:** Requires `fswatch` (auto-installed via Homebrew on macOS if missing).
 
-### Method 3: Git Push (Automatic)
-
-Best for: Production workflow, team collaboration
-
-1. Add images to `public/images/`
-2. Commit and push to `main` branch
-3. GitHub Actions automatically uploads them
-
-The workflow triggers only when files in `public/images/` change.
-
-## Workflow Examples
-
-### Adding a New Image
-
-```bash
-# 1. Copy image to directory
-cp ~/Downloads/hero.jpg public/images/hero/
-
-# 2. Upload immediately
-npm run upload:image public/images/hero/hero.jpg
-
-# 3. Use in your Astro page
-# In src/pages/index.astro:
-<img src="https://static.robray.net/images/hero/hero.jpg" alt="Hero" />
-
-# 4. Commit (optional - for version control)
-git add public/images/hero/hero.jpg
-git commit -m "Add hero image"
-git push
-```
-
-### Batch Upload During Development
-
-```bash
-# Terminal 1: Run dev server
-npm run dev
-
-# Terminal 2: Watch for image changes
-npm run watch:images
-
-# Terminal 3: Work on your images
-# Add/edit images in public/images/
-# They upload automatically!
-```
-
-### Updating an Existing Image
-
-**Option A: Replace with same filename** (recommended)
-```bash
-# Just upload the new version
-npm run upload:image public/images/logo.png
-
-# Note: May be cached - consider versioning for immediate updates
-```
-
-**Option B: Version the filename**
-```bash
-# Upload with new version
-cp ~/Downloads/logo-new.png public/images/logo-v2.png
-npm run upload:image public/images/logo-v2.png
-
-# Update code to use logo-v2.png
-```
-
-**Option C: Delete then upload**
-```bash
-# Delete old version
-npx wrangler r2 object delete static-robray-net/images/logo.png
-
-# Upload new version
-npm run upload:image public/images/logo.png
-```
+---
 
 ## Using Images in Astro
 
-### Basic Usage
+### Direct URL
 
 ```astro
 <img 
@@ -180,28 +104,24 @@ npm run upload:image public/images/logo.png
 />
 ```
 
-### With Constants
+### With a constant
 
 ```astro
 ---
-const STATIC_CDN = 'https://static.robray.net';
-const images = {
-  logo: `${STATIC_CDN}/images/logo.png`,
-  hero: `${STATIC_CDN}/images/hero/banner.jpg`,
-};
+const CDN = 'https://static.robray.net';
 ---
 
-<img src={images.logo} alt="Logo" />
-<img src={images.hero} alt="Hero Banner" />
+<img src={`${CDN}/images/logo.png`} alt="Logo" />
+<img src={`${CDN}/images/heroes/banner.jpg`} alt="Hero Banner" />
 ```
 
-### Create a Helper Component
+### CDNImage helper component
 
 ```astro
 ---
 // src/components/CDNImage.astro
 interface Props {
-  src: string; // path relative to /images/
+  src: string;   // path relative to /images/
   alt: string;
   width?: number;
   height?: number;
@@ -213,13 +133,7 @@ const CDN_URL = 'https://static.robray.net';
 const fullSrc = `${CDN_URL}/images/${src}`;
 ---
 
-<img 
-  src={fullSrc} 
-  alt={alt} 
-  width={width} 
-  height={height} 
-  class={className}
-/>
+<img src={fullSrc} alt={alt} width={width} height={height} class={className} />
 ```
 
 Usage:
@@ -228,11 +142,11 @@ Usage:
 import CDNImage from '../components/CDNImage.astro';
 ---
 
-<CDNImage src="logo.png" alt="Logo" width={200} />
-<CDNImage src="hero/banner.jpg" alt="Hero" />
+<CDNImage src="logos/logo.png" alt="Logo" width={200} />
+<CDNImage src="heroes/banner.jpg" alt="Hero" />
 ```
 
-### Responsive Images
+### Responsive images
 
 ```astro
 ---
@@ -240,237 +154,178 @@ const CDN = 'https://static.robray.net/images';
 ---
 
 <picture>
-  <source 
-    srcset={`${CDN}/hero/banner-mobile.jpg`} 
-    media="(max-width: 768px)"
-  />
-  <source 
-    srcset={`${CDN}/hero/banner-desktop.jpg`} 
-    media="(min-width: 769px)"
-  />
-  <img 
-    src={`${CDN}/hero/banner-desktop.jpg`} 
-    alt="Hero Banner"
-  />
+  <source srcset={`${CDN}/heroes/banner-mobile.jpg`} media="(max-width: 768px)" />
+  <source srcset={`${CDN}/heroes/banner-desktop.jpg`} media="(min-width: 769px)" />
+  <img src={`${CDN}/heroes/banner-desktop.jpg`} alt="Hero Banner" />
 </picture>
 ```
 
-## GitHub Actions Integration
-
-### Automatic Image Upload
-
-When you push changes to `main` that include `public/images/**`, the `upload-images.yml` workflow runs:
-
-```yaml
-# Triggers on:
-- Push to main branch
-- Changes in public/images/**
-- Manual workflow dispatch
-```
-
-### Manual Trigger
-
-You can also manually trigger image uploads from GitHub:
-
-1. Go to **Actions** tab
-2. Select "Upload Images to R2"
-3. Click "Run workflow"
-4. Select branch
-5. Click "Run workflow"
-
-## Advanced Usage
-
-### List Uploaded Images
-
-```bash
-npx wrangler r2 object list static-robray-net --prefix=images/
-```
-
-### Download an Image
-
-```bash
-npx wrangler r2 object get static-robray-net/images/logo.png --file=logo.png
-```
-
-### Delete an Image
-
-```bash
-npx wrangler r2 object delete static-robray-net/images/old-image.jpg
-```
-
-### Check Image URL
-
-```bash
-curl -I https://static.robray.net/images/logo.png
-```
-
-Should return `200 OK` if uploaded successfully.
+---
 
 ## Best Practices
 
-### 1. Optimize Before Upload
+### Optimize before uploading
 
-Always optimize images before uploading:
+Always compress images before uploading to reduce CDN storage and improve load times:
 
-**Tools:**
-- [Squoosh](https://squoosh.app/) - Web-based
-- [ImageOptim](https://imageoptim.com/) - macOS app
-- [TinyPNG](https://tinypng.com/) - Web-based
-- CLI: `imageoptim`, `jpegoptim`, `optipng`
+- [Squoosh](https://squoosh.app/) — browser-based, excellent quality control
+- [ImageOptim](https://imageoptim.com/) — macOS app, drag and drop
+- [TinyPNG](https://tinypng.com/) — web-based for PNG/JPG
 
-**Example with CLI:**
 ```bash
-# Install
+# CLI tools
 brew install jpegoptim optipng
 
-# Optimize JPEGs
-jpegoptim --size=100k public/images/*.jpg
-
-# Optimize PNGs
+jpegoptim --size=200k public/images/*.jpg
 optipng -o7 public/images/*.png
-
-# Then upload
-npm run upload:images
 ```
 
-### 2. Use Descriptive Filenames
+### Use descriptive filenames
 
-❌ Bad:
-```
-img1.jpg, photo.png, pic.jpg
-```
+❌ Avoid: `img1.jpg`, `photo.png`, `pic.jpg`
 
-✅ Good:
-```
-hero-banner-2024.jpg, product-thumbnail-blue.png, team-photo-office.jpg
-```
+✅ Prefer: `hero-homepage.jpg`, `team-photo-2024.jpg`, `product-blue-thumbnail.png`
 
-### 3. Organize with Subdirectories
+### Organize with subdirectories
 
 ```
 public/images/
 ├── logos/
-│   ├── logo-white.svg
+│   ├── logo-light.svg
 │   └── logo-dark.svg
 ├── heroes/
 │   ├── home-hero.jpg
 │   └── about-hero.jpg
-├── products/
+├── projects/
 │   └── thumbnails/
 └── team/
 ```
 
-### 4. Use Appropriate Formats
+Paths are preserved when uploaded: `public/images/logos/logo-light.svg` → `https://static.robray.net/images/logos/logo-light.svg`
 
-- **JPG**: Photos, complex images (smaller file size)
-- **PNG**: Graphics with transparency, simple graphics
-- **SVG**: Logos, icons, simple graphics (scales perfectly)
-- **WebP**: Modern format (smaller than JPG, supports transparency)
+### Choose the right format
 
-### 5. Consider Versioning
+| Format | Best for |
+|--------|----------|
+| **JPG** | Photos, complex imagery |
+| **PNG** | Graphics with transparency |
+| **SVG** | Logos, icons (scales perfectly) |
+| **WebP** | Modern format — smaller than JPG, supports transparency |
 
-For frequently updated images:
-```
-logo-v1.png
-logo-v2.png
-hero-2024-01.jpg
-hero-2024-02.jpg
-```
+### Always specify width and height
 
-Or use timestamps:
-```
-logo-20241010.png
-```
-
-### 6. Set Up Image Dimensions
-
-Always specify width/height to prevent layout shift:
+Prevents layout shift (CLS):
 
 ```astro
-<img 
-  src="https://static.robray.net/images/logo.png"
-  alt="Logo"
-  width="200"
-  height="50"
-/>
+<img src="..." alt="..." width="800" height="450" />
 ```
 
-## Caching Behavior
+### Version frequently-updated images
 
-Images on R2 are cached by Cloudflare's CDN:
+For images that change often, version the filename rather than overwriting:
 
-- **First request**: Fetched from R2 origin (~50-100ms)
-- **Subsequent requests**: Served from edge cache (~5-20ms)
-- **Cache duration**: Controlled by Cloudflare (typically 1-7 days)
+```
+logo-v1.png → logo-v2.png
+hero-2024-spring.jpg → hero-2024-fall.jpg
+```
 
-### Force Cache Refresh
+This avoids CDN cache issues.
 
-If you update an image and need immediate updates:
+---
 
-1. **Version the filename** (recommended)
-2. **Purge cache via Cloudflare Dashboard**
-3. **Wait for TTL to expire** (automatic)
+## Advanced R2 Operations
+
+```bash
+# List all uploaded images
+npx wrangler r2 object list static-robray-net --prefix=images/
+
+# Download an image from R2
+npx wrangler r2 object get static-robray-net/images/logo.png --file=logo-download.png
+
+# Delete an image from R2
+npx wrangler r2 object delete static-robray-net/images/old-image.jpg
+
+# Check if an image is live
+curl -I https://static.robray.net/images/logo.png
+# Should return: HTTP/2 200
+```
+
+---
+
+## Caching
+
+Images served from R2 via `static.robray.net` are cached at Cloudflare's edge:
+
+- **First request**: ~50–100ms (fetched from R2)
+- **Cached requests**: ~5–20ms (served from edge)
+
+To force a cache refresh after updating an image:
+1. **Rename the file** (e.g., `logo-v2.png`) — cleanest approach
+2. **Purge via Cloudflare Dashboard** → Caching → Cache Purge → Custom Purge
+3. **Wait for TTL** — cache expires automatically
+
+---
 
 ## Troubleshooting
 
-### Images Not Uploading
+### Images not uploading
 
 ```bash
-# Check authentication
+# Confirm Wrangler is authenticated
 npx wrangler whoami
 
-# Check bucket exists
+# Confirm the R2 bucket exists
 npx wrangler r2 bucket list
 
-# Try manual upload with verbose output
+# Try a manual upload with verbose output
 npx wrangler r2 object put static-robray-net/images/test.jpg --file=public/images/test.jpg
 ```
 
-### 404 on Image URL
+### 404 on image URL
 
-1. Verify upload succeeded:
-   ```bash
-   npx wrangler r2 object list static-robray-net --prefix=images/
-   ```
+```bash
+# Check if the image was actually uploaded
+npx wrangler r2 object list static-robray-net --prefix=images/
 
-2. Check custom domain is configured:
-   - Cloudflare Dashboard → R2 → static-robray-net → Settings
-   - Verify `static.robray.net` is listed
+# Verify the custom domain is configured
+# Cloudflare Dashboard → R2 → static-robray-net → Settings → Custom Domains
+# → static.robray.net should be listed and active
+```
 
-3. Test direct R2 URL vs CDN URL
-
-### Watch Script Not Working
+### Watch script not working
 
 ```bash
 # Install fswatch
 brew install fswatch
 
-# Test fswatch
+# Test fswatch directly
 fswatch -1 public/images/
 
-# Run watch script with debug
+# Debug the watch script
 bash -x ./scripts/watch-images.sh
 ```
+
+### Image shows stale version
+
+This is a CDN cache issue. Either:
+- Upload with a new versioned filename (`logo-v2.png`)
+- Purge the cache: Cloudflare Dashboard → Caching → Cache Purge → enter the image URL
+
+---
 
 ## npm Scripts Reference
 
 ```bash
-# Upload all images
-npm run upload:images
-
-# Upload single image
-npm run upload:image <path>
-
-# Watch for changes
-npm run watch:images
-
-# Full deployment (code + images)
-npm run deploy:full
+npm run upload:images          # Upload all images in public/images/
+npm run upload:image <path>    # Upload a single image
+npm run watch:images           # Watch public/images/ and auto-upload on change
+npm run deploy:full            # Full deploy: build + upload assets + upload images + deploy Worker
 ```
+
+---
 
 ## Related Documentation
 
-- [DEPLOYMENT.md](./DEPLOYMENT.md) - Full deployment guide
-- [ARCHITECTURE.md](./ARCHITECTURE.md) - System architecture
-- [public/images/README.md](./public/images/README.md) - Directory-specific guide
-
+- [DEPLOYMENT.md](./DEPLOYMENT.md) — Full deployment guide
+- [CHEATSHEET.md](./CHEATSHEET.md) — Quick command reference
+- [public/images/README.md](./public/images/README.md) — Directory-specific notes

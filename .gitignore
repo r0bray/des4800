@@ -25,3 +25,9 @@ pnpm-debug.log*
 .wrangler/
 .dev.vars
 
+# local source images (uploaded to R2, not committed)
+public/images/**
+!public/images/
+!public/images/.gitkeep
+!public/images/README.md
+

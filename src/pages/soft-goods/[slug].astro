@@ -1,0 +1,64 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ThreadContent from '../../components/soft-goods/ThreadContent.astro';
+import ZippersContent from '../../components/soft-goods/ZippersContent.astro';
+import {
+  getSoftGoodsPages,
+  isSoftGoodsVisible,
+  type SoftGoodsPage,
+} from '../../data/soft-goods';
+import type { GetStaticPaths } from 'astro';
+
+export const prerender = true;
+
+export const getStaticPaths = (() => {
+  // Drafts are included only when import.meta.env.DEV is true (see isSoftGoodsVisible)
+  return getSoftGoodsPages().map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: SoftGoodsPage;
+}
+
+const { page } = Astro.props as Props;
+
+// Safety net for unexpected requests (e.g. stale paths)
+if (!isSoftGoodsVisible(page)) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const customContent = {
+  thread: ThreadContent,
+  zippers: ZippersContent,
+} as const;
+
+const CustomContent = customContent[page.slug as keyof typeof customContent];
+---
+
+<Layout
+  title={`${page.title} - Soft Goods - DES4800`}
+  description={page.description}
+>
+  <article class="post-detail">
+    <header class="post-header">
+      <a href="/soft-goods/" class="back-link">← Back to Soft Goods</a>
+      <div class="post-header-title-row">
+        <h1>{page.title}</h1>
+        {page.status === 'draft' && import.meta.env.DEV && (
+          <span class="status-badge status-badge--draft">Draft</span>
+        )}
+      </div>
+    </header>
+
+    {CustomContent ? (
+      <CustomContent />
+    ) : (
+      <div class="post-content">
+        <p>{page.body}</p>
+      </div>
+    )}
+  </article>
+</Layout>

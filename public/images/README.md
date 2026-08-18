@@ -1,6 +1,6 @@
 # Static Images Directory
 
-This directory contains static images that are uploaded to the R2 bucket at `static-robray-net`.
+This directory is a local staging area for static images that are uploaded to the R2 bucket at `static-robray-net`.
 
 ## Quick Upload
 
@@ -15,6 +15,7 @@ Upload a single image:
 ```
 
 Watch for changes and auto-upload:
+
 ```bash
 ./scripts/watch-images.sh
 ```
@@ -50,9 +51,9 @@ public/images/
     └── product-1.jpg     → https://static.robray.net/images/thumbnails/product-1.jpg
 ```
 
-## Automatic Upload (GitHub Actions)
+## Git workflow note
 
-When you push changes to the `main` branch that include files in `public/images/`, GitHub Actions will automatically upload them to R2.
+Files in `public/images/` are intended to be uploaded with the local scripts in this repo rather than committed as normal source assets. After adding or updating files here, run `npm run upload:images` or `npm run upload:image ...`.
 
 ## Best Practices
 
@@ -75,4 +76,3 @@ To "update" an image:
 1. Delete the old version: `npx wrangler r2 object delete static-robray-net/images/old.jpg`
 2. Upload the new version: `./scripts/upload-single-image.sh public/images/old.jpg`
 3. Or use a versioned filename: `logo-v2.png`
-

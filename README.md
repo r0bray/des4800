@@ -1,6 +1,6 @@
 # DES4800 - Cloudflare Workers + R2
 
-A modern website built with Astro 5.x and deployed on Cloudflare Workers with assets hosted on R2.
+A modern website built with Astro 7.x and deployed on Cloudflare Workers with assets hosted on R2.
 
 ## 🌐 Site Information
 
@@ -43,10 +43,10 @@ This builds the site for production in the `dist/` directory.
 
 ### Working with Images
 
-Place static images in `public/images/` and upload to R2:
+Place local source images in `public/images/`. This directory is gitignored (only `README.md` and `.gitkeep` are tracked), so images live locally and are uploaded to R2 rather than committed to the repo.
 
 ```bash
-# Upload all images immediately
+# Upload all images
 npm run upload:images
 
 # Upload a single image
@@ -56,7 +56,9 @@ npm run upload:image public/images/logo.png
 npm run watch:images
 ```
 
-See [IMAGES.md](./IMAGES.md) for complete image management guide.
+Use the uploaded CDN paths in Astro, for example `https://static.robray.net/images/...`.
+
+See [IMAGES.md](./IMAGES.md) for the complete image management guide.
 
 ## 📦 Deployment
 
@@ -69,15 +71,16 @@ See [IMAGES.md](./IMAGES.md) for complete image management guide.
    ```
 
 2. **DNS Configuration**:
-   - Add CNAME record for `des4800.robray.net` pointing to Cloudflare Workers
-   - Add CNAME record for `static.robray.net` pointing to R2 bucket
+   - Connect `des4800.robray.net` to the Worker via Cloudflare Worker custom domain
+   - Add custom domain `static.robray.net` to the R2 bucket
 
 ### Deploy to Cloudflare Workers
 
 ```bash
-npm run build
-wrangler pages deploy dist
+npm run deploy
 ```
+
+This runs `npm run build && wrangler deploy` — builds the site and deploys the Worker directly.
 
 ### Automated Deployment
 
@@ -89,15 +92,16 @@ npm run deploy:full
 
 This runs `./scripts/deploy.sh` which:
 1. Builds the site
-2. Uploads assets to R2 (with `--remote` flag)
-3. Deploys Worker to Cloudflare Pages
+2. Uploads compiled `_astro` CSS/JS to R2
+3. Uploads public assets (favicon, etc.) to R2
+4. Uploads all images from `public/images/` to R2
+5. Deploys the Worker with `wrangler deploy`
+
+Image uploads are included — no need to run them separately.
 
 **Option B: GitHub Actions (automatic)**
 
-Push to `main` branch and GitHub Actions will:
-1. Build the site
-2. Upload compiled assets to R2
-3. Deploy the Worker
+Push to `main` branch and GitHub Actions will automatically build and deploy the Worker.
 
 See [GitHub Actions Setup](#github-actions-setup) below.
 
@@ -105,10 +109,10 @@ See [GitHub Actions Setup](#github-actions-setup) below.
 
 ```bash
 npm run build
-npx wrangler pages deploy dist --project-name=des4800-robray-net-site-production
+npx wrangler deploy
 ```
 
-Then upload assets:
+Then upload assets manually:
 ```bash
 npx wrangler r2 object put static-robray-net/_astro/[filename] --file=dist/_astro/[filename] --remote
 ```
@@ -118,7 +122,7 @@ npx wrangler r2 object put static-robray-net/_astro/[filename] --file=dist/_astr
 ### Asset Handling
 
 - Static assets (JS, CSS, images) are served from `static.robray.net` (R2)
-- HTML pages are server-rendered by Cloudflare Workers
+- HTML pages are server-rendered by the Cloudflare Worker
 - This provides optimal performance with edge-cached assets and dynamic SSR
 
 ### Configuration Files
@@ -129,13 +133,13 @@ npx wrangler r2 object put static-robray-net/_astro/[filename] --file=dist/_astr
 
 ## 🛠️ Technology Stack
 
-- **Framework**: Astro 5.14.3
-- **Adapter**: @astrojs/cloudflare 12.6.10
-- **Hosting**: Cloudflare Workers/Pages (SSR)
+- **Framework**: Astro 7.x
+- **Adapter**: @astrojs/cloudflare
+- **Hosting**: Cloudflare Workers (SSR)
 - **Assets**: Cloudflare R2
 - **CDN**: Cloudflare CDN
-- **Language**: TypeScript 5.6.3
-- **Deployment**: Wrangler 4.42.2
+- **Language**: TypeScript
+- **Deployment**: Wrangler
 
 ## 📝 Notes
 
@@ -143,31 +147,29 @@ npx wrangler r2 object put static-robray-net/_astro/[filename] --file=dist/_astr
 
 **Code Changes (Automatic via GitHub Actions):**
 - Push code to `main` branch
-- GitHub Actions builds and deploys to Workers
+- GitHub Actions builds and deploys the Worker
 - Compiled assets uploaded to R2
 
-**Image Uploads (Separate):**
-- Add images to `public/images/`
-- Upload via `npm run upload:images`
-- Or auto-upload via GitHub Actions when pushed
+**Image Uploads:**
+- Add images to `public/images/` (gitignored)
+- Included automatically when running `npm run deploy:full`
+- Or upload independently via `npm run upload:images`
 - Or use watch mode: `npm run watch:images`
 
 ### R2 Bucket Configuration
 
-The R2 bucket `static-robray-net` needs to be configured with:
+The R2 bucket `static-robray-net` is configured with:
 - Public access for assets
 - Custom domain `static.robray.net` linked to the bucket
-- CORS settings if needed for cross-origin requests
+- CORS settings as needed for cross-origin requests
 
 ### DNS Setup
 
 Configured in Cloudflare DNS for `robray.net`:
 
 1. **Main site** (`des4800.robray.net`):
-   - Type: CNAME
-   - Name: des4800
-   - Target: des4800-robray-net-site-production.pages.dev
-   - Proxy: Enabled (orange cloud)
+   - Connected via Cloudflare Worker custom domain
+   - Worker: `des4800-robray-net-site-production`
    - Status: ✅ Active
 
 2. **Static assets** (`static.robray.net`):
@@ -176,13 +178,13 @@ Configured in Cloudflare DNS for `robray.net`:
    - SSL certificate auto-issued
    - Status: ✅ Active
 
-### Cloudflare Pages vs Workers
+### Cloudflare Workers
 
-This setup uses Cloudflare Pages (which runs on Workers) for deployment. The `wrangler pages deploy` command handles the Worker deployment automatically.
+This setup deploys directly to Cloudflare Workers using `wrangler deploy`. The Worker serves HTML via SSR and the R2 bucket serves static assets.
 
 ## 🤖 GitHub Actions Setup
 
-To enable automatic deployments on push to `main`:
+Automatic deployments on push to `main` are handled by `.github/workflows/deploy.yml`.
 
 ### 1. Get Cloudflare Credentials
 
@@ -234,16 +236,14 @@ GitHub Actions will automatically build and deploy!
 
 ### SSH Authentication with 1Password
 
-This project uses 1Password SSH agent with the "Github CSUSB SSH Key":
+This project uses the 1Password SSH agent (`SSH_AUTH_SOCK` set to the 1Password socket in `~/.zshrc`) with the "Github CSUSB SSH Key". The SSH config lives in `~/dotfiles/ssh_config`, symlinked to `~/.ssh/config`.
 
 ```bash
 # Test SSH connection
-ssh -T git@r0braygithub
+ssh -T git@github.com
 
 # Should respond: "Hi r0bray! You've successfully authenticated..."
 ```
-
-Git remote uses the `r0braygithub` host alias defined in `~/dotfiles/ssh_config`.
 
 ## 📚 Documentation
 
@@ -268,7 +268,7 @@ Git remote uses the `r0braygithub` host alias defined in `~/dotfiles/ssh_config`
 - ✅ Assets serving from R2 at https://static.robray.net
 - ✅ GitHub repository configured with SSH authentication
 - ✅ Local development environment working
-- ⏳ GitHub Actions secrets needed for auto-deployment
+- ✅ GitHub Actions configured for auto-deployment on push to `main`
 
 ---
 

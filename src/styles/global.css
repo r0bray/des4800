@@ -479,6 +479,61 @@ footer {
   max-width: 48rem;
 }
 
+/* Content sections (hub pages with multiple card groups) */
+.content-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.content-section-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.content-section-header h2 {
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-2xl);
+}
+
+.content-section-header p {
+  margin: 0;
+  color: var(--gray);
+  max-width: 40rem;
+}
+
+.content-section-empty {
+  color: var(--gray);
+  font-size: var(--font-size-sm);
+}
+
+.post-header-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.post-header-title-row h1 {
+  margin-bottom: 0;
+}
+
+.status-badge {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  line-height: 1.2;
+}
+
+.status-badge--draft {
+  background: #f3f0e6;
+  color: #6b5d3a;
+  border: 1px solid #d9cfb5;
+}
+
 /* Posts Grid */
 .posts-grid {
   display: grid;
