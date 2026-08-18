@@ -46,6 +46,12 @@ This builds the site for production in the `dist/` directory.
 Place local source images in `public/images/`. This directory is gitignored (only `README.md` and `.gitkeep` are tracked), so images live locally and are uploaded to R2 rather than committed to the repo.
 
 ```bash
+# Pull the shared image set down from R2
+npm run sync:images
+
+# Pull and delete local image files that no longer exist in R2
+npm run sync:images:delete
+
 # Upload all images
 npm run upload:images
 
@@ -55,6 +61,8 @@ npm run upload:image public/images/logo.png
 # Watch and auto-upload on changes
 npm run watch:images
 ```
+
+This gives collaborators a simple way to repopulate `public/images/` after cloning the repo, as long as they have Wrangler access to the R2 bucket. The sync uses the tracked file `public/images-manifest.json` to know which image keys exist in R2.
 
 Use the uploaded CDN paths in Astro, for example `https://static.robray.net/images/...`.
 

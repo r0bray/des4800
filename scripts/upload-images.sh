@@ -4,6 +4,9 @@ set -e
 BUCKET_NAME="static-robray-net"
 IMAGES_DIR="public/images"
 
+echo "📝 Updating image manifest..."
+node ./scripts/update-images-manifest.mjs
+
 echo "📸 Uploading images to R2 bucket: $BUCKET_NAME"
 echo ""
 
@@ -23,14 +26,14 @@ if [ -z "$(ls -A $IMAGES_DIR)" ]; then
   exit 0
 fi
 
-# Count total files
-total_files=$(find "$IMAGES_DIR" -type f | wc -l | xargs)
+# Count total files (exclude local/system junk files)
+total_files=$(find "$IMAGES_DIR" -type f ! -name '.DS_Store' ! -name 'Thumbs.db' ! -name '.gitkeep' ! -name 'README.md' | wc -l | xargs)
 echo "Found $total_files file(s) to upload"
 echo ""
 
 # Upload all images recursively
 count=0
-find "$IMAGES_DIR" -type f | while read file; do
+find "$IMAGES_DIR" -type f ! -name '.DS_Store' ! -name 'Thumbs.db' ! -name '.gitkeep' ! -name 'README.md' | while read file; do
   # Get relative path from images directory
   relative_path="${file#$IMAGES_DIR/}"
   filename=$(basename "$file")

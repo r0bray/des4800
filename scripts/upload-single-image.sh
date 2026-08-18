@@ -21,6 +21,13 @@ if [ ! -f "$FILE_PATH" ]; then
   exit 1
 fi
 
+filename=$(basename "$FILE_PATH")
+if [ "$filename" = ".DS_Store" ] || [ "$filename" = "Thumbs.db" ]; then
+  echo "⚠️  Skipping local/system junk file: $FILE_PATH"
+  exit 0
+fi
+
+
 # Get filename
 filename=$(basename "$FILE_PATH")
 
@@ -32,6 +39,12 @@ if [[ "$FILE_PATH" == public/images/* ]]; then
 else
   # External file, upload to root of images
   r2_path="images/$filename"
+fi
+
+if [[ "$FILE_PATH" == public/images/* ]]; then
+  echo "📝 Updating image manifest..."
+  node ./scripts/update-images-manifest.mjs
+  echo ""
 fi
 
 echo "📸 Uploading image to R2..."

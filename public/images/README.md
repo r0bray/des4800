@@ -2,7 +2,19 @@
 
 This directory is a local staging area for static images that are uploaded to the R2 bucket at `static-robray-net`.
 
-## Quick Upload
+## Quick Sync and Upload
+
+Pull the shared image set down from R2 after cloning:
+```bash
+npm run sync:images
+```
+
+This uses the tracked file `public/images-manifest.json` to know which image paths to download.
+
+Mirror R2 exactly and remove extra local image files:
+```bash
+npm run sync:images:delete
+```
 
 Upload all images in this directory:
 ```bash
@@ -53,7 +65,7 @@ public/images/
 
 ## Git workflow note
 
-Files in `public/images/` are intended to be uploaded with the local scripts in this repo rather than committed as normal source assets. After adding or updating files here, run `npm run upload:images` or `npm run upload:image ...`.
+Files in `public/images/` are intended to be uploaded with the local scripts in this repo rather than committed as normal source assets. After cloning, run `npm run sync:images` to restore the shared image set locally. After adding, renaming, or removing images here, run `npm run update:images-manifest` and commit `public/images-manifest.json`, then run `npm run upload:images` or `npm run upload:image ...`.
 
 ## Best Practices
 
