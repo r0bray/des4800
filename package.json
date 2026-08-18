@@ -12,6 +12,7 @@
     "upload:images": "./scripts/upload-images.sh",
     "upload:image": "./scripts/upload-single-image.sh",
     "update:images-manifest": "node ./scripts/update-images-manifest.mjs",
+    "update:images-manifest:r2": "node ./scripts/rebuild-images-manifest-from-r2.mjs",
     "sync:images": "bash ./scripts/sync-images-from-r2.sh",
     "sync:images:delete": "bash ./scripts/sync-images-from-r2.sh --delete",
     "watch:images": "./scripts/watch-images.sh",

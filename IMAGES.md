@@ -90,6 +90,8 @@ npm run sync:images
 
 This is the recommended first step for a collaborator who just cloned the repo and needs the non-git image assets.
 
+If the manifest seems incomplete, refresh it from R2 first with `npm run update:images-manifest:r2`.
+
 ### `npm run sync:images:delete` — Exact mirror from R2
 
 ```bash
@@ -105,6 +107,14 @@ npm run update:images-manifest
 ```
 
 Scans local `public/images/` and rewrites `public/images-manifest.json`. Run this any time you add, rename, or remove images locally. The upload scripts also run this automatically.
+
+### `npm run update:images-manifest:r2` — Rebuild manifest from R2
+
+```bash
+npm run update:images-manifest:r2
+```
+
+Queries the Cloudflare R2 bucket directly and rewrites `public/images-manifest.json` from the actual remote objects under `images/`. Use this if you know R2 contains more files than the current manifest.
 
 ### `npm run upload:images` — Upload all images
 

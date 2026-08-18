@@ -46,6 +46,9 @@ This builds the site for production in the `dist/` directory.
 Place local source images in `public/images/`. This directory is gitignored (only `README.md` and `.gitkeep` are tracked), so images live locally and are uploaded to R2 rather than committed to the repo.
 
 ```bash
+# Rebuild the image manifest from the current R2 bucket contents
+npm run update:images-manifest:r2
+
 # Pull the shared image set down from R2
 npm run sync:images
 
