@@ -38,6 +38,8 @@ npm run sync:images:delete
 
 macOS/Windows junk files such as `.DS_Store` and `Thumbs.db` are excluded from the manifest and upload scripts.
 
+Malformed keys such as `Users/...` or anything containing `/public/images/` are also filtered out locally and from R2-derived manifests.
+
 ### 1. Add your image
 
 Copy or move the image into `public/images/` (use subdirectories to stay organized):
@@ -106,6 +108,8 @@ This first rebuilds `public/images-manifest.json` from the current contents of t
 
 `npm run dev` and `npm run preview` now attempt to run this automatically before starting their local servers, print a clear success or warning message, and still start Astro if the R2 sync step fails.
 
+When `npm run dev` auto-uploads changed images through the watcher, it also attempts a cache purge for each uploaded image.
+
 ### `npm run sync:images:status` — Show missing/changed/up-to-date files
 
 ```bash
@@ -146,7 +150,28 @@ Scans local `public/images/` and rewrites `public/images-manifest.json`. Run thi
 npm run update:images-manifest:r2
 ```
 
-Queries the Cloudflare R2 bucket directly and rewrites `public/images-manifest.json` from the actual remote objects under `images/`, including object sizes and `etag` values when available. Use this if you know R2 contains more files than the current manifest or you want sync to detect changed remote files more accurately.
+Queries the Cloudflare R2 bucket directly and rewrites `public/images-manifest.json` from the actual remote objects under `images/`, including object sizes and `etag` values when available. Malformed remote keys such as `Users/...` are ignored. Use this if you know R2 contains more files than the current manifest or you want sync to detect changed remote files more accurately.
+
+### `npm run cleanup:images:r2:bad-keys` — Find malformed remote image keys
+
+```bash
+npm run cleanup:images:r2:bad-keys
+```
+
+Lists malformed R2 keys such as `images/Users/...` or anything containing `/public/images/`.
+
+To delete them from R2:
+
+```bash
+npm run cleanup:images:r2:bad-keys:delete
+```
+
+After cleanup, rebuild the manifest from R2 and resync:
+
+```bash
+npm run update:images-manifest:r2
+npm run sync:images:delete
+```
 
 ### `npm run upload:images` — Upload all images
 
@@ -312,7 +337,11 @@ Prevents layout shift (CLS):
 
 ### Version frequently-updated images
 
-For images that change often, version the filename rather than overwriting:
+Image uploads in this repo now set `Cache-Control: no-store` on R2 objects, which helps browsers and the CDN pick up overwritten files more quickly.
+
+Uploads in this repo also attempt a best-effort Cloudflare cache purge right after upload. If the purge succeeds, you'll see a success message; if it fails, the upload still succeeds and you'll get a warning.
+
+For images that change often, version the filename rather than overwriting when you want the safest cache-busting behavior:
 
 ```
 logo-v1.png → logo-v2.png
@@ -403,9 +432,10 @@ bash -x ./scripts/watch-images.sh
 
 ### Image shows stale version
 
-This is a CDN cache issue. Either:
+This is usually a CDN or browser cache issue. New uploads in this repo now use `Cache-Control: no-store`, but existing cached responses may still need a purge. Either:
 - Upload with a new versioned filename (`logo-v2.png`)
 - Purge the cache: Cloudflare Dashboard → Caching → Cache Purge → enter the image URL
+- Or use the helper script: `npm run purge:image -- https://static.robray.net/images/soft-goods/henry-ford-sewing-machine.jpg` (requires `CLOUDFLARE_ZONE_ID` in `.env`)
 
 ---
 

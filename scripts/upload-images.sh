@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+. ./scripts/purge-image-cache-lib.sh
+
 BUCKET_NAME="static-robray-net"
 IMAGES_DIR="public/images"
 
@@ -42,7 +44,8 @@ find "$IMAGES_DIR" -type f ! -name '.DS_Store' ! -name 'Thumbs.db' ! -name '.git
   echo "[$count/$total_files] Uploading: images/$relative_path"
   
   # Upload to R2 with proper path structure
-  npx wrangler r2 object put "$BUCKET_NAME/images/$relative_path" --file="$file" --remote
+  npx wrangler r2 object put "$BUCKET_NAME/images/$relative_path" --file="$file" --remote --cache-control "no-store"
+  purge_image_cache "https://static.robray.net/images/$relative_path"
 done
 
 echo ""

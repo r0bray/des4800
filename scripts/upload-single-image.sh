@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+. ./scripts/purge-image-cache-lib.sh
+
 BUCKET_NAME="static-robray-net"
 
 # Check if file argument is provided
@@ -53,11 +55,14 @@ echo "  Remote: $r2_path"
 echo ""
 
 # Upload to R2
-npx wrangler r2 object put "$BUCKET_NAME/$r2_path" --file="$FILE_PATH" --remote
+npx wrangler r2 object put "$BUCKET_NAME/$r2_path" --file="$FILE_PATH" --remote --cache-control "no-store"
+
+image_url="https://static.robray.net/$r2_path"
 
 echo ""
 echo "✅ Image uploaded successfully!"
-echo "🌐 URL: https://static.robray.net/$r2_path"
+echo "🌐 URL: $image_url"
+purge_image_cache "$image_url"
 echo ""
 echo "Use in Astro:"
 echo "  <img src=\"https://static.robray.net/$r2_path\" alt=\"$filename\" />"

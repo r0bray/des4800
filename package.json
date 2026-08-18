@@ -20,6 +20,9 @@
     "sync:images:latest": "npm run update:images-manifest:r2 && npm run sync:images",
     "sync:images:latest:force": "npm run update:images-manifest:r2 && npm run sync:images:force",
     "watch:images": "./scripts/watch-images.sh",
+    "cleanup:images:r2:bad-keys": "node ./scripts/cleanup-bad-r2-image-keys.mjs",
+    "cleanup:images:r2:bad-keys:delete": "node ./scripts/cleanup-bad-r2-image-keys.mjs --delete",
+    "purge:image": "node ./scripts/purge-image-cache.mjs",
     "deploy:full": "./scripts/deploy.sh"
   },
   "dependencies": {

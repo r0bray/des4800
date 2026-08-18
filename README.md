@@ -56,6 +56,12 @@ This builds the site for production in the `dist/` directory.
 Place local source images in `public/images/`. This directory is gitignored (only `README.md` and `.gitkeep` are tracked), so images live locally and are uploaded to R2 rather than committed to the repo.
 
 ```bash
+# Find malformed remote image keys like images/Users/...
+npm run cleanup:images:r2:bad-keys
+
+# Delete malformed remote image keys
+npm run cleanup:images:r2:bad-keys:delete
+
 # Rebuild the image manifest from the current R2 bucket contents
 npm run update:images-manifest:r2
 
@@ -107,7 +113,7 @@ See [IMAGES.md](./IMAGES.md) for the complete image management guide.
 npm run deploy
 ```
 
-This runs `npm run build && wrangler deploy` — builds the site and deploys the Worker directly.
+This runs `npm run build && wrangler deploy` — builds the site and deploys the Worker directly. The Cloudflare/Astro toolchain generates the worker bundle during build and deploys it via Wrangler.
 
 ### Automated Deployment
 

@@ -21,13 +21,7 @@ if (fs.existsSync(envPath)) {
 const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
 const apiToken = process.env.CLOUDFLARE_API_TOKEN;
 const bucketName = 'static-robray-net';
-const prefix = 'images/';
-const manifestPath = path.join(process.cwd(), 'public', 'images-manifest.json');
-const ignoredBasenames = new Set(['.gitkeep', 'README.md', '.DS_Store', 'Thumbs.db']);
-
-function isInvalidRelativePath(relativePath) {
-  return relativePath.startsWith('Users/') || relativePath.includes('/public/images/');
-}
+const deleteMode = process.argv.includes('--delete');
 
 if (!accountId) {
   console.error('Missing CLOUDFLARE_ACCOUNT_ID');
@@ -39,13 +33,17 @@ if (!apiToken) {
   process.exit(1);
 }
 
-async function listAllObjects() {
-  const entries = [];
+function isBadKey(key) {
+  return key.startsWith('images/Users/') || key.includes('/public/images/');
+}
+
+async function listBadKeys() {
+  const badKeys = [];
   let cursor = null;
 
   while (true) {
     const url = new URL(`https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/${bucketName}/objects`);
-    url.searchParams.set('prefix', prefix);
+    url.searchParams.set('prefix', 'images/');
     url.searchParams.set('per_page', '1000');
     if (cursor) {
       url.searchParams.set('cursor', cursor);
@@ -73,15 +71,10 @@ async function listAllObjects() {
     }
 
     for (const object of data.result ?? []) {
-      if (!object?.key?.startsWith(prefix)) continue;
-      const relativePath = object.key.slice(prefix.length);
-      const basename = path.posix.basename(relativePath);
-      if (!relativePath || ignoredBasenames.has(basename) || isInvalidRelativePath(relativePath)) continue;
-      entries.push({
-        path: relativePath,
-        size: typeof object.size === 'number' ? object.size : null,
-        etag: typeof object.etag === 'string' ? object.etag.replace(/^\"|\"$/g, '') : null,
-      });
+      const key = object?.key ?? '';
+      if (isBadKey(key)) {
+        badKeys.push(key);
+      }
     }
 
     const nextCursor = data.result_info?.cursor;
@@ -91,10 +84,52 @@ async function listAllObjects() {
     cursor = nextCursor;
   }
 
-  return entries;
+  return badKeys.sort((a, b) => a.localeCompare(b));
 }
 
-const manifest = Array.from(new Map((await listAllObjects()).map((entry) => [entry.path, entry])).values())
-  .sort((a, b) => a.path.localeCompare(b.path));
-fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
-console.log(`Updated public/images-manifest.json from R2 with ${manifest.length} image(s)`);
+async function deleteKey(key) {
+  const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/${bucketName}/objects/${encodeURIComponent(key)}`;
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${apiToken}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Failed to delete ${key}: ${response.status} ${response.statusText}\n${body}`);
+  }
+
+  const data = await response.json();
+  if (!data.success) {
+    throw new Error(`Cloudflare API failed to delete ${key}:\n${JSON.stringify(data, null, 2)}`);
+  }
+}
+
+const badKeys = await listBadKeys();
+
+if (badKeys.length === 0) {
+  console.log('✅ No malformed R2 image keys found.');
+  process.exit(0);
+}
+
+console.log(`Found ${badKeys.length} malformed R2 image key(s):`);
+for (const key of badKeys) {
+  console.log(`- ${key}`);
+}
+
+if (!deleteMode) {
+  console.log('');
+  console.log('Run with --delete to remove these keys from R2.');
+  process.exit(0);
+}
+
+console.log('');
+console.log('Deleting malformed R2 image keys...');
+for (const key of badKeys) {
+  console.log(`Deleting: ${key}`);
+  await deleteKey(key);
+}
+console.log('✅ Malformed R2 image keys deleted.');

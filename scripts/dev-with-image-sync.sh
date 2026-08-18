@@ -17,6 +17,9 @@ else
 fi
 
 echo ""
+echo "🧹 Stopping any stale image watcher processes..."
+pkill -f "scripts/watch-images.sh" 2>/dev/null || true
+
 echo "👀 Starting automatic image upload watcher for public/images/..."
 if bash ./scripts/watch-images.sh &
 then
