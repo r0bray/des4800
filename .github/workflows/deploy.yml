@@ -38,8 +38,8 @@ jobs:
       - name: Upload built assets (_astro) to R2
         run: |
           echo "📦 Uploading compiled assets to R2..."
-          if [ -d "dist/_astro" ]; then
-            for file in dist/_astro/*; do
+          if [ -d "dist/client/_astro" ]; then
+            for file in dist/client/_astro/*; do
               if [ -f "$file" ]; then
                 filename=$(basename "$file")
                 echo "  Uploading: _astro/$filename"
@@ -48,7 +48,7 @@ jobs:
             done
             echo "✅ Built assets uploaded"
           else
-            echo "⚠️  No _astro directory found"
+            echo "⚠️  No _astro directory found at dist/client/_astro"
           fi
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
