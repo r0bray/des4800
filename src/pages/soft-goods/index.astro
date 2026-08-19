@@ -33,11 +33,11 @@ const showDraftBadge = import.meta.env.DEV;
           <article class="post-card">
             <a
               href={`/soft-goods/${topic.slug}/`}
-              class:list={['post-card-media', { 'post-card-media--has-image': topic.image }]}
-              aria-label={topic.image ? topic.title : `${topic.title} image placeholder`}
+              class:list={['post-card-media', { 'post-card-media--has-image': topic.heroImage ?? topic.image }]}
+              aria-label={topic.heroImage ?? topic.image ? topic.title : `${topic.title} image placeholder`}
             >
-              {topic.image ? (
-                <img src={topic.image} alt="" loading="lazy" />
+              {topic.heroImage ?? topic.image ? (
+                <img src={topic.heroImage ?? topic.image} alt="" loading="lazy" />
               ) : (
                 <span class="post-card-media-label">Image coming soon</span>
               )}
@@ -77,11 +77,11 @@ const showDraftBadge = import.meta.env.DEV;
           <article class="post-card">
             <a
               href={`/soft-goods/${topic.slug}/`}
-              class:list={['post-card-media', { 'post-card-media--has-image': topic.image }]}
-              aria-label={topic.image ? topic.title : `${topic.title} image placeholder`}
+              class:list={['post-card-media', { 'post-card-media--has-image': topic.heroImage ?? topic.image }]}
+              aria-label={topic.heroImage ?? topic.image ? topic.title : `${topic.title} image placeholder`}
             >
-              {topic.image ? (
-                <img src={topic.image} alt="" loading="lazy" />
+              {topic.heroImage ?? topic.image ? (
+                <img src={topic.heroImage ?? topic.image} alt="" loading="lazy" />
               ) : (
                 <span class="post-card-media-label">Image coming soon</span>
               )}

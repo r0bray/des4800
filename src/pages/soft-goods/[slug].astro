@@ -2,6 +2,9 @@
 import Layout from '../../layouts/Layout.astro';
 import ThreadContent from '../../components/soft-goods/ThreadContent.astro';
 import ZippersContent from '../../components/soft-goods/ZippersContent.astro';
+import SewingMachinesContent from '../../components/soft-goods/SewingMachinesContent.astro';
+import Juki8700HContent from '../../components/soft-goods/Juki8700HContent.astro';
+import JukiHZLF600Content from '../../components/soft-goods/JukiHZLF600Content.astro';
 import {
   getSoftGoodsPages,
   isSoftGoodsVisible,
@@ -33,6 +36,9 @@ if (!isSoftGoodsVisible(page)) {
 const customContent = {
   thread: ThreadContent,
   zippers: ZippersContent,
+  'sewing-machines': SewingMachinesContent,
+  'juki-8700h': Juki8700HContent,
+  'juki-hzl-f600': JukiHZLF600Content,
 } as const;
 
 const CustomContent = customContent[page.slug as keyof typeof customContent];
@@ -52,6 +58,20 @@ const CustomContent = customContent[page.slug as keyof typeof customContent];
         )}
       </div>
     </header>
+
+    {page.heroImage && (
+      <figure class="post-hero">
+        <img
+          src={page.heroImage}
+          alt={page.heroImageAlt ?? page.title}
+          loading="eager"
+          decoding="async"
+        />
+        {page.heroImageCaption && (
+          <figcaption set:html={page.heroImageCaption} />
+        )}
+      </figure>
+    )}
 
     {CustomContent ? (
       <CustomContent />

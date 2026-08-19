@@ -18,6 +18,10 @@ export interface SoftGoodsPage {
   status: SoftGoodsStatus;
   description: string;
   image?: string;
+  heroImage?: string;
+  heroImageAlt?: string;
+  /** Caption displayed below the hero image */
+  heroImageCaption?: string;
   /** Placeholder intro when the page has no custom content component */
   body: string;
 }
@@ -155,9 +159,12 @@ export const softGoodsPages: SoftGoodsPage[] = [
     section: 'tools',
     status: 'draft',
     image: 'https://static.robray.net/images/soft-goods/henry-ford-sewing-machine.jpg',
+    heroImage: 'https://static.robray.net/images/soft-goods/henry-ford-sewing-machine.jpg',
+    heroImageAlt: 'Historic sewing machine used as a visual header for the sewing machines topic page',
+    heroImageCaption: 'Sewing machines are fundamental tools in soft-goods work. The right machine for the job depends on your material, stitch needs, and production style—from nimble household machines to powerful industrial workhorses.',
     description:
       'Studio machine basics, setup, safe operation, and which stitches and tools support product design prototypes.',
-    body: 'Sewing machines turn cut parts into sewn assemblies. Studio work depends on setup, needle and stitch choice, and safe operation as much as on pattern design. This page will expand with machine types, setup checklists, and prototype-friendly techniques.',
+    body: '',
   },
   {
     title: 'Thread',
@@ -165,6 +172,9 @@ export const softGoodsPages: SoftGoodsPage[] = [
     section: 'tools',
     status: 'published',
     image: '/images/soft-goods/gutermann-mara-70.jpg',
+    heroImage: '/images/soft-goods/gutermann-mara-70.jpg',
+    heroImageAlt: 'Gütermann Mara thread spool with ticket number 70 shown on the yellow end label',
+    heroImageCaption: 'In soft-goods product design, matching thread type and weight to fabric and use is as important as choosing the fabric itself.',
     description:
       'Choosing the right thread for strength, stretch, and finish. We will figure out thread sizing numbers and look at Gütermann Mara, Mara rPET, and Tera.',
     body: '', // full body: ThreadContent component
@@ -201,6 +211,9 @@ export const softGoodsPages: SoftGoodsPage[] = [
     slug: 'zippers',
     section: 'tools',
     status: 'published',
+    heroImage: '/images/soft-goods/zipper-closeup.jpg',
+    heroImageAlt: 'Close-up of a zipper chain and slider used as the hero image for the zippers page',
+    heroImageCaption: 'Zipper sizing is determined by the width of the teeth across the closed chain. The number (such as #5 or #8) indicates this width in millimeters and is your primary specification when choosing a zipper.',
     description:
       'Zipper types, sizes, and how the zipper number relates to tooth width when specifying closures for soft goods.',
     body: '', // full body: ZippersContent component
@@ -222,6 +235,32 @@ export const softGoodsPages: SoftGoodsPage[] = [
     description:
       'Ribbons and woven straps used for reinforcement, handles, edges, and load-bearing soft-goods structure.',
     body: 'Grosgrain and webbing carry load and finish edges where fabric alone is not enough. This page will expand with materials, widths, and how these tapes and straps show up in bags, wearables, and studio prototypes.',
+  },
+  {
+    title: 'Juki 8700H',
+    slug: 'juki-8700h',
+    section: 'tools',
+    status: 'draft',
+    image: 'https://static.robray.net/images/soft-goods/juki-ddl-8700.webp',
+    heroImage: 'https://static.robray.net/images/soft-goods/juki-ddl-8700.webp',
+    heroImageAlt: 'Juki DDL-8700 industrial sewing machine on a white background',
+    heroImageCaption: 'The Juki 8700H is an industrial straight-stitch machine built for fast, consistent seams on medium-to-heavy materials. For product details and documentation, see the <a href="https://juki.com/ddl-8700" target="_blank" rel="noopener noreferrer">JUKI DDL-8700 product page</a>.',
+    description:
+      'Overview, threading notes, and studio guidance for the Juki 8700H industrial straight-stitch sewing machine.',
+    body: '',
+  },
+  {
+    title: 'Juki HZL-F600',
+    slug: 'juki-hzl-f600',
+    section: 'tools',
+    status: 'draft',
+    image: 'https://static.robray.net/images/soft-goods/juki-hzl-f600.jpg',
+    heroImage: 'https://static.robray.net/images/soft-goods/juki-hzl-f600.jpg',
+    heroImageAlt: 'Juki HZL-F600 home sewing machine on a white background',
+    heroImageCaption: 'The Juki HZL-F600 is a computerized household sewing machine with versatile stitch options, quilting features, and automatic needle threading—ideal for mixed studio tasks, prototyping, and skill building. For product details and documentation, see the <a href="https://www.juki.co.jp/household_en/products/list/home/hzlf600.html" target="_blank" rel="noopener noreferrer">JUKI HZL-F600 product page</a>.',
+    description:
+      'Overview, threading notes, and studio guidance for the Juki HZL-F600 computerized home sewing machine.',
+    body: '',
   },
 ];
 

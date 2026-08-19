@@ -1,0 +1,232 @@
+---
+const page = {
+  title: 'Sewing machines',
+  description: 'Understanding different machine types and choosing the right one for your work',
+  image: 'https://static.robray.net/images/soft-goods/henry-ford-sewing-machine.jpg',
+  imageAlt: 'Vintage Singer sewing machine',
+};
+
+const machines = [
+  {
+    title: 'Juki 8700H',
+    slug: 'juki-8700h',
+    kind: 'Industrial straight-stitch lockstitch machine',
+    image: 'https://static.robray.net/images/soft-goods/juki-ddl-8700.webp',
+    imageAlt: 'Juki DDL-8700 industrial sewing machine on a white background',
+    description:
+      'A heavy-weight industrial machine built for fast, repeatable straight seams on medium-to-heavy materials.',
+    label: 'Juki 8700H machine page',
+  },
+  {
+    title: 'Juki HZL-F600',
+    slug: 'juki-hzl-f600',
+    kind: 'Computerized home sewing machine',
+    image: 'https://static.robray.net/images/soft-goods/juki-hzl-f600.jpg',
+    imageAlt: 'Juki HZL-F600 home sewing machine on a white background',
+    description:
+      'A versatile household machine with many stitches, automatic features, and an attachment walking foot for quilting and general studio work.',
+    label: 'Juki HZL-F600 machine page',
+  },
+];
+---
+
+<div class="post-content">
+
+  <p>
+    Sewing machines turn cut parts into sewn assemblies. In soft-goods work, the right machine
+    matters just as much as the right pattern, fabric, needle, and thread. A home machine and an
+    industrial machine may both sew a straight seam, but they do not do it with the same speed,
+    force, consistency, or range of features.
+  </p>
+  <p>
+    In our studio context, the <strong>Juki 8700H</strong> and the <strong>Juki HZL-F600</strong>
+    cover two very different roles. The 8700H is a focused production-style straight-stitch machine
+    for longer seams and heavier work. The HZL-F600 is a flexible household machine that handles many
+    stitch types, garment details, quilting tasks, and general prototyping.
+  </p>
+
+  <div class="posts-grid">
+    {
+      machines.map((machine) => (
+        <article class="post-card">
+          <a
+            href={`/soft-goods/${machine.slug}/`}
+            class:list={['post-card-media', { 'post-card-media--has-image': machine.image }]}
+            aria-label={machine.label}
+          >
+            {machine.image ? (
+              <img src={machine.image} alt={machine.imageAlt} loading="lazy" />
+            ) : (
+              <span class="post-card-media-label">{machine.title}</span>
+            )}
+          </a>
+          <div class="post-card-content">
+            <h2 class="post-title">
+              <a href={`/soft-goods/${machine.slug}/`}>{machine.title}</a>
+            </h2>
+            <p class="post-description">
+              <strong>{machine.kind}.</strong> {machine.description}
+            </p>
+          </div>
+          <div class="post-card-footer">
+            <a href={`/soft-goods/${machine.slug}/`} class="read-more">
+              Open machine page →
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <h2 id="two-machines-two-roles">Two machines, two roles</h2>
+  <p>
+    The biggest difference is that these machines were designed for different kinds of sewing.
+    The <strong>Juki 8700H</strong>
+    is an <strong>industrial 1-needle lockstitch machine</strong>. It is meant to sew one stitch
+    type very well: a fast, reliable straight lockstitch. The <strong>Juki HZL-F600</strong> is a
+    <strong>computerized home sewing machine</strong> built to do many jobs: straight stitch, zigzag,
+    buttonholes, decorative stitches, quilting features, and more.
+  </p>
+  <p>
+    That means the 8700H usually feels better when the job is repetitive, structural, and
+    material-driven: long seams, medium-to-heavy assemblies, bags, denser woven fabrics, and
+    prototype construction where speed and seam consistency matter. The HZL-F600 usually feels
+    better when the job is varied: garment details, edge finishing, lighter fabrics, test
+    pieces, quilting, and projects where changing stitch type matters.
+  </p>
+
+  <h2 id="comparison">Juki 8700H vs Juki HZL-F600</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Category</th>
+          <th scope="col">Juki 8700H</th>
+          <th scope="col">Juki HZL-F600</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Machine type</td>
+          <td>Industrial straight-stitch lockstitch machine</td>
+          <td>Computerized household sewing machine</td>
+        </tr>
+        <tr>
+          <td>Main strength</td>
+          <td>Fast, durable, repeatable straight seams on heavier work</td>
+          <td>Versatility across many stitch types and home/studio tasks</td>
+        </tr>
+        <tr>
+          <td>Speed</td>
+          <td>Up to about 4,000 stitches per minute for the heavy-weight variant</td>
+          <td>Up to about 900 stitches per minute</td>
+        </tr>
+        <tr>
+          <td>Stitch options</td>
+          <td>Straight stitch only</td>
+          <td>Large stitch library, buttonholes, quilting and decorative options</td>
+        </tr>
+        <tr>
+          <td>Material range</td>
+          <td>Better for medium-to-heavy materials and sustained sewing</td>
+          <td>Good general range for light to moderately heavy home/studio projects</td>
+        </tr>
+        <tr>
+          <td>Feed behavior</td>
+          <td>Industrial bottom-feed straight-stitch system</td>
+          <td>Household box-feed system with optional walking-foot attachment</td>
+        </tr>
+        <tr>
+          <td>Needle/thread scale</td>
+          <td>Larger industrial needle system suited to heavier setups</td>
+          <td>Home-machine needle system for broader but generally lighter-duty use</td>
+        </tr>
+        <tr>
+          <td>Setup style</td>
+          <td>Usually mounted in a dedicated table with external motor and cone thread</td>
+          <td>Portable tabletop machine with built-in controls and accessories</td>
+        </tr>
+        <tr>
+          <td>Best fit in class</td>
+          <td>Construction seams, bags, denser canvas work, production-like repetition</td>
+          <td>Skill building, quilting, garments, mixed prototypes, detail work</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="commonalities">Commonalities</h2>
+  <p>
+    Even though they feel very different, these machines still share a lot. Both are designed to
+    form a lockstitch. Both depend on correct threading, needle choice, tension balance, and
+    bobbin setup. Both reward test sewing before committing to a real part. Both can sew clean,
+    strong seams when the material stack, thread, and needle are matched appropriately.
+  </p>
+  <p>
+    They also overlap in basic studio practice: start with scrap tests, confirm stitch length,
+    check seam appearance on both sides, and listen to the machine. Skipped stitches, knotting,
+    puckering, or difficulty penetrating the material are usually setup signals rather than
+    reasons to force the machine harder.
+  </p>
+
+  <h2 id="feed-types">Different types of fabric-feeding systems</h2>
+  <p>
+    One of the most important differences between sewing machines is <strong>how they move fabric</strong>.
+    Feed system design affects seam alignment, layer shifting, stitch consistency, and what
+    kinds of materials a machine can control well.
+  </p>
+
+  <h3 id="attachment-walking-foot">Standard attachment walking foot</h3>
+  <p>
+    A <strong>standard attachment walking foot</strong> is the bulky detachable foot commonly used
+    on home machines. It is driven by a small arm that hooks onto the needle-clamp screw area, so
+    the foot steps and helps pull the top layer along with the lower feed dogs. It is useful for home
+    quilting, slippery layers, and minor heavy-duty fixes.
+  </p>
+  <p>
+    It is still an <strong>attachment</strong>, not a built-in industrial feed system. Under
+    heavier stress, its plastic or light-metal teeth can drag, lose consistency, or simply reach
+    their limit. The <strong>Juki HZL-F600</strong> can use this kind of walking foot, which is helpful,
+    but that does <em>not</em> make it a true industrial walking-foot machine.
+  </p>
+
+  <h3 id="compound-feed">True industrial walking foot (compound/triple feed)</h3>
+  <p>
+    A <strong>true industrial walking foot</strong>, also called <strong>compound feed</strong> or
+    <strong>triple feed</strong>, is a different category of machine. In that system, the <strong>feed dog,
+    needle, and inside presser foot all move forward together in a synchronized cycle</strong>.
+    That shared motion keeps thick or sticky layers from shifting out of alignment.
+  </p>
+  <p>
+    This is the kind of feed system used when sewing heavier leather, layered webbing, dense
+    canvas, upholstery, and bulky assemblies where ordinary bottom feed would let layers creep
+    or skip. It is much more capable than a household walking-foot attachment, but it also
+    belongs to a larger, more specialized machine class.
+  </p>
+
+  <h3 id="needle-feed">Needle feed machines</h3>
+  <p>
+    <strong>Needle feed machines</strong> move the fabric using the horizontal motion of the needle
+    itself rather than a top walking foot. Because the needle helps carry the material forward while
+    it is still engaged in the fabric, these machines are excellent for precise layer alignment on
+    long straight seams and for slippery synthetics that want to drift.
+  </p>
+  <p>
+    Needle-feed machines are especially valued when you want cleaner tracking without the bulk
+    of a walking-foot setup. They are common in operations where straight seams need to stay
+    accurate over long distances.
+  </p>
+
+  <h2 id="how-to-choose">How to choose between them</h2>
+  <p>
+    Choose the <strong>Juki 8700H</strong> when the main question is, “How do I sew this medium-to-heavy
+    assembly cleanly and repeatedly?” Choose the <strong>Juki HZL-F600</strong> when the main question
+    is, “What machine gives me the most flexibility for mixed tasks, lighter materials, and multiple
+    stitch functions?”
+  </p>
+  <p>
+    In a studio, the best answer is often not one machine replacing the other. It is
+    understanding what each machine is for, then choosing the machine whose feed system, power,
+    and stitch options match the job in front of you.
+  </p>
+</div>
