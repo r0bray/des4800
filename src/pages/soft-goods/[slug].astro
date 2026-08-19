@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PatternmakingContent from '../../components/soft-goods/PatternmakingContent.astro';
 import ThreadContent from '../../components/soft-goods/ThreadContent.astro';
 import ZippersContent from '../../components/soft-goods/ZippersContent.astro';
 import SewingMachinesContent from '../../components/soft-goods/SewingMachinesContent.astro';
@@ -34,6 +35,7 @@ if (!isSoftGoodsVisible(page)) {
 }
 
 const customContent = {
+  patternmaking: PatternmakingContent,
   thread: ThreadContent,
   zippers: ZippersContent,
   'sewing-machines': SewingMachinesContent,
