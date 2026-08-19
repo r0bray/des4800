@@ -32,9 +32,13 @@ export const softGoodsPages: SoftGoodsPage[] = [
     title: 'Patternmaking',
     slug: 'patternmaking',
     section: 'skills',
-    status: 'draft',
+    status: 'published',
     description:
       'Draft and adjust 2D patterns so pieces fit, align, and sew cleanly into a finished soft-goods form.',
+    heroImage: 'https://static.robray.net/images/soft-goods/pattern-making.jpg',
+    heroImageAlt: 'Overhead view of pattern pieces drawn on kraft paper with blue pen, ready for cutting and sewing',
+    heroImageCaption: 'Patternmaking translates a product design into cuttable pieces. Patterns must account for grain, seam allowance, notches, and how pieces will align during assembly.',
+    image: 'https://static.robray.net/images/soft-goods/pattern-making.jpg',
     body: 'Patternmaking turns a product idea into cuttable pieces. This page will cover patterning language, seam allowance, grain, notches, and how pattern choices show up in the sewn sample.',
   },
   {
