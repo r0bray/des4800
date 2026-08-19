@@ -4,20 +4,23 @@ Complete guide to deploying the DES4800 Astro site to Cloudflare Workers with R2
 
 ## Prerequisites
 
-Before deploying, ensure you have:
+### For GitHub Actions (Automatic) Deployment
+- Cloudflare Account with Workers and R2 enabled
+- GitHub repository with secrets configured
+- Git access to push to `main` branch
 
+### For Local Deployments
 1. **Node.js 20+**: Check with `node --version`
 2. **Cloudflare Account**: With Workers and R2 enabled
-3. **Wrangler authenticated**: Run `npx wrangler login` (opens browser OAuth)
+3. **Wrangler authenticated locally**: Run `npx wrangler login` (opens browser OAuth)
 4. **Domain**: `robray.net` configured in Cloudflare DNS
-
-### Authenticate Wrangler (first time only)
+### Authenticate Wrangler (for local deployments)
 
 ```bash
 npx wrangler login
 ```
 
-This opens a browser window for OAuth. Once authorized, your credentials are stored locally and you won't need to repeat this.
+This opens a browser window for OAuth. Once authorized, your credentials are stored locally and you won't need to repeat this for future local deployments.
 
 ---
 
@@ -53,9 +56,60 @@ Static assets and images are served from the R2 bucket via a custom domain:
 
 ---
 
-## Standard Deployment
+## Standard Deployment (Recommended: GitHub Actions)
 
-### Full Deployment (recommended)
+### Automatic Deployment via GitHub Actions ⚡ (PRIMARY METHOD)
+
+The easiest and most reliable way to deploy:
+
+```bash
+git commit -am "Your changes"
+git push origin main
+```
+
+That's it! GitHub Actions will automatically:
+1. ✅ Build the site
+2. ✅ Upload compiled CSS/JS to R2 (from `dist/client/_astro/`)
+3. ✅ Upload `favicon.svg` to R2
+4. ✅ Deploy the Worker to Cloudflare
+
+**Monitor progress:** https://github.com/r0bray/des4800/actions
+
+> **Note:** Images in `public/images/` are gitignored and must be uploaded separately using `npm run upload:images` or included in a manual `npm run deploy:full`.
+
+---
+
+## Local Deployment (Alternative)
+
+If you prefer to deploy from your local machine:
+## Standard Deployment (Recommended: GitHub Actions)
+
+### Automatic Deployment via GitHub Actions ⚡ (PRIMARY METHOD)
+
+The easiest and most reliable way to deploy:
+
+```bash
+git commit -am "Your changes"
+git push origin main
+```
+
+That's it! GitHub Actions will automatically:
+1. ✅ Build the site
+2. ✅ Upload compiled CSS/JS to R2 (from `dist/client/_astro/`)
+3. ✅ Upload `favicon.svg` to R2
+4. ✅ Deploy the Worker to Cloudflare
+
+**Monitor progress:** https://github.com/r0bray/des4800/actions
+
+> **Note:** Images in `public/images/` are gitignored and must be uploaded separately using `npm run upload:images` or included in a manual `npm run deploy:full`.
+
+---
+
+## Local Deployment (Alternative)
+
+If you prefer to deploy from your local machine:
+
+### Full Local Deployment
 
 ```bash
 npm run deploy:full
@@ -64,69 +118,77 @@ npm run deploy:full
 This runs `scripts/deploy.sh`, which does the following in order:
 
 1. **Builds the site** — runs `npm run build`, outputs to `dist/`
-2. **Uploads `_astro` assets** — uploads all compiled CSS/JS from `dist/_astro/` to `static-robray-net/_astro/` in R2
+2. **Uploads `_astro` assets** — uploads all compiled CSS/JS from `dist/client/_astro/` to `static-robray-net/_astro/` in R2
 3. **Uploads public assets** — uploads `favicon.svg` and other public files to R2
 4. **Uploads images** — uploads everything in `public/images/` to `static-robray-net/images/` in R2
 5. **Deploys the Worker** — runs `npx wrangler deploy`, pushing `dist/_worker.js` to Cloudflare
 
-### Quick Deploy (code only, no image upload)
+### Quick Local Deploy (code only, no image upload)
 
 ```bash
 npm run deploy
 ```
 
-Equivalent to `npm run build && wrangler deploy`. Use this when you have no image changes and want a faster deployment.
+Equivalent to `npm run build && wrangler deploy`. Use this for faster local deployment when images haven't changed.
+Equivalent to `npm run build && wrangler deploy`. Use this for faster local deployment when images haven't changed.you have no image changes and want a faster deployment.
 
 ---
 
-## Manual Deployment Steps
+## Manual Deployment Steps (Advanced)
 
-If you need fine-grained control:
+If you need fine-grained control, you can deploy manually:
 
 ```bash
 # 1. Build
 npm run build
 
-# 2. Upload compiled CSS/JS assets
-for file in dist/_astro/*; do
+# 2. Upload compiled CSS/JS assets from dist/client/_astro/
+for file in dist/client/_astro/*; do
   filename=$(basename "$file")
-  npx wrangler r2 object put "static-robray-net/_astro/$filename" --file="$file"
+  npx wrangler r2 object put "static-robray-net/_astro/$filename" --file="$file" --remote
 done
 
 # 3. Upload favicon
-npx wrangler r2 object put static-robray-net/favicon.svg --file=dist/favicon.svg
+npx wrangler r2 object put static-robray-net/favicon.svg --file=dist/favicon.svg --remote
 
-# 4. Upload images
+# 4. Upload images (if needed)
 for file in public/images/**/*; do
   [ -f "$file" ] || continue
   key="${file#public/}"
-  npx wrangler r2 object put "static-robray-net/$key" --file="$file"
+  npx wrangler r2 object put "static-robray-net/$key" --file="$file" --remote
 done
 
 # 5. Deploy the Worker
 npx wrangler deploy
 ```
 
+> **Note:** Assets are now in `dist/client/_astro/`, not `dist/_astro/` (due to Cloudflare SSR output structure).
+
 ---
 
-## GitHub Actions (Automatic Deployment)
+## GitHub Actions Workflow Details
 
 Pushes to the `main` branch trigger automatic deployment via `.github/workflows/deploy.yml`.
 
 **What the workflow does:**
 1. Installs Node dependencies
-2. Builds the Astro site
-3. Uploads `_astro` CSS/JS to R2
-4. Uploads `favicon.svg` to R2
-5. Deploys the Worker with `wrangler deploy`
+2. Builds the Astro site (`npm run build`)
+3. Uploads compiled assets to R2:
+   - CSS/JS from `dist/client/_astro/`
+   - `favicon.svg`
+4. Deploys the Worker with `wrangler deploy`
 
-**Trigger:** Push to `main` (doc-only changes are excluded via path filters)
+**Trigger:** Push to `main` (doc-only changes like README.md are excluded)
 
 **Required secrets** (already configured in the repository):
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_TOKEN` — Cloudflare API token with Workers and R2 permissions
+- `CLOUDFLARE_ACCOUNT_ID` — Your Cloudflare account ID
 
-> **Note:** The GitHub Actions workflow does not upload images. Images live in `public/images/`, which is gitignored. Use `npm run deploy:full` or `npm run upload:images` locally to push images to R2. See [IMAGES.md](./IMAGES.md).
+**Image uploads:** The workflow does NOT upload images (they're gitignored). To include images in deployment:
+- Use `npm run deploy:full` locally (includes image upload), then commit the manifest change
+- Or use `npm run upload:images` to upload images separately
+
+See [IMAGES.md](./IMAGES.md) for image management details.
 
 ---
 
@@ -160,13 +222,16 @@ After deploying:
 
 ```bash
 # Check what's in the bucket
-npx wrangler r2 object list static-robray-net
+npx wrangler r2 bucket list
 
-# Re-upload assets manually
-for file in dist/_astro/*; do
-  npx wrangler r2 object put "static-robray-net/_astro/$(basename $file)" --file="$file"
+# Re-upload assets manually from dist/client/_astro/
+for file in dist/client/_astro/*; do
+  filename=$(basename "$file")
+  npx wrangler r2 object put "static-robray-net/_astro/$filename" --file="$file" --remote
 done
 ```
+
+> **Important:** Assets are in `dist/client/_astro/` not `dist/_astro/`.
 
 ### Site returns "Worker not found" or 404
 
@@ -196,7 +261,21 @@ npm run astro check
 npm run build
 ```
 
-### Wrangler not authenticated
+### GitHub Actions deployment failed
+
+**Cause:** Usually a Cloudflare API token permission issue.
+
+Check the GitHub Actions logs:
+1. Go to https://github.com/r0bray/des4800/actions
+2. Click the failed workflow run
+3. Expand the step that failed (usually "Upload built assets")
+
+If it's an auth error:
+- Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets are set
+- Check token permissions at https://dash.cloudflare.com/profile/api-tokens
+- Ensure token has `workers:write` and `r2:write` permissions
+
+### Local Wrangler not authenticated
 
 ```bash
 npx wrangler login
@@ -223,14 +302,19 @@ Configure CORS on the R2 bucket in Cloudflare Dashboard → R2 → `static-robra
 
 ## Production Checklist
 
-- [ ] Wrangler authenticated (`npx wrangler login`)
+**One-time setup:**
 - [ ] R2 bucket `static-robray-net` exists
 - [ ] Custom domain `static.robray.net` configured on R2 bucket
 - [ ] Custom domain `des4800.robray.net` configured on Worker
-- [ ] `npm run deploy:full` completed successfully
+- [ ] GitHub repository secrets configured (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`)
+
+**For each deployment:**
+- [ ] Code committed and pushed to `main`
+- [ ] GitHub Actions workflow completes successfully (check https://github.com/r0bray/des4800/actions)
 - [ ] Site loads at https://des4800.robray.net
 - [ ] Assets (CSS/JS) load from https://static.robray.net
 - [ ] No console errors in browser DevTools
+- [ ] Images uploaded separately if needed: `npm run upload:images`
 
 ---
 

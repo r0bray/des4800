@@ -95,60 +95,48 @@ See [IMAGES.md](./IMAGES.md) for the complete image management guide.
 
 ## 📦 Deployment
 
-### Prerequisites for Deployment
+### Primary: GitHub Actions (Automatic) ⚡
 
-1. **R2 Bucket Setup**:
-   ```bash
-   # Create the R2 bucket (if not already created)
-   wrangler r2 bucket create static-robray-net
-   ```
-
-2. **DNS Configuration**:
-   - Connect `des4800.robray.net` to the Worker via Cloudflare Worker custom domain
-   - Add custom domain `static.robray.net` to the R2 bucket
-
-### Deploy to Cloudflare Workers
+The easiest way to deploy:
 
 ```bash
+git add .
+git commit -m "Your changes"
+git push origin main
+```
+
+✅ **GitHub Actions automatically:**
+1. Builds the site
+2. Uploads compiled CSS/JS to R2 (from `dist/client/_astro/`)
+3. Uploads `favicon.svg` to R2
+4. Deploys the Worker to Cloudflare
+
+**Monitor progress:** https://github.com/r0bray/des4800/actions
+
+### Alternative: Local Deployment
+
+If you prefer to deploy from your machine:
+
+```bash
+# Full deployment (includes images)
+npm run deploy:full
+
+# Quick deploy (code only)
 npm run deploy
 ```
 
-This runs `npm run build && wrangler deploy` — builds the site and deploys the Worker directly. The Cloudflare/Astro toolchain generates the worker bundle during build and deploys it via Wrangler.
-
-### Automated Deployment
-
-**Option A: Use the deployment script (recommended)**
-
+Requires local Wrangler authentication:
 ```bash
-npm run deploy:full
+npx wrangler login
 ```
 
-This runs `./scripts/deploy.sh` which:
-1. Builds the site
-2. Uploads compiled `_astro` CSS/JS to R2
-3. Uploads public assets (favicon, etc.) to R2
-4. Uploads all images from `public/images/` to R2
-5. Deploys the Worker with `wrangler deploy`
+### Prerequisites (One-time)
 
-Image uploads are included — no need to run them separately.
-
-**Option B: GitHub Actions (automatic)**
-
-Push to `main` branch and GitHub Actions will automatically build and deploy the Worker.
-
-See [GitHub Actions Setup](#github-actions-setup) below.
-
-**Option C: Manual deployment**
-
-```bash
-npm run build
-npx wrangler deploy
-```
-
-Then upload assets manually:
-```bash
-npx wrangler r2 object put static-robray-net/_astro/[filename] --file=dist/_astro/[filename] --remote
-```
+- Cloudflare account with Workers & R2
+- R2 bucket `static-robray-net` created
+- Custom domain `static.robray.net` → R2 bucket
+- Custom domain `des4800.robray.net` → Worker
+- GitHub repository secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
 
 ## 🏗️ Architecture
 
@@ -215,61 +203,57 @@ Configured in Cloudflare DNS for `robray.net`:
 
 This setup deploys directly to Cloudflare Workers using `wrangler deploy`. The Worker serves HTML via SSR and the R2 bucket serves static assets.
 
-## 🤖 GitHub Actions Setup
+## 🤖 GitHub Actions Workflow
 
-Automatic deployments on push to `main` are handled by `.github/workflows/deploy.yml`.
+Automatic deployments are handled by `.github/workflows/deploy.yml`.
 
-### 1. Get Cloudflare Credentials
+**Triggered on:** Push to `main` (doc-only changes are skipped)
 
-```bash
-npx wrangler whoami
-# Note your Account ID
-```
+**What it does:**
+1. Install dependencies
+2. Run `npm run build`
+3. Upload CSS/JS from `dist/client/_astro/` to R2
+4. Upload `favicon.svg` to R2
+5. Deploy Worker with `wrangler deploy`
 
-### 2. Create Cloudflare API Token
+**Required secrets** (already configured):
+- `CLOUDFLARE_API_TOKEN` — API token with Workers and R2 permissions
+- `CLOUDFLARE_ACCOUNT_ID` — Your Cloudflare account ID
 
-1. Go to: https://dash.cloudflare.com/profile/api-tokens
-2. Create token with permissions:
-   - Workers R2 Storage: Edit
-   - Workers Scripts: Edit
-   - Account Settings: Read
+**Note on images:** The workflow does NOT upload images (they're gitignored). To deploy images:
+- Use `npm run deploy:full` locally, which includes `npm run upload:images`
+- Or run `npm run upload:images` separately
 
-### 3. Add GitHub Secrets
-
-Go to: https://github.com/r0bray/des4800/settings/secrets/actions
-
-Add two secrets:
-- `CLOUDFLARE_ACCOUNT_ID`: Your account ID from step 1
-- `CLOUDFLARE_API_TOKEN`: The token from step 2
-
-### 4. Push to Deploy
-
-```bash
-git push origin main
-```
-
-GitHub Actions will automatically build and deploy!
-
-**View deployments**: https://github.com/r0bray/des4800/actions
+**View workflow progress:** https://github.com/r0bray/des4800/actions
 
 ## 🔧 Troubleshooting
 
-### Assets not loading
+### GitHub Actions deployment failed
 
-1. Verify R2 bucket exists: `npx wrangler r2 bucket list`
-2. Check bucket has public access enabled
-3. Verify custom domain `static.robray.net` is configured in R2 settings
-4. Check browser console for CORS errors
+1. Check logs: https://github.com/r0bray/des4800/actions
+2. Verify secrets at: https://github.com/r0bray/des4800/settings/secrets/actions
+3. Ensure API token has `workers:write` and `r2:write` permissions
+4. Check token hasn't expired: https://dash.cloudflare.com/profile/api-tokens
 
-### Worker deployment fails
+### Assets not loading (CSS/JS 404)
 
-1. Ensure you're authenticated: `npx wrangler login`
+1. Hard refresh browser: `Cmd+Shift+R` or `Ctrl+Shift+R`
+2. Verify R2 bucket has assets:
+   ```bash
+   npx wrangler r2 bucket list
+   ```
+3. Check custom domain `static.robray.net` is configured in R2 settings
+4. Verify assets are in `static-robray-net/_astro/`
+
+### Worker deployment fails locally
+
+1. Authenticate: `npx wrangler login`
 2. Check `wrangler.toml` configuration
-3. Verify your Cloudflare account has Workers enabled
+3. Verify Cloudflare account has Workers enabled
 
-### SSH Authentication with 1Password
+### SSH Authentication
 
-This project uses the 1Password SSH agent (`SSH_AUTH_SOCK` set to the 1Password socket in `~/.zshrc`) with the "Github CSUSB SSH Key". The SSH config lives in `~/dotfiles/ssh_config`, symlinked to `~/.ssh/config`.
+Git operations use SSH authentication configured in your local environment.
 
 ```bash
 # Test SSH connection
@@ -280,13 +264,11 @@ ssh -T git@github.com
 
 ## 📚 Documentation
 
-- **[QUICKSTART.md](./QUICKSTART.md)** - Get started in minutes
-- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Complete deployment walkthrough
-- **[IMAGES.md](./IMAGES.md)** - Image upload and management guide
-- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - System architecture and diagrams
-- **[CHEATSHEET.md](./CHEATSHEET.md)** - Quick command reference
-- **[SETUP-COMPLETE.md](./SETUP-COMPLETE.md)** - Setup summary
-- **[.github/SECRETS.md](./.github/SECRETS.md)** - GitHub Actions secrets setup
+- **[QUICKSTART.md](./QUICKSTART.md)** — Get started in minutes
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** — Detailed deployment guide and troubleshooting
+- **[CHEATSHEET.md](./CHEATSHEET.md)** — Quick command reference
+- **[IMAGES.md](./IMAGES.md)** — Image upload and management
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)** — System architecture and diagrams
 
 ## 🔗 Resources
 
@@ -297,11 +279,11 @@ ssh -T git@github.com
 
 ## 📊 Project Status
 
-- ✅ Site deployed and live at https://des4800.robray.net
+- ✅ Site live at https://des4800.robray.net
 - ✅ Assets serving from R2 at https://static.robray.net
-- ✅ GitHub repository configured with SSH authentication
+- ✅ GitHub Actions auto-deployment on push to `main`
 - ✅ Local development environment working
-- ✅ GitHub Actions configured for auto-deployment on push to `main`
+- ✅ Cloudflare Workers + R2 fully configured
 
 ---
 

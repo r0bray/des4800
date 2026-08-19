@@ -54,84 +54,64 @@ npm run preview
 npm run astro check
 ```
 
-## Deployment (First Time)
+## Deployment
 
-### 1. Install & Build
+### First-Time Setup (One Time)
 
-```bash
-npm install
-npm run build
-```
+1. Ensure you have:
+   - Cloudflare account with Workers & R2 enabled
+   - GitHub repository configured with `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets
+   - R2 custom domain `static.robray.net` configured
+   - Worker custom domain `des4800.robray.net` configured
 
-### 2. Setup Cloudflare
+2. That's it! GitHub Actions is already set up.
 
-```bash
-# Login to Cloudflare
-npx wrangler login
+### Deploy Your Changes (Every Time)
 
-# Create R2 bucket
-./scripts/setup-r2.sh
-```
-
-### 3. Configure DNS
-
-In Cloudflare Dashboard:
-
-1. **For static.robray.net**:
-   - Go to R2 → static-robray-net → Settings
-   - Add custom domain: `static.robray.net`
-
-2. **For des4800.robray.net**:
-   - Will be configured automatically on first deployment
-
-### 4. Deploy
+**Push to main:**
 
 ```bash
-./scripts/deploy.sh
+git add .
+git commit -m "Your changes"
+git push origin main
 ```
 
-On first run, enter:
-- Project name: `des4800-robray-net-site-production`
-- Branch: `main`
+GitHub Actions will automatically:
+- ✅ Build the site
+- ✅ Upload CSS/JS to R2
+- ✅ Deploy the Worker
 
-### 5. Verify
+**Monitor progress:** https://github.com/r0bray/des4800/actions
 
-Visit https://des4800.robray.net to see your live site!
+**Verify:** Visit https://des4800.robray.net (give it 30 seconds after push)
 
-## Subsequent Deployments
+## Troubleshooting Quick Starts
 
-After initial setup, deploying is simple:
+**Deployment failed in GitHub Actions?**
+- Check https://github.com/r0bray/des4800/actions for logs
+- Common cause: API token missing or expired permissions
+- Verify secrets at: https://github.com/r0bray/des4800/settings/secrets/actions
 
-```bash
-./scripts/deploy.sh
-```
+**CSS not loading?**
+- Hard refresh your browser: `Cmd+Shift+R` (Mac) or `Ctrl+Shift+R` (Windows)
+- Check that `https://static.robray.net/_astro/` assets are accessible
 
-That's it! The script handles:
-- Building the site
-- Uploading assets to R2
-- Deploying to Cloudflare Workers
+**Want to deploy locally instead?**
+- Install dependencies: `npm install`
+- Authenticate: `npx wrangler login`
+- Deploy: `npm run deploy:full` (with images) or `npm run deploy` (code only)
 
-## Configuration
-
-### Key Files
+## Configuration Files
 
 **astro.config.mjs**
 - Cloudflare adapter settings
-- Asset prefix for R2
+- Asset prefix for R2 (`https://static.robray.net`)
 - Site URL
 
 **wrangler.toml**
-- Worker name
+- Worker name: `des4800-robray-net-site-production`
 - R2 bucket binding
 - Compatibility settings
-
-### Environment Variables
-
-Copy `env.example` to `.env` for local overrides:
-
-```bash
-cp env.example .env
-```
 
 ## Troubleshooting
 
@@ -157,11 +137,28 @@ npm install
 
 ## Next Steps
 
-- Edit `src/pages/index.astro` to customize your homepage
-- Add new pages in `src/pages/`
-- Modify styles in `src/layouts/Layout.astro`
-- Check `DEPLOYMENT.md` for detailed deployment info
-- See `README.md` for full documentation
+1. **Make changes** to your site:
+   - Edit pages in `src/pages/`
+   - Modify styles in `src/layouts/Layout.astro` or `src/styles/global.css`
+   - Add new content in `src/components/`
+
+2. **Test locally:**
+   ```bash
+   npm run dev
+   ```
+   Visit http://localhost:4321
+
+3. **Deploy:**
+   ```bash
+   git push origin main
+   ```
+
+4. **Verify** at https://des4800.robray.net
+
+For more details, see:
+- `DEPLOYMENT.md` — Detailed deployment walkthrough
+- `CHEATSHEET.md` — Quick command reference
+- `README.md` — Full documentation
 
 ## Tech Stack
 
@@ -179,8 +176,9 @@ npm install
 
 ---
 
-**Need help?** Check the detailed guides:
-- `DEPLOYMENT.md` - Complete deployment walkthrough
-- `README.md` - Full documentation
-- `.github/SECRETS.md` - CI/CD setup
+**Need help?**
+- `DEPLOYMENT.md` — Detailed deployment and troubleshooting
+- `CHEATSHEET.md` — Quick command reference
+- `IMAGES.md` — Image upload and management
+- `README.md` — Complete documentation
 

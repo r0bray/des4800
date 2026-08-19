@@ -20,13 +20,35 @@ npm run watch:images               # Watch public/images/ and auto-upload on cha
 
 ## Deployment Commands
 
+### Primary: Git Push (Automatic via GitHub Actions)
+
 ```bash
-npm run deploy:full   # Full deployment: build → upload _astro assets → upload images → deploy Worker
-npm run deploy        # Quick deploy: build + deploy Worker only (no image upload)
+git add .
+git commit -m "Your changes"
+git push origin main
+```
+
+→ Automatically builds, uploads assets to R2, and deploys Worker.
+
+### Alternative: Local Deployment
+
+```bash
+npm run deploy:full   # Full: build → upload assets → upload images → deploy Worker
+npm run deploy        # Quick: build + deploy Worker only (no image upload)
 npm run build         # Build only (no deploy)
 ```
 
-> `deploy:full` handles image upload automatically — no separate step needed.
+> Use `npm run deploy:full` locally when you need to include images.
+
+## GitHub Actions
+
+```bash
+# Monitor deployment
+https://github.com/r0bray/des4800/actions
+
+# View logs of last deployment
+https://github.com/r0bray/des4800/actions/workflows/deploy.yml
+```
 
 ## Cloudflare / Wrangler Commands
 
@@ -113,16 +135,14 @@ npm run upload:image public/images/heroes/hero.jpg
 ### Deploy code changes
 
 ```bash
-# Option A: Push to main (triggers GitHub Actions)
+# PRIMARY: Push to main (auto-deploys via GitHub Actions)
 git add .
 git commit -m "Update page"
 git push origin main
 
-# Option B: Deploy manually (includes image upload)
-npm run deploy:full
-
-# Option C: Quick deploy (code only)
-npm run deploy
+# ALTERNATIVE: Deploy from local machine
+npm run deploy:full          # With images
+npm run deploy               # Code only (faster)
 ```
 
 ### Check what's in R2
@@ -142,17 +162,36 @@ rm -rf node_modules .astro && npm install && npm run dev
 # Build fails — check for errors
 npm run astro check
 
-# Not authenticated to Cloudflare
+# Not authenticated for local deploy
 npx wrangler login
+
+# GitHub Actions deployment failed
+https://github.com/r0bray/des4800/actions  # Check logs here
 
 # Images not uploading
 npx wrangler whoami && npx wrangler r2 bucket list
 
-# Verify an image is live
-curl -I https://static.robray.net/images/your-image.jpg
+# Verify CSS is live
+curl -I https://static.robray.net/_astro/index.YCIkRrJG.css
 
 # Clear Astro cache
 rm -rf .astro dist
+```
+
+## Deployment Flow
+
+```
+git push origin main
+    ↓
+GitHub Actions triggered
+    ↓
+1. Install dependencies
+2. npm run build
+3. Upload dist/client/_astro/* to R2
+4. Upload favicon.svg to R2
+5. wrangler deploy
+    ↓
+✅ Live at https://des4800.robray.net
 ```
 
 ## npm Scripts Reference
@@ -163,7 +202,8 @@ rm -rf .astro dist
 | `npm run build` | Build for production |
 | `npm run preview` | Preview production build |
 | `npm run deploy` | Build + deploy Worker |
-| `npm run deploy:full` | Build + upload assets + upload images + deploy Worker |
+| `npm run deploy:full` | Full local deploy (use when pushing images) |
+| `npm run deploy` | Quick local deploy (code only) |
 | `npm run upload:images` | Upload all `public/images/` to R2 |
 | `npm run upload:image <path>` | Upload a single image to R2 |
 | `npm run watch:images` | Watch `public/images/` and auto-upload |
