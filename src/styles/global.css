@@ -104,6 +104,19 @@ p {
   margin-bottom: var(--spacing-md);
 }
 
+ul,
+ol {
+  margin: var(--spacing-md) 0 var(--spacing-lg);
+  padding-left: var(--spacing-lg);
+}
+
+li {
+  color: var(--gray);
+  font-size: var(--font-size-lg);
+  line-height: 1.75;
+  margin-bottom: var(--spacing-xs);
+}
+
 /* ===========================
    Components
    =========================== */
@@ -819,16 +832,7 @@ footer {
   background: #fafafa;
 }
 
-.post-content ul,
-.post-content ol {
-  margin: var(--spacing-md) 0;
-  padding-left: var(--spacing-lg);
-}
 
-.post-content li {
-  margin-bottom: var(--spacing-xs);
-  color: var(--gray);
-}
 
 .post-content code {
   background: var(--gray-light);
