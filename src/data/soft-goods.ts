@@ -215,7 +215,7 @@ export const softGoodsPages: SoftGoodsPage[] = [
     slug: 'zippers',
     section: 'tools',
     status: 'published',
-    heroImage: 'https://static.robray.net/images/soft-goods/zipper-closeup.jpg',
+    heroImage: 'https://static.robray.net/images/soft-goods/zipper.jpg',
     heroImageAlt: 'Close-up of a zipper chain and slider used as the hero image for the zippers page',
     heroImageCaption: 'Zipper sizing is determined by the width of the teeth across the closed chain. The number (such as #5 or #8) indicates this width in millimeters and is your primary specification when choosing a zipper.',
     description:
