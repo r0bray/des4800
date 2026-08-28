@@ -175,8 +175,8 @@ export const softGoodsPages: SoftGoodsPage[] = [
     slug: 'thread',
     section: 'tools',
     status: 'published',
-    image: '/images/soft-goods/gutermann-mara-70.jpg',
-    heroImage: '/images/soft-goods/gutermann-mara-70.jpg',
+    image: 'https://static.robray.net/images/soft-goods/gutermann-mara-70.jpg',
+    heroImage: 'https://static.robray.net/images/soft-goods/gutermann-mara-70.jpg',
     heroImageAlt: 'Gütermann Mara thread spool with ticket number 70 shown on the yellow end label',
     heroImageCaption: 'In soft-goods product design, matching thread type and weight to fabric and use is as important as choosing the fabric itself.',
     description:
@@ -215,7 +215,7 @@ export const softGoodsPages: SoftGoodsPage[] = [
     slug: 'zippers',
     section: 'tools',
     status: 'published',
-    heroImage: '/images/soft-goods/zipper-closeup.jpg',
+    heroImage: 'https://static.robray.net/images/soft-goods/zipper-closeup.jpg',
     heroImageAlt: 'Close-up of a zipper chain and slider used as the hero image for the zippers page',
     heroImageCaption: 'Zipper sizing is determined by the width of the teeth across the closed chain. The number (such as #5 or #8) indicates this width in millimeters and is your primary specification when choosing a zipper.',
     description:
