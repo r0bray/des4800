@@ -165,7 +165,7 @@ export const softGoodsPages: SoftGoodsPage[] = [
     image: 'https://static.robray.net/images/soft-goods/henry-ford-sewing-machine.jpg',
     heroImage: 'https://static.robray.net/images/soft-goods/henry-ford-sewing-machine.jpg',
     heroImageAlt: 'Historic sewing machine used as a visual header for the sewing machines topic page',
-    heroImageCaption: 'Sewing machines are fundamental tools in soft-goods work. The right machine for the job depends on your material, stitch needs, and production style—from nimble household machines to powerful industrial workhorses.',
+    heroImageCaption: 'Sewing machines are fundamental tools in soft-goods work. The right machine for the job depends on your material, stitch needs, and production style.',
     description:
       'Studio machine basics, setup, safe operation, and which stitches and tools support product design prototypes.',
     body: '',
