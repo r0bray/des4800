@@ -1,0 +1,65 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getProjects } from '../../data/projects';
+
+export const prerender = true;
+
+const allProjects = getProjects('published');
+const showDraftBadge = import.meta.env.DEV;
+---
+
+<Layout
+  title="Projects - DES4800"
+  description="Project walkthroughs and case studies in product design and soft goods."
+>
+  <div class="page-header page-header--left">
+    <h1>Projects</h1>
+    <p>
+      Complete project walkthroughs that bring together the skills, tools, and materials from the course. Each project is a case study in problem-solving, decision-making, and execution in product design and soft goods.
+    </p>
+  </div>
+
+  <section class="content-section" aria-labelledby="featured-projects">
+    <div class="content-section-header">
+      <h2 id="featured-projects">Featured Projects</h2>
+      <p>Step-by-step guides and documentation of course projects and design explorations.</p>
+    </div>
+    {allProjects.length > 0 ? (
+      <div class="posts-grid">
+        {allProjects.map((project) => (
+          <article class="post-card">
+            <a
+              href={`/projects/${project.slug}/`}
+              class:list={['post-card-media', { 'post-card-media--has-image': project.heroImage ?? project.image }]}
+              aria-label={project.heroImage ?? project.image ? project.title : `${project.title} image placeholder`}
+            >
+              {project.heroImage ?? project.image ? (
+                <img src={project.heroImage ?? project.image} alt="" loading="lazy" />
+              ) : (
+                <span class="post-card-media-label">Image coming soon</span>
+              )}
+            </a>
+            <div class="post-card-content">
+              <h3 class="post-title">
+                <a href={`/projects/${project.slug}/`}>
+                  {project.title}
+                  {showDraftBadge && project.status === 'draft' && (
+                    <span class="status-badge status-badge--draft">Draft</span>
+                  )}
+                </a>
+              </h3>
+              <p class="post-description">{project.description}</p>
+            </div>
+            <div class="post-card-footer">
+              <a href={`/projects/${project.slug}/`} class="read-more">
+                View project →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="content-section-empty">No published projects yet.</p>
+    )}
+  </section>
+</Layout>
