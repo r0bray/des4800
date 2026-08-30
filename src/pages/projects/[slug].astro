@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PatternInIllustratorContent from '../../components/projects/PatternInIllustratorContent.astro';
+import { getProjects, isProjectVisible, type Project } from '../../data/projects';
+import type { GetStaticPaths } from 'astro';
+
+export const prerender = true;
+
+export const getStaticPaths = (() => {
+  return getProjects().map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props as Props;
+
+// Safety net for unexpected requests
+if (!isProjectVisible(project)) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const customContent = {
+  'pattern-in-illustrator': PatternInIllustratorContent,
+} as const;
+
+const CustomContent = customContent[project.slug as keyof typeof customContent];
+---
+
+<Layout
+  title={`${project.title} - Projects - DES4800`}
+  description={project.description}
+>
+  <article class="post-detail">
+    <header class="post-header">
+      <a href="/projects/" class="back-link">← Back to Projects</a>
+      <div class="post-header-title-row">
+        <h1>{project.title}</h1>
+        {project.status === 'draft' && import.meta.env.DEV && (
+          <span class="status-badge status-badge--draft">Draft</span>
+        )}
+      </div>
+    </header>
+
+    {project.heroImage && (
+      <figure class="post-hero">
+        <img
+          src={project.heroImage}
+          alt={project.heroImageAlt ?? project.title}
+          loading="eager"
+          decoding="async"
+        />
+        {project.heroImageCaption && (
+          <figcaption set:html={project.heroImageCaption} />
+        )}
+      </figure>
+    )}
+
+    {CustomContent ? (
+      <CustomContent />
+    ) : (
+      <div class="post-content">
+        <p>{project.body}</p>
+      </div>
+    )}
+  </article>
+</Layout>
