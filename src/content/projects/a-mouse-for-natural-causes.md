@@ -116,16 +116,22 @@ You can download Bambu Studio from the [official website](https://www.bambulab.c
 
    e. painters-pyramid-base.stl
 
-3. Prepare, slice, and export the models for your 3D printer. NOTE! You will use the File, Export, "Export plate sliced file" option. This will create a .3mf file that you can copy to your microSD card.
+<div class="video-embed-container">
+  <iframe width="100%" height="400" src="https://www.youtube.com/embed/k030BjZ6oow" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+*Here's a video that gives you a quick overview of how import, prepare, slice, and export the models.*
+
+3. Prepare, slice, and export the models for your 3D printer. NOTE! You will use the File, Export, "Export plate sliced file" option. This will create a .gcode.3mf file that you can copy to your microSD card.
 
 <figure class="inline-figure">
   <img src="https://static.robray.net/images/bambu-studio-export-plate-sliced-file.png" alt="Bambu Studio File menu showing Export options with 'Export plate sliced file' highlighted" />
   <figcaption>Bambu Studio's File menu, with Export &gt; "Export plate sliced file" highlighted.</figcaption>
 </figure>
 
-4. Copy the .3mf file to your microSD card.
+4. Copy the .gcode.3mf file to your microSD card.
 
-3. Print the .3mf file
+3. Print the .gcode.3mf file
 
 <figure class="inline-figure">
   <img src="https://static.robray.net/images/projects/stand-printed.jpg" alt="The completed painter's pyramid print, fresh off the build plate" />
