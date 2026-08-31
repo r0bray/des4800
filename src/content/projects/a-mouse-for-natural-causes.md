@@ -3,9 +3,9 @@ title: 'A Mouse for Natural Causes'
 slug: a-mouse-for-natural-causes
 status: published
 description: 'A CMF design assignment exploring color, material, and finish for a brand that embraces impermanence and aging.'
-heroImage: 'https://static.robray.net/images/projects/natural-causes-mouse-hero.svg'
+heroImage: 'https://static.robray.net/images/projects/first-mouse.jpg'
 heroImageAlt: 'Natural Causes mouse CMF design project'
-heroImageCaption: "Natural Causes: We create technology products that don't need to last forever."
+heroImageCaption: "A prototype of the first mouse, developed by <a href='https://en.wikipedia.org/wiki/Douglas_Engelbart'>Douglas Engelbart</a> in 1963, from 1968 Rue des Archives / APIC / Getty Images"
 ---
 
 # **A Mouse for Natural Causes**
@@ -173,7 +173,7 @@ Think about the palette as a family. Consider relationships between warm and coo
 
 DO NOT create a collection of beige "eco" products. Look for softer, natural, weathered, faded, mineral, vegetal, or otherwise unexpected colors that give the brand a recognizable identity.
 
-### **4. Name Your ColorPrototype**
+### **4. Give Your Mouse a Product Name**
 
 Give your mouse product a working product name that fits the Natural Causes identity.
 
