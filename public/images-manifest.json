@@ -1,70 +1,5 @@
 [
   {
-    "path": "bambu-studio-export-plate-sliced-file.png",
-    "size": 690261,
-    "etag": "382feba524e4f79de8e270513e02a0c5"
-  },
-  {
-    "path": "bmo.jpg",
-    "size": 63240,
-    "etag": "428c4946e2bfcd9c52433959a582fcbb"
-  },
-  {
-    "path": "des4800-hero.svg",
-    "size": 860,
-    "etag": "1a700d51c02ee1b977e3e5357c8cf5eb"
-  },
-  {
-    "path": "finn.jpg",
-    "size": 33872,
-    "etag": "b865b566ae24b371b84b69020ba58e81"
-  },
-  {
-    "path": "jake.jpg",
-    "size": 44805,
-    "etag": "da0188113390ae87f8fae0c868ed6878"
-  },
-  {
-    "path": "marceline.jpg",
-    "size": 54218,
-    "etag": "4141c93428d64059453e51f34d19fec5"
-  },
-  {
-    "path": "projects/bambu-studio-export-menu.png",
-    "size": 74,
-    "etag": "3232f76290980f53bc20e4e1f32d9237"
-  },
-  {
-    "path": "projects/first-mouse.jpg",
-    "size": 142348,
-    "etag": "10f34646bf69b1475f8ceab6502e5b31"
-  },
-  {
-    "path": "projects/natural-causes-mouse-hero.svg",
-    "size": 1254,
-    "etag": "0321e0d4fad9ee1ac47be039dc52ba10"
-  },
-  {
-    "path": "projects/pattern-in-illustrator-hero.svg",
-    "size": 1245,
-    "etag": "a6cf7729dafc215aae5f2df6be27d504"
-  },
-  {
-    "path": "projects/stand-assembled.jpg",
-    "size": 215362,
-    "etag": "4a0fe488d3714d8abf7b78fcf84f135d"
-  },
-  {
-    "path": "projects/stand-parts.jpg",
-    "size": 169381,
-    "etag": "809a40dde74bf7fed4662894f0a0a4e7"
-  },
-  {
-    "path": "projects/stand-printed.jpg",
-    "size": 263400,
-    "etag": "9bbee6807eb7ab2c9edf3ae46e857c6e"
-  },
-  {
     "path": "sample.svg",
     "size": 629,
     "etag": "131e40214fcc9787bfe100ec8a711e8a"
@@ -86,13 +21,8 @@
   },
   {
     "path": "soft-goods/henry-ford-sewing-machine.jpg",
-    "size": 96395,
-    "etag": "0104c53e58bee0e004bfc3941d92db7d"
-  },
-  {
-    "path": "soft-goods/henry-ford-sewing-machine.psd",
-    "size": 957274,
-    "etag": "c60244656a96f6309993ecf0e7e56e2e"
+    "size": 55364,
+    "etag": "2e2594208681ce8ea36b3e35ebb47ad4"
   },
   {
     "path": "soft-goods/juki-8700h-placeholder.svg",
@@ -116,8 +46,8 @@
   },
   {
     "path": "soft-goods/juki-hzl-f600.jpg",
-    "size": 63471,
-    "etag": "cbb5717f5ae1860a69094234dcfaa987"
+    "size": 39770,
+    "etag": "6e261824d3fa674d10edb210e850c094"
   },
   {
     "path": "soft-goods/Manual-JUKI-DDL-8700.pdf",
@@ -130,18 +60,13 @@
     "etag": "cf693014674d65097c0d1b411e630a55"
   },
   {
-    "path": "soft-goods/pattern-making.jpg",
-    "size": 206404,
-    "etag": "a61256df3969aa40c67343a2ea185ef0"
-  },
-  {
     "path": "soft-goods/Setup-Sheet-JUKI-DDL-8700.pdf",
     "size": 225428,
     "etag": "feacb8326b4cf051ee3855b34d11dfea"
   },
   {
-    "path": "soft-goods/zipper.jpg",
-    "size": 219934,
-    "etag": "601f0c0c68a6f79f0aa962f10a6efec0"
+    "path": "soft-goods/singer-number1.jpg",
+    "size": 55364,
+    "etag": "2e2594208681ce8ea36b3e35ebb47ad4"
   }
 ]
