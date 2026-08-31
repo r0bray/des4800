@@ -1,5 +1,50 @@
 [
   {
+    "path": "bambu-studio-export-plate-sliced-file.png",
+    "size": 690261,
+    "etag": "382feba524e4f79de8e270513e02a0c5"
+  },
+  {
+    "path": "bmo.jpg",
+    "size": 63240,
+    "etag": "428c4946e2bfcd9c52433959a582fcbb"
+  },
+  {
+    "path": "des4800-hero.svg",
+    "size": 860,
+    "etag": "1a700d51c02ee1b977e3e5357c8cf5eb"
+  },
+  {
+    "path": "finn.jpg",
+    "size": 33872,
+    "etag": "b865b566ae24b371b84b69020ba58e81"
+  },
+  {
+    "path": "jake.jpg",
+    "size": 44805,
+    "etag": "da0188113390ae87f8fae0c868ed6878"
+  },
+  {
+    "path": "marceline.jpg",
+    "size": 54218,
+    "etag": "4141c93428d64059453e51f34d19fec5"
+  },
+  {
+    "path": "projects/bambu-studio-export-menu.png",
+    "size": 74,
+    "etag": "3232f76290980f53bc20e4e1f32d9237"
+  },
+  {
+    "path": "projects/natural-causes-mouse-hero.svg",
+    "size": 1254,
+    "etag": "0321e0d4fad9ee1ac47be039dc52ba10"
+  },
+  {
+    "path": "projects/pattern-in-illustrator-hero.svg",
+    "size": 1245,
+    "etag": "a6cf7729dafc215aae5f2df6be27d504"
+  },
+  {
     "path": "sample.svg",
     "size": 629,
     "etag": "131e40214fcc9787bfe100ec8a711e8a"
@@ -68,11 +113,6 @@
     "path": "soft-goods/pattern-making.jpg",
     "size": 206404,
     "etag": "a61256df3969aa40c67343a2ea185ef0"
-  },
-  {
-    "path": "soft-goods/patternmaking-draft.jpg",
-    "size": 28,
-    "etag": "e51d2ed58c4d2b244bc079d6a5855fec"
   },
   {
     "path": "soft-goods/Setup-Sheet-JUKI-DDL-8700.pdf",

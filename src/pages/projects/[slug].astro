@@ -1,71 +1,63 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PatternInIllustratorContent from '../../components/projects/PatternInIllustratorContent.astro';
-import { getProjects, isProjectVisible, type Project } from '../../data/projects';
+import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
 export const prerender = true;
 
-export const getStaticPaths = (() => {
-  return getProjects().map((project) => ({
-    params: { slug: project.slug },
+export const getStaticPaths = (async () => {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.data.slug },
     props: { project },
   }));
 }) satisfies GetStaticPaths;
 
 interface Props {
-  project: Project;
+  project: any;
 }
 
 const { project } = Astro.props as Props;
 
-// Safety net for unexpected requests
-if (!isProjectVisible(project)) {
+// Only render published projects (unless in dev)
+if (project.data.status === 'draft' && !import.meta.env.DEV) {
   return new Response(null, { status: 404, statusText: 'Not Found' });
 }
 
-const customContent = {
-  'pattern-in-illustrator': PatternInIllustratorContent,
-} as const;
-
-const CustomContent = customContent[project.slug as keyof typeof customContent];
+const { Content } = await render(project);
 ---
 
 <Layout
-  title={`${project.title} - Projects - DES4800`}
-  description={project.description}
+  title={`${project.data.title} - Projects - DES4800`}
+  description={project.data.description}
 >
   <article class="post-detail">
     <header class="post-header">
       <a href="/projects/" class="back-link">← Back to Projects</a>
       <div class="post-header-title-row">
-        <h1>{project.title}</h1>
-        {project.status === 'draft' && import.meta.env.DEV && (
+        <h1>{project.data.title}</h1>
+        {project.data.status === 'draft' && import.meta.env.DEV && (
           <span class="status-badge status-badge--draft">Draft</span>
         )}
       </div>
     </header>
 
-    {project.heroImage && (
+    {project.data.heroImage && (
       <figure class="post-hero">
         <img
-          src={project.heroImage}
-          alt={project.heroImageAlt ?? project.title}
+          src={project.data.heroImage}
+          alt={project.data.heroImageAlt ?? project.data.title}
           loading="eager"
           decoding="async"
         />
-        {project.heroImageCaption && (
-          <figcaption set:html={project.heroImageCaption} />
+        {project.data.heroImageCaption && (
+          <figcaption set:html={project.data.heroImageCaption} />
         )}
       </figure>
     )}
 
-    {CustomContent ? (
-      <CustomContent />
-    ) : (
-      <div class="post-content">
-        <p>{project.body}</p>
-      </div>
-    )}
+    <div class="post-content">
+      <Content />
+    </div>
   </article>
 </Layout>

@@ -1,10 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getProjects } from '../../data/projects';
+import { getCollection } from 'astro:content';
 
 export const prerender = true;
 
-const allProjects = getProjects('published');
+const allProjects = await getCollection('projects');
+const publishedProjects = allProjects.filter((p) => p.data.status === 'published' || import.meta.env.DEV);
 const showDraftBadge = import.meta.env.DEV;
 ---
 
@@ -24,34 +25,34 @@ const showDraftBadge = import.meta.env.DEV;
       <h2 id="featured-projects">Featured Projects</h2>
       <p>Step-by-step guides and documentation of course projects and design explorations.</p>
     </div>
-    {allProjects.length > 0 ? (
+    {publishedProjects.length > 0 ? (
       <div class="posts-grid">
-        {allProjects.map((project) => (
+        {publishedProjects.map((project) => (
           <article class="post-card">
             <a
-              href={`/projects/${project.slug}/`}
-              class:list={['post-card-media', { 'post-card-media--has-image': project.heroImage ?? project.image }]}
-              aria-label={project.heroImage ?? project.image ? project.title : `${project.title} image placeholder`}
+              href={`/projects/${project.data.slug}/`}
+              class:list={['post-card-media', { 'post-card-media--has-image': project.data.heroImage }]}
+              aria-label={project.data.heroImage ? project.data.title : `${project.data.title} image placeholder`}
             >
-              {project.heroImage ?? project.image ? (
-                <img src={project.heroImage ?? project.image} alt="" loading="lazy" />
+              {project.data.heroImage ? (
+                <img src={project.data.heroImage} alt="" loading="lazy" />
               ) : (
                 <span class="post-card-media-label">Image coming soon</span>
               )}
             </a>
             <div class="post-card-content">
               <h3 class="post-title">
-                <a href={`/projects/${project.slug}/`}>
-                  {project.title}
-                  {showDraftBadge && project.status === 'draft' && (
+                <a href={`/projects/${project.data.slug}/`}>
+                  {project.data.title}
+                  {showDraftBadge && project.data.status === 'draft' && (
                     <span class="status-badge status-badge--draft">Draft</span>
                   )}
                 </a>
               </h3>
-              <p class="post-description">{project.description}</p>
+              <p class="post-description">{project.data.description}</p>
             </div>
             <div class="post-card-footer">
-              <a href={`/projects/${project.slug}/`} class="read-more">
+              <a href={`/projects/${project.data.slug}/`} class="read-more">
                 View project →
               </a>
             </div>

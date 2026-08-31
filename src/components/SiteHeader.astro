@@ -1,0 +1,294 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  heroImage?: string;
+  heroImageAlt?: string;
+  heroImageCaption?: string;
+}
+
+const { heroImage, heroImageAlt = 'Site hero image', heroImageCaption } = Astro.props;
+
+const allProjects = await getCollection('projects');
+const publishedProjects = allProjects.filter((p) => p.data.status === 'published');
+---
+
+<header class="site-header">
+  <div class="site-header-top">
+    <div class="site-header-container">
+      <a href="/" class="site-logo">
+        <h1>Physical Product Design & Digital Fabrication</h1>
+      </a>
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  {heroImage && (
+    <figure class="site-hero">
+      <img
+        src={heroImage}
+        alt={heroImageAlt}
+        loading="eager"
+        decoding="async"
+      />
+      {heroImageCaption && (
+        <figcaption set:html={heroImageCaption} />
+      )}
+    </figure>
+  )}
+
+  <!-- Mobile Navigation Menu -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav-content">
+      <div class="mobile-nav-section">
+        <h3>Navigation</h3>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <!-- <li><a href="/soft-goods/">Soft Goods</a></li>
+          <li><a href="/laser-cutting-engraving/">Laser Cutting & Engraving</a></li>
+          <li><a href="/wood-shop/">Wood Shop</a></li> -->
+        </ul>
+      </div>
+
+      <div class="mobile-nav-section">
+        <h3>Projects</h3>
+        <ul>
+          {publishedProjects.length > 0 ? (
+            publishedProjects.map((project) => (
+              <li>
+                <a href={`/projects/${project.data.slug}/`}>{project.data.title}</a>
+              </li>
+            ))
+          ) : (
+            <li><a href="/projects/">View All Projects</a></li>
+          )}
+        </ul>
+      </div>
+
+      <div class="mobile-nav-section">
+        <h3>Canvas & Contact</h3>
+        <ul>
+          <li>
+            <a href="https://csusb.instructure.com/courses/73018" target="_blank" rel="noopener noreferrer">
+              DES 4800 Canvas
+            </a>
+          </li>
+          <li>
+            <a href="https://csusb.instructure.com/courses/73906" target="_blank" rel="noopener noreferrer">
+              ART 3440 Canvas
+            </a>
+          </li>
+          <li><a href="mailto:rob.ray@csusb.edu">rob.ray@csusb.edu</a></li>
+          <li>
+            <a href="https://github.com/r0bray/" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://www.csusb.edu/art" target="_blank" rel="noopener noreferrer">
+              CSUSB Art & Design
+            </a>
+          </li>
+          <li>
+            <a href="http://robray.net" target="_blank" rel="noopener noreferrer">
+              robray.net
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: relative;
+  }
+
+  .site-header-top {
+    background-color: white;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .site-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+  }
+
+  .site-logo {
+    text-decoration: none;
+    color: inherit;
+    flex: 1;
+  }
+
+  .site-logo h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    gap: 0.35rem;
+  }
+
+  .mobile-menu-toggle span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--gray-dark);
+    transition: all 0.3s ease;
+    display: block;
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translate(0, 8px) rotate(45deg);
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translate(0, -8px) rotate(-45deg);
+  }
+
+  .site-hero {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .site-hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .site-hero figcaption {
+    padding: 1.5rem 2rem;
+    font-size: 0.95rem;
+    color: var(--gray);
+    background-color: white;
+    border-top: 1px solid var(--border-color);
+  }
+
+  /* Mobile Navigation */
+  .mobile-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-bottom: 1px solid var(--border-color);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    z-index: 99;
+  }
+
+  .mobile-nav[aria-expanded="true"] {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .mobile-nav-content {
+    padding: 1rem 2rem;
+  }
+
+  .mobile-nav-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .mobile-nav-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .mobile-nav-section h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .mobile-nav-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-section li {
+    margin-bottom: 0.5rem;
+  }
+
+  .mobile-nav-section a {
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.2s ease;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .mobile-nav-section a:hover {
+    color: var(--accent-dark);
+  }
+
+  /* Mobile Breakpoint */
+  @media (max-width: 768px) {
+    .site-header-container {
+      padding: 1rem 1.5rem;
+    }
+
+    .site-logo h1 {
+      font-size: 1.1rem;
+    }
+
+    .mobile-menu-toggle {
+      display: flex;
+    }
+
+    .mobile-nav {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle') as HTMLButtonElement;
+  const nav = document.getElementById('mobile-nav') as HTMLElement;
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+      nav.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+    });
+
+    // Close menu when a link is clicked
+    const links = nav.querySelectorAll('a');
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        nav.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
