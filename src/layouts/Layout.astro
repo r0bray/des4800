@@ -1,12 +1,26 @@
 ---
 import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import { getCollection } from 'astro:content';
 
 interface Props {
   title: string;
   description?: string;
+  heroImage?: string;
+  heroImageAlt?: string;
+  heroImageCaption?: string;
 }
 
-const { title, description = 'DES4800 Project - Hosted on Cloudflare Workers' } = Astro.props;
+const {
+  title,
+  description = 'DES4800 Project - Hosted on Cloudflare Workers',
+  heroImage,
+  heroImageAlt,
+  heroImageCaption,
+} = Astro.props;
+
+const allProjects = await getCollection('projects');
+const publishedProjects = allProjects.filter((p) => p.data.status === 'published');
 ---
 
 <!doctype html>
@@ -20,6 +34,7 @@ const { title, description = 'DES4800 Project - Hosted on Cloudflare Workers' } 
     <title>{title}</title>
   </head>
   <body>
+    <SiteHeader heroImage={heroImage} heroImageAlt={heroImageAlt} heroImageCaption={heroImageCaption} />
     <main>
       <slot />
     </main>
@@ -29,9 +44,9 @@ const { title, description = 'DES4800 Project - Hosted on Cloudflare Workers' } 
           <h3>Navigation</h3>
           <nav class="footer-nav">
             <a href="/">Home</a>
-            <a href="/soft-goods/">Soft Goods</a>
+            <!-- <a href="/soft-goods/">Soft Goods</a>
             <a href="/laser-cutting-engraving/">Laser Cutting &amp; Engraving</a>
-            <a href="/wood-shop/">Wood Shop</a>
+            <a href="/wood-shop/">Wood Shop</a> -->
             <!-- <a href="/3d-printing/">3D Printing</a>
             <a href="/plasticity/">3D Modeling with Plasticity</a> -->
             <!-- <a href="#">Links & Resources</a> -->
@@ -41,8 +56,9 @@ const { title, description = 'DES4800 Project - Hosted on Cloudflare Workers' } 
         <div class="footer-column">
           <h3>Projects</h3>
           <nav class="footer-nav">
-            <!-- <a href="/bauhaus-chess-set/">1924 Bauhaus Chess Set</a>
-            <a href="/making-your-own-tools/">Making Your Own Tools</a> -->
+            {publishedProjects.map((project) => (
+              <a href={`/projects/${project.data.slug}/`}>{project.data.title}</a>
+            ))}
           </nav>
         </div>
 

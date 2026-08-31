@@ -48,6 +48,20 @@ const plasticity = defineCollection({
   }),
 });
 
+const projects = defineCollection({
+  loader: glob({ base: './src/content/projects', pattern: '**/*.md' }),
+  schema: z.object({
+    title: z.string(),
+    slug: z.string(),
+    status: z.enum(['draft', 'published']),
+    description: z.string(),
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
+    heroImageCaption: z.string().optional(),
+  }),
+});
+
 export const collections = {
   plasticity,
+  projects,
 };
