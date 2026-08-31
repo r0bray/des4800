@@ -116,16 +116,31 @@ You can download Bambu Studio from the [official website](https://www.bambulab.c
 
    e. painters-pyramid-base.stl
 
-3. Prepare, slice, and export the models for your 3D printer. NOTE! You will use the File, Export, "Export plate sliced file" option.
+3. Prepare, slice, and export the models for your 3D printer. NOTE! You will use the File, Export, "Export plate sliced file" option. This will create a .3mf file that you can copy to your microSD card.
 
-![Bambu Studio File menu showing Export options with "Export plate sliced file" highlighted](https://static.robray.net/images/bambu-studio-export-plate-sliced-file.png)
-
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/bambu-studio-export-plate-sliced-file.png" alt="Bambu Studio File menu showing Export options with 'Export plate sliced file' highlighted" />
+  <figcaption>Bambu Studio's File menu, with Export &gt; "Export plate sliced file" highlighted.</figcaption>
+</figure>
 
 4. Copy the .3mf file to your microSD card.
 
-3. 
+3. Print the .3mf file
 
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/stand-printed.jpg" alt="The completed painter's pyramid print, fresh off the build plate" />
+  <figcaption>The completed painter's pyramid print, fresh off the build plate.</figcaption>
+</figure>
 
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/stand-parts.jpg" alt="The printed parts separated: interchangeable tips, base, and central block" />
+  <figcaption>The printed parts separated from the build plate: interchangeable tops, base, and connector.</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/stand-assembled.jpg" alt="The assembled painter's pyramid, ready for testing your paint layers" />
+  <figcaption>The assembled painter's pyramid, ready to work!</figcaption>
+</figure>
 
 ### **1. Prime Your Prototype**
 
@@ -201,15 +216,21 @@ Your name should help us imagine what kind of company Natural Causes is and how 
 HELPFUL TIP! 💡: If you are waiting for a 3D printer, use this time to consider your color palette, develop your secondary color palette, and devise a product name.
 
 ## Wednesday Sept 3rd
-Lab Time:
-1. You will have time from 10:20AM to end-of-class to continue working on your mouse.
+All Lab Day: No Lecture or Group Discussion/Crit.
+1. If you haven't already, 3D print your 3D printed painter's pyramids.
+2. Once printed, prime your mouse with gray primer using the flat-topped painter's pyramid as a base.
+3. After the primer is FULLY DRY, and only if fully dry, paint the mouse with your primary color.
 
 ## Monday Sept 7th
-- Holiday! No Class!
+Holiday! No Class!
 
 ## Wednesday Sept 9th
-Bring to Class for Our 9AM Review:
-1. Your 3D printed painter's pyramids.   
-3. Primary color swatch declaring the color you will paint your mouse.  
-4. Secondary color swatches (at least one, not more than two) for your Natural Causes color palette.  
+1. This is painting and paint correction (sanding, re-priming, re-painting) day.
+2. There will also be an "infinty wall" setup for photographing your mouse.
+
+## Monday Sept 14th
+Bring to Class for Our 10AM Review:
+1. Your 3D printed painter's pyramid. 
+2. Your completed mouse painted with your primary color.
+3. A slide deck with the photo of your mouse, your primary color swatch, secondary color swatches.  
 5. Your mouse's Natural Causes product name.
