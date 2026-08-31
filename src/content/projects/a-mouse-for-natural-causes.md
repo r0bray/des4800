@@ -102,7 +102,7 @@ You can download Bambu Studio from the [official website](https://www.bambulab.c
 
 *Here's a video that shows you how to install Bambu Studio and gives you a quick overview of the software. A few of the setup screens in this video were removed in the most recent version of the software but I think you'll find the video very helpful regardless.*
 
-1. Next, download the [Painter's pyramid with various removable tips](https://www.printables.com/model/118888-painters-pyramid-with-various-removable-tips) 3D models from printables.com
+1. Next, download the [Painter's pyramid with various removable tips](https://www.printables.com/model/1317314-painters-pyramid-with-various-removable-tips) 3D models from printables.com
 
 2. Import the models into Bambu Studio. Don't try to import the PDF file; import the STL files instead.
  
