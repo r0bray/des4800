@@ -225,12 +225,36 @@ All Lab Day: No Lecture or Group Discussion/Crit.
 Holiday! No Class!
 
 ## Wednesday Sept 9th
-1. This is painting and paint correction (sanding, re-priming, re-painting) day.
-2. There will also be an "infinty wall" setup for photographing your mouse.
+This is an all-lab day for your 3D printing, painting and paint correction (sanding, re-priming, re-painting).
+NOTEIf you are waiting for a 3D printer or for the spray booth, use this time to consider your color palette, develop your secondary color palette, and devise a product name.
 
 ## Monday Sept 14th
-Bring to Class for Our 10AM Review:
+-  9AM to 10AM: Continue working on the project.
+- 10AM to 11AM: I will do a product photography demonstration. There will also be an "infinty wall" backdrop setup for photographing your mouse.
+- 11AM to End: Finish the project and prepare for the 9AM crit on Wednesday.
+
+## Wednesday Sept 16th
+Bring the following **physical objects** to our class for our 9AM crit:
 1. Your 3D printed painter's pyramid. 
 2. Your completed mouse painted with your primary color.
-3. A slide deck with the photo of your mouse, your primary color swatch, secondary color swatches.  
-5. Your mouse's Natural Causes product name.
+
+You should also have the following **digital asset** uploaded to Canvas and ready to share in class:
+
+A PDF slide deck in landscape orientation with:
+
+1. your mouse's Natural Causes product name,
+2. a product photo of your mouse, 
+3. a product photo of your painter's pyramid, 
+4. a slide in your PDF primary color swatch and secondary color swatches.
+
+## **Rubric** 
+
+| **Points** | **Criteria** |
+|---:|---|
+| **6 pts** | **Completed Painted Mouse** Mouse is fully painted in the selected primary color and presented as a convincing CMF appearance prototype. Paint coverage is complete across the top, sides, bottom, recessed areas, edges, buttons, and entire scroll wheel. Finish is clean and consistent, with careful surface preparation and NO drips, runs, fingerprints, scratches, exposed primer/black plastic, or other defects. |
+| **2 pts** | **Natural Causes CMF Palette** Primary and secondary colors form a thoughtful, cohesive palette appropriate to the Natural Causes brand and uses the brands provided Brand Character section of the brief as a reference. Choices demonstrate consideration of the project's themes of usefulness, aging, impermanence, warmth, and materiality rather than relying on conventional "tech" or generic "eco" aesthetics. |
+| **1 pt** | **Product Name** Mouse has a considered working name that fits the Natural Causes identity and avoids conventional technology/product naming clichés. |
+| **1 pt** | **Product Photography** Slide deck includes a clear, well-composed photograph of the completed mouse that accurately communicates its color and finish. |
+| **1 pt** | **PDF Presentation** PDF slide deck is complete, legible, visually organized, and ready for the 9AM critique. It includes the product name, mouse photograph, primary color swatch, and secondary color swatches. |
+| **3 pt** | **3D-Printed Painter's Pyramid** Completed and functional painter's pyramid is brought to the critique and demonstrates successful completion of the introductory 3D-printing workflow. |
+| **14 pts** | **TOTAL** |
