@@ -73,7 +73,7 @@ Overview of laser cutter safety, materials, and software. Begin designing your f
 
 1. Finalize your design file. 
 2. Run your cut using scrap acrylic from our scrap stack.
-3. Take note of the settings you used to have in your back pocket next time you run acrylic.
+3. Take note of the settings you used! You'll have them in your back pocket next time you run acrylic.
 
 
 ## Upload a zip archive file to Canvas that includes 2 files
