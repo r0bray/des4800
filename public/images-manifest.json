@@ -1,18 +1,18 @@
 [
   {
+    "path": "DES4800-Preparing-Illustrator-for-Laser-Cutting.pdf",
+    "size": 5257234,
+    "etag": "d180102bd8d7ef05b17d8da2358f0c26"
+  },
+  {
+    "path": "laser-handbook@2x.jpg",
+    "size": 816191,
+    "etag": "d1d6045c529d032529ea549f7a38bdf8"
+  },
+  {
     "path": "sample.svg",
     "size": 629,
     "etag": "131e40214fcc9787bfe100ec8a711e8a"
-  },
-  {
-    "path": "soft-goods/Catalog-JUKI-DLL-8700.pdf",
-    "size": 294781,
-    "etag": "c7b02c0ba270056c082686f5c6edd522"
-  },
-  {
-    "path": "soft-goods/CautionForSafety-JUKI-DDL-8700.pdf",
-    "size": 348845,
-    "etag": "7cc93be54ee56c508680b35a84a21d43"
   },
   {
     "path": "soft-goods/gutermann-mara-70.jpg",
@@ -20,53 +20,13 @@
     "etag": "58e3a6a8fc0bf6aed6c866cc963b2b46"
   },
   {
-    "path": "soft-goods/henry-ford-sewing-machine.jpg",
-    "size": 55364,
-    "etag": "2e2594208681ce8ea36b3e35ebb47ad4"
+    "path": "uls-laser.jpg",
+    "size": 365223,
+    "etag": "383d1819eafc0662e230273430126d79"
   },
   {
-    "path": "soft-goods/juki-8700h-placeholder.svg",
-    "size": 1004,
-    "etag": "5a58394e11f701f3321a6aa9e7d6d5ad"
-  },
-  {
-    "path": "soft-goods/juki-ddl-8700__p1.webp",
-    "size": 41054,
-    "etag": "5fa8261f7b56e19b6593620e4d329e81"
-  },
-  {
-    "path": "soft-goods/juki-ddl-8700.webp",
-    "size": 41054,
-    "etag": "5fa8261f7b56e19b6593620e4d329e81"
-  },
-  {
-    "path": "soft-goods/juki-hzl-f600-placeholder.svg",
-    "size": 1001,
-    "etag": "ec77d3b735fa8e6967729461d08d3d78"
-  },
-  {
-    "path": "soft-goods/juki-hzl-f600.jpg",
-    "size": 39770,
-    "etag": "6e261824d3fa674d10edb210e850c094"
-  },
-  {
-    "path": "soft-goods/Manual-JUKI-DDL-8700.pdf",
-    "size": 467210,
-    "etag": "25e12024f60d3df9c02aba17b2d7a183"
-  },
-  {
-    "path": "soft-goods/PartsList-JUKI-DDL-8700.pdf",
-    "size": 936133,
-    "etag": "cf693014674d65097c0d1b411e630a55"
-  },
-  {
-    "path": "soft-goods/Setup-Sheet-JUKI-DDL-8700.pdf",
-    "size": 225428,
-    "etag": "feacb8326b4cf051ee3855b34d11dfea"
-  },
-  {
-    "path": "soft-goods/singer-number1.jpg",
-    "size": 55364,
-    "etag": "2e2594208681ce8ea36b3e35ebb47ad4"
+    "path": "uls-laser@2x.jpg",
+    "size": 856586,
+    "etag": "de4caa2c4aeaff1a832ce3485f0abfc8"
   }
 ]
