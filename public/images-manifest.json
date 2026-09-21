@@ -1,5 +1,15 @@
 [
   {
+    "path": "DES4800-Preparing-Illustrator-for-Laser-Cutting.pdf",
+    "size": 5257234,
+    "etag": "d180102bd8d7ef05b17d8da2358f0c26"
+  },
+  {
+    "path": "laser-handbook@2x.jpg",
+    "size": 816191,
+    "etag": "d1d6045c529d032529ea549f7a38bdf8"
+  },
+  {
     "path": "sample.svg",
     "size": 629,
     "etag": "131e40214fcc9787bfe100ec8a711e8a"
@@ -8,5 +18,15 @@
     "path": "soft-goods/gutermann-mara-70.jpg",
     "size": 34839,
     "etag": "58e3a6a8fc0bf6aed6c866cc963b2b46"
+  },
+  {
+    "path": "uls-laser.jpg",
+    "size": 365223,
+    "etag": "383d1819eafc0662e230273430126d79"
+  },
+  {
+    "path": "uls-laser@2x.jpg",
+    "size": 856586,
+    "etag": "de4caa2c4aeaff1a832ce3485f0abfc8"
   }
 ]
