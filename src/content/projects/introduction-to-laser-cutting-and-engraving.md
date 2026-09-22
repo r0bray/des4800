@@ -60,6 +60,13 @@ Once your piece is complete:
 - Ensure you remove any remaininng leftover materials from the laser cutter.
 - If nobody else is in line to use the laser cutter, power down the equipment.
 - Save your file before closing Illustrator, close Illustrator and log out of the computer.
+- Take a landscape orientation photo of your laser cut shape and include it in the zip archive you will upload to Canvas.
+- 
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/laser-cut-tri@2x.jpg" alt="Laser cut triangl" />
+  <figcaption>Take a landscape photo of your laser cut shape and include it in the zip archive you will upload to Canvas.</figcaption>
+</figure>
+
 
 ---
 
@@ -78,7 +85,11 @@ Overview of laser cutter safety, materials, and software. Begin designing your f
 
 ## Upload a zip archive file to Canvas that includes 2 files
 
-- your Illustrator .ai file with correct RGB color settings, rulers, guides, . 
+If you need help making a zip refer to [Apple's guidance](https://support.apple.com/en-mide/guide/mac-help/mchlp2528/mac) or [Microsoft's guidance](https://support.microsoft.com/en-us/windows/experience/storage-filemanagement/zip-and-unzip-files).
+
+Name your zip archive _firstname-lastname-laser.zip_, include the following files:
+
+- your Illustrator .ai file with correct artboard size, RGB color settings, rulers, guides, etc.
 - a photograph of your laser cut shape.
 
 ---
