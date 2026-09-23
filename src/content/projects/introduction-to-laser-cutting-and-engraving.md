@@ -5,7 +5,7 @@ status: published
 description: 'An introductory project exploring the fundamentals of laser cutting as a tool for precision fabrication.'
 heroImage: 'https://static.robray.net/images/uls-laser@2x.jpg'
 heroImageAlt: 'Introduction to Laser Cutting'
-heroImageCaption: 'ULS Laser Cutter'
+heroImageCaption: 'The ULS Laser Cutter in VA-121'
 ---
 
 ## Overview
@@ -25,14 +25,34 @@ In this project you will learn the fundamentals of operating the machine safely 
 
 ### **1. Prepare Your Design File**
 
-Create a file in Illustrator that includes at least one 50mmx50mm cut-pathed shape. Refer to [Preparing-Illustrator-for-Laser-Cutting.pdf](https://static.robray.net/images/DES4800-Preparing-Illustrator-for-Laser-Cutting.pdf) for annotated screenshots and helpful tips.
+Create a file in Illustrator that includes one 50mmx50mm cut-pathed shape. 
 
-- You can use any shape you like, but it should fit within 50mm x 50mm dimensions.
-- Cut paths should be set as hairline strokes (0.1 pt) in the designated RED (rgb) color.
+| First Letter of Last Name | Shape |
+|---|---|
+|A, B, or C| Triangle|
+|D, E, or F| Nonagon|
+|G, H, or I| Dodecahedron|
+|J, K, or L| Pentagon|
+|M, N, or O| Circle|
+|P, Q, or R| Hexagon|
+|S, T, or U| Rectangle|
+|V, W, or X| Octagon|
+|Y or Z| Square|
+
+Examples
+- if your last name is Jimenez, you will cut a Pentagon.
+- if your last name is Walters, you will cut an Octagon.
+
+> **🚨 NOTE!**
+> Refer to [Preparing-Illustrator-for-Laser-Cutting.pdf](https://static.robray.net/images/Preparing-Illustrator-for-Laser-Cutting.pdf) for annotated screenshots and helpful tips.
+
 - Set your artboard to match the size of the laser cutter bed 32" wide x 18"  high.
-- Your units of measurement should be millimeters.
-- Use a lefthand and bottom guide to align your design with the bottom-left of the laser cutter bed with a little bit of margin.
-- Your file should be saved as a .ai file.
+- Your Illustrator units of measurement should be millimeters.
+- Use a lefthand and bottom guide in your Illustrator file to align your design with the bottom-left of the laser cutter bed with a little bit of margin.
+- Use the shape assigned to your name in the table above.
+- The shape should fit within 50mm x 50mm dimensions.
+- Your outline must be set as hairline stroke of 0.1 px in the designated RED rgb  color. R = 255, G = 0, B = 0. The ULS Laser Cutter will use this as the laser's cut path.
+- Your file should be saved as _firstname-lastname-lasershape.ai_ file.
 
 ### **2. Prepare the Equipment**
 
@@ -60,8 +80,7 @@ Once your piece is complete:
 - Ensure you remove any remaininng leftover materials from the laser cutter.
 - If nobody else is in line to use the laser cutter, power down the equipment.
 - Save your file before closing Illustrator, close Illustrator and log out of the computer.
-- Take a landscape orientation photo of your laser cut shape and include it in the zip archive you will upload to Canvas.
-- 
+- Take a landscape orientation photo of your laser cut shape and include it in the [zip archive](http://localhost:4321/projects/introduction-to-laser-cutting/#upload-a-zip-archive-file-to-canvas-that-includes-2-files) you will upload to Canvas. 
 <figure class="inline-figure">
   <img src="https://static.robray.net/images/laser-cut-tri@2x.jpg" alt="Laser cut triangl" />
   <figcaption>Take a landscape photo of your laser cut shape and include it in the zip archive you will upload to Canvas.</figcaption>
@@ -89,8 +108,8 @@ If you need help making a zip refer to [Apple's guidance](https://support.apple.
 
 Name your zip archive _firstname-lastname-laser.zip_, include the following files:
 
-- your Illustrator .ai file with correct artboard size, RGB color settings, rulers, guides, etc.
-- a photograph of your laser cut shape.
+- your Illustrator firstname-lastname-lasershape.ai file with correct artboard size, RGB color settings, rulers, guides, etc.
+- a landscape-oriented photograph of your laser cut shape.
 
 ---
 
