@@ -232,7 +232,7 @@ Holiday! No Class!
 
 ## Wednesday Sept 9th
 This is an all-lab day for your 3D printing, painting and paint correction (sanding, re-priming, re-painting).
-NOTEIf you are waiting for a 3D printer or for the spray booth, use this time to consider your color palette, develop your secondary color palette, and devise a product name.
+NOTE: If you are waiting for a 3D printer or for the spray booth, use this time to consider your color palette, develop your secondary color palette, and devise a product name.
 
 ## Monday Sept 14th
 -  9AM to 10AM: Continue working on the project.
