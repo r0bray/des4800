@@ -264,3 +264,9 @@ A PDF slide deck in landscape orientation with:
 | **1 pt** | **PDF Presentation** PDF slide deck is complete, legible, visually organized, and ready for the 9AM critique. It includes the product name, mouse photograph, primary color swatch, and secondary color swatches. |
 | **3 pt** | **3D-Printed Painter's Pyramid** Completed and functional painter's pyramid is brought to the critique and demonstrates successful completion of the introductory 3D-printing workflow. |
 | **14 pts** | **TOTAL** |
+
+## **Presentations and Critque**
+You will present your work to some of your "critter" classmates. Review the [Presenter Guidelines for "A Mouse for Natural Causes"](https://docs.google.com/document/d/1ZqEHYoYospkPXu7IcK7AgWxwIu33A-9HnlTubXXOWmU/edit?usp=sharing).
+
+You will be a "critter" and provide feedback on the work of your classmates. Review the [Critter Guidelines for "A Mouse for Natural Causes"
+](https://docs.google.com/document/d/1-UCDvUsc7xcu3WVUW-Vm5aUdAlNmyKpdn9QoOL__jJU/edit?usp=sharing)
