@@ -40,6 +40,11 @@
     "etag": "d1d6045c529d032529ea549f7a38bdf8"
   },
   {
+    "path": "lightbar@2x@2x.jpg",
+    "size": 1097584,
+    "etag": "8c06a11839e16030d13b994133873e62"
+  },
+  {
     "path": "marceline.jpg",
     "size": 54218,
     "etag": "4141c93428d64059453e51f34d19fec5"
@@ -58,6 +63,11 @@
     "path": "projects/first-mouse.jpg",
     "size": 142348,
     "etag": "10f34646bf69b1475f8ceab6502e5b31"
+  },
+  {
+    "path": "projects/lightbar@2x@2x.jpg",
+    "size": 1097584,
+    "etag": "8c06a11839e16030d13b994133873e62"
   },
   {
     "path": "projects/natural-causes-mouse-hero.svg",

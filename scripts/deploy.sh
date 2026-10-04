@@ -61,6 +61,16 @@ echo "🌐 Deploying to Cloudflare Workers (des4800-robray-net-site-production).
 npx wrangler deploy
 echo ""
 
+# Purge Cloudflare CDN cache
+echo "🧹 Purging Cloudflare CDN cache..."
+if node ./scripts/purge-deploy-cache.mjs; then
+  echo ""
+else
+  echo "⚠️  Cache purge failed — you may see stale assets until the CDN TTL expires."
+  echo "    Run 'npm run purge:cache' manually once CLOUDFLARE_API_TOKEN and CLOUDFLARE_ZONE_ID are set in .env"
+  echo ""
+fi
+
 echo "✨ Deployment complete!"
 echo "🌐 Site: https://des4800.robray.net"
 echo "📦 Assets: https://static.robray.net"

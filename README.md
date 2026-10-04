@@ -14,7 +14,7 @@ A modern website built with Astro 7.x and deployed on Cloudflare Workers with as
 
 ### Prerequisites
 
-- Node.js 18+ or 20+
+- Node.js 22+
 - npm or yarn
 - Cloudflare account with Workers and R2 enabled
 - Wrangler CLI authenticated
