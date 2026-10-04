@@ -10,7 +10,7 @@ Complete guide to deploying the DES4800 Astro site to Cloudflare Workers with R2
 - Git access to push to `main` branch
 
 ### For Local Deployments
-1. **Node.js 20+**: Check with `node --version`
+1. **Node.js 22+**: Check with `node --version`
 2. **Cloudflare Account**: With Workers and R2 enabled
 3. **Wrangler authenticated locally**: Run `npx wrangler login` (opens browser OAuth)
 4. **Domain**: `robray.net` configured in Cloudflare DNS
