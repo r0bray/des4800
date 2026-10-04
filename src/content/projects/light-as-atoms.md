@@ -3,8 +3,8 @@ title: 'Light as Atoms'
 slug: light-as-atoms
 status: published
 description: 'Phase A ideation brief for transforming a rechargeable LED light module into an intriguing, useful, atmospheric, expressive, or surprising object.'
-heroImage: 'https://static.robray.net/images/projects/lightbar@2x.jpg'
-heroImageAlt: 'Placeholder header image for Light as Atoms project'
+heroImage: 'https://static.robray.net/images/projects/lightbar@2x@2x.jpg'
+heroImageAlt: 'LEE lightbar for Light as Atoms project'
 heroImageCaption: 'LED lightbar for the Light as Atoms project page.'
 ---
 
