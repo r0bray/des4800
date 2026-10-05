@@ -60,14 +60,44 @@
     "etag": "3232f76290980f53bc20e4e1f32d9237"
   },
   {
+    "path": "projects/color-lamp@2x.jpg",
+    "size": 332600,
+    "etag": "4fb1e21303e32fa1061bbb06bf18aa5a"
+  },
+  {
+    "path": "projects/displaystand@2x.jpg",
+    "size": 486123,
+    "etag": "153f69f5ebeda5670cc16494b0454773"
+  },
+  {
     "path": "projects/first-mouse.jpg",
     "size": 142348,
     "etag": "10f34646bf69b1475f8ceab6502e5b31"
   },
   {
+    "path": "projects/interchangeable-shades-lamp.jpg",
+    "size": 296045,
+    "etag": "91f0b1983aba155f256fe23bd7d555e3"
+  },
+  {
+    "path": "projects/lantern@2x@2x.jpg",
+    "size": 415179,
+    "etag": "a9dc7b4035c4ef3b18c9aeb1fe442a31"
+  },
+  {
     "path": "projects/lightbar@2x@2x.jpg",
     "size": 1097584,
     "etag": "8c06a11839e16030d13b994133873e62"
+  },
+  {
+    "path": "projects/lightbox@2x.jpg",
+    "size": 439432,
+    "etag": "227ab1548da34d68088504689c0ab478"
+  },
+  {
+    "path": "projects/modular-table-lamp.jpg",
+    "size": 82668,
+    "etag": "9490b3a564077e7171ed230d02438a1e"
   },
   {
     "path": "projects/natural-causes-mouse-hero.svg",
@@ -78,6 +108,26 @@
     "path": "projects/pattern-in-illustrator-hero.svg",
     "size": 1245,
     "etag": "a6cf7729dafc215aae5f2df6be27d504"
+  },
+  {
+    "path": "projects/portable-task-lamp.jpg",
+    "size": 146767,
+    "etag": "f5bb67c05c0a3602ba6aca2a1a8a4fd1"
+  },
+  {
+    "path": "projects/portal@2x.jpg",
+    "size": 350156,
+    "etag": "43c6539260e82d8f074cdfa81a77a70a"
+  },
+  {
+    "path": "projects/projector@2x.jpg",
+    "size": 310283,
+    "etag": "fccd68eabf331d6ce0c6d1eee927d88a"
+  },
+  {
+    "path": "projects/sconce@2x@2x.jpg",
+    "size": 183536,
+    "etag": "e080bfe8f59989e10fb26e3e66600c35"
   },
   {
     "path": "projects/stand-assembled.jpg",
