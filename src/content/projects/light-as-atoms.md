@@ -211,7 +211,7 @@ You will share your ideas with your previously assigned classroom group:
 - Finn row
 - BMO row
 
-The purpose of the group exchange is not to choose a winner. It is to identify:
+The purpose of the group exchange is to identify:
 
 - Strong ideas
 - Shared themes
