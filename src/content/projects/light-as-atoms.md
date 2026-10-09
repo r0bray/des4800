@@ -31,12 +31,12 @@ Your light is a rectangular rechargeable LED bar that includes the following fea
 - A light-emitting surface
 - A USB-C charging port
 - A mode button
-- A motion sensor
+- A light sensor (This is not a motion sensor)
 
 Before developing ideas, investigate the attributes of the light. Determine:
 
 - Where the light comes from on the device.
-- Where the motion sensor is located and how it is triggered.
+- Where the light sensor is located and how it is triggered.
 - Where the button and charging ports are located.
 - How the magnetic mounting works.
 - How the light might be used vertically, horizontally, or at an angle.
@@ -79,13 +79,13 @@ Use the examples below as thought starters. You may develop one of these ideas, 
 </figure>
 
 <figure class="inline-figure">
-  <img src="https://static.robray.net/images/projects/interchangeable-shades-lamp.jpg" alt="An interchangeable shades lamp concept" />
-  <figcaption>7. An Interchangeable Shades Lamp</figcaption>
+  <img src="https://static.robray.net/images/projects/interchangeable-shades-lamp.jpg" alt="A replaceable-skin lamp concept" />
+  <figcaption>7. A Replaceable-Skin Lamp</figcaption>
 </figure>
 
 <figure class="inline-figure">
-  <img src="https://static.robray.net/images/projects/portal@2x.jpg" alt="A motion-activated portal to another world concept" />
-  <figcaption>8. A Motion-Activated Portal to Another World</figcaption>
+  <img src="https://static.robray.net/images/projects/portal@2x.jpg" alt="A light-activated portal to another world concept" />
+  <figcaption>8. A Light-Activated Portal to Another World</figcaption>
 </figure>
 
 <figure class="inline-figure">
@@ -99,7 +99,6 @@ Use the examples below as thought starters. You may develop one of these ideas, 
 </figure>
 
 Or it could be one of these!
-
 11. A Sign or Communication Device
 12. A Light That Changes with Movement
 13. A Small Architectural Model
@@ -126,7 +125,7 @@ You should explore the following questions through sketches, notes, diagrams, or
 
 ### **What features does it already have?**
 
-- Motion activation
+- Light activation
 - Rechargeable battery
 - Multiple brightness levels
 - Magnetic mounting
@@ -159,7 +158,7 @@ Consider a specific user or situation:
 Describe a short scenario:
 
 1. A person enters a dark room.
-2. The motion sensor activates the light.
+2. The light sensor activates the light.
 3. An acrylic structure reveals a pattern on the wall.
 4. The person approaches and removes the light from the housing.
 
@@ -184,7 +183,7 @@ Show:
 
 - How the light is contextualized by its surroundings.
 - How the user engages it.
-- Is motion sensing relevant to this experience? (Not a requirement)
+- Is light sensing relevant to this experience? (Not a requirement)
 - How can the charging port be accessed?
 - Should the light be removable? If so, how?
 - Should the light be affixed to another object? If so, how?
@@ -283,7 +282,7 @@ Useful questions include:
 - What is the most interesting part of this idea?
 - What does the light do in this concept that it could not do by itself?
 - What is the user’s experience?
-- What would happen when the motion sensor activates?
+- What would happen when the light sensor activates?
 - How does the transmission of light affect the idea?
 - Is this primarily a tool, a lamp, a display, a sculpture, a fictional object, or a combination?
 - Could another student’s idea be combined with this one?
@@ -302,7 +301,7 @@ Useful questions include:
 
 ## **Understanding of the Light Module: 2 points**
 
-**2 points:** Investigates and meaningfully responds to the light’s actual features, such as its motion sensor, rechargeable battery, brightness settings, magnetic mounting, controls, physical form, and removable nature.
+**2 points:** Investigates and meaningfully responds to the light’s actual features, such as its light sensor, rechargeable battery, brightness settings, magnetic mounting, controls, physical form, and removable nature.
 
 **1 point:** Shows some awareness of the light’s features but uses them only generally or superficially.
 
