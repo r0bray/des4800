@@ -48,20 +48,63 @@ Before developing ideas, investigate the attributes of the light. Determine:
 
 Use the examples below as thought starters. You may develop one of these ideas, combine several, or invent something completely different.
 
-1. A Portable Lantern
-2. A Wall Sconce
-3. A Shadow Projector
-4. A Layered Narrative Lightbox
-5. A Color-Mixing Lamp
-6. A Modular Table Lamp
-7. A Replaceable-Skin Lamp
-8. A Light-Activated Portal to Another World
-9. A Portable Task Light
-10. A Product Display System
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/lantern@2x@2x.jpg" alt="A portable lantern concept" />
+  <figcaption>1. A Portable Lantern</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/sconce@2x@2x.jpg" alt="A wall sconce concept" />
+  <figcaption>2. A Wall Sconce</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/projector@2x.jpg" alt="A shadow projector concept" />
+  <figcaption>3. A Shadow Projector</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/lightbox@2x.jpg" alt="A layered narrative lightbox concept" />
+  <figcaption>4. A Layered Narrative Lightbox</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/color-lamp@2x.jpg" alt="A color-mixing lamp concept" />
+  <figcaption>5. A Color-Mixing Lamp</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/modular-table-lamp.jpg" alt="A modular table lamp concept" />
+  <figcaption>6. A Modular Table Lamp</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/interchangeable-shades-lamp.jpg" alt="A replaceable-skin lamp concept" />
+  <figcaption>7. A Replaceable-Skin Lamp</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/portal@2x.jpg" alt="A light-activated portal to another world concept" />
+  <figcaption>8. A Light-Activated Portal to Another World</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/portable-task-lamp.jpg" alt="A portable task light concept" />
+  <figcaption>9. A Portable Task Light</figcaption>
+</figure>
+
+<figure class="inline-figure">
+  <img src="https://static.robray.net/images/projects/displaystand@2x.jpg" alt="A product display system concept" />
+  <figcaption>10. A Product Display System</figcaption>
+</figure>
+
+Or it could be one of these!
 11. A Sign or Communication Device
 12. A Light That Changes with Movement
 13. A Small Architectural Model
 14. An Art Object or Light Sculpture
+
+Or something completely different. 
 
 ## **Questions to Answer During Ideation**
 
@@ -211,7 +254,7 @@ You will share your ideas with your previously assigned classroom group:
 - Finn row
 - BMO row
 
-The purpose of the group exchange is not to choose a winner. It is to identify:
+The purpose of the group exchange is to identify:
 
 - Strong ideas
 - Shared themes
