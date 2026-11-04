@@ -4,7 +4,7 @@ slug: physical-meets-digital-nfc
 status: published
 description: 'Design and fabricate a wooden NFC card and an acrylic NFC keychain for someone else, combining intentional physical design with a hidden digital experience.'
 heroImage: 'https://static.robray.net/images/projects/roadtrip@2x.jpg'
-heroImageAlt: 'Placeholder image for Physical Meets Digital NFC project'
+heroImageAlt: 'Road trip gift with wooden card and NFC tag'
 heroImageCaption: 'A sample project idea: A close friend is moving away. They are the kind of person who saves ticket stubs, photos, notes, and other physical reminders. Create a small collage, drawing, or other physical composition that includes the wooden card with an NFC tag attached. Tapping it opens a much larger photo album, video collection, or set of memories of a road trip you took with them.'
 ---
 
@@ -247,7 +247,7 @@ All of your creative practices and finishing choices are intentional, well execu
 
 **7. Peer Feedback and Testing**
 
-The student gives useful feedback, helps test classmates’ URLs/designs, and uses peer testing to improve their own work.
+You give useful feedback, help test classmates’ URLs/designs, and use peer testing to improve your own work.
 
 **8. Presentation and Design Rationale**
 
