@@ -1,5 +1,10 @@
 [
   {
+    "path": "adjusting-your-units-to-millimeters.png",
+    "size": 234423,
+    "etag": "be72533065b325b98c699ec6b4ee64e9"
+  },
+  {
     "path": "bambu-studio-export-plate-sliced-file.png",
     "size": 690261,
     "etag": "382feba524e4f79de8e270513e02a0c5"
@@ -48,6 +53,11 @@
     "path": "marceline.jpg",
     "size": 54218,
     "etag": "4141c93428d64059453e51f34d19fec5"
+  },
+  {
+    "path": "naming-your-project.png",
+    "size": 129979,
+    "etag": "997099926ce02639f2dc45c299fd29c5"
   },
   {
     "path": "Preparing-Illustrator-for-Laser-Cutting.pdf",
@@ -125,6 +135,11 @@
     "etag": "fccd68eabf331d6ce0c6d1eee927d88a"
   },
   {
+    "path": "projects/roadtrip@2x.jpg",
+    "size": 343532,
+    "etag": "7a506c875fd777c42e6f54e323e2ed0b"
+  },
+  {
     "path": "projects/sconce@2x@2x.jpg",
     "size": 183536,
     "etag": "e080bfe8f59989e10fb26e3e66600c35"
@@ -148,6 +163,21 @@
     "path": "sample.svg",
     "size": 629,
     "etag": "131e40214fcc9787bfe100ec8a711e8a"
+  },
+  {
+    "path": "Screenshot 2026-10-30 at 9.11.42 AM.png",
+    "size": 231843,
+    "etag": "b49a6562367a5165f3e889ec76bcf233"
+  },
+  {
+    "path": "show-the-grid-lines.png",
+    "size": 358801,
+    "etag": "7ef0170cbaafd05db0775d57e2abf999"
+  },
+  {
+    "path": "snap-to-grid-and-other-snapping-options.png",
+    "size": 276551,
+    "etag": "7ba1320868679616b383004a20a414d4"
   },
   {
     "path": "soft-goods/Catalog-JUKI-DLL-8700.pdf",
