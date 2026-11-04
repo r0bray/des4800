@@ -1,11 +1,11 @@
 ---
-title: 'Physical Meets Digital: Physical Design with NFC Technology'
+title: 'Physical Meets Digital'
 slug: physical-meets-digital-nfc
 status: published
 description: 'Design and fabricate a wooden NFC card and an acrylic NFC keychain for someone else, combining intentional physical design with a hidden digital experience.'
-heroImage: 'https://static.robray.net/images/projects/placeholder-hero.jpg'
+heroImage: 'https://static.robray.net/images/projects/roadtrip@2x.jpg'
 heroImageAlt: 'Placeholder image for Physical Meets Digital NFC project'
-heroImageCaption: 'Project brief: Physical Meets Digital — Physical Design with NFC Technology.'
+heroImageCaption: 'A sample project idea: A close friend is moving away. They are the kind of person who saves ticket stubs, photos, notes, and other physical reminders. Create a small collage, drawing, or other physical composition that includes the wooden card with an NFC tag attached. Tapping it opens a much larger photo album, video collection, or set of memories of a road trip you took with them.'
 ---
 
 # **Physical Meets Digital: Physical Design with NFC Technology**
@@ -161,19 +161,19 @@ These are examples, not templates. Notice that each idea begins with a particula
 
 **1. Play This When...**
 
-Your younger sister is about to leave for college. You remember your own first weeks away: figuring out the dining hall, meeting roommates, getting lost on campus, and suddenly missing home. You and your sister have always traded songs, especially on long drives together. You make a keychain for her new dorm keys. Tapping it opens a playlist called “Play This When You Miss Home,” filled with songs that connect to your shared memories.
+Your younger sister is about to leave for college. You remember your own first weeks away: figuring out the dining hall, meeting roommates, getting lost on campus, and suddenly missing home, a place you couldn't wait to leave. You and your sister have always traded songs, in a bratty way and sometimes in a nice way, especially on long drives together waiting to get over the Cajon Pass. She'll be at school in Santa Cruz so you won't see each other like you used to. You make a keychain for her new dorm keys. Tapping it opens a playlist called “Play This When You Miss Home,” filled with songs that connect to your shared memories.
 
-**2. The Place Keychain**
+**2. The Special Place Keychain**
 
-You and your best friend have returned to the same beach, park, overlook, or neighborhood spot for years. Maybe it is where you went after finals, where your group always met in the summer, or where you had an important conversation. Design the keychain around details of that particular place rather than a generic symbol. Tapping it could open a shared photo album, a map, or a collection of memories from the times you spent there.
+You and your best friend have returned to the same beach, park, overlook, or neighborhood spot for years. Maybe it is where you went after finals, where your group always met in the summer, or where you had an important, and difficult, conversation. Design the keychain around details of that particular place rather than a generic symbol. Tapping it could open a shared photo album, a map, or a collection of memories from the times you spent there.
 
 **3. The Good-Luck Charm**
 
-Your cousin is auditioning for school plays and always calls you when nerves kick in. You know the backstage routines, phrases, or jokes that calm them down because you have talked them through auditions before. Make a small object they can keep on a backpack or keys. Tapping it could open a short video or message from you that they can revisit right before an audition.
+Your cousin is auditioning for school plays and always calls you when their nerves kick in. You know the backstage routines, phrases, or jokes that calm them down because you have talked them through auditions before. Make a small object they can keep on a backpack or keys. Tapping it could open a short video of you telling the joke that makes them crack up so they can watch it right before an audition.
 
 **4. The Inside-Joke Keychain**
 
-You and a friend still laugh about a ridiculous moment that nobody else would understand: a phrase someone misheard, a disastrous road trip stop, or a photo that has become part of your shared vocabulary. Design the physical keychain as a subtle reference, not an explanation of the joke. Tapping reveals the photo, video, audio clip, or other artifact that makes the reference meaningful to that particular person.
+You and a friend still laugh about a ridiculous moment that nobody else would understand: a phrase someone misheard, a disastrous road trip stop, or a photo that has become part of your shared vocabulary. Design the physical keychain as a subtle reference, not an explanation of the joke. Tapping it reveals the photo, video, audio clip, or other artifact that makes the reference meaningful to that particular person.
 
 **5. The Everyday Keychain**
 
@@ -183,19 +183,19 @@ Your dad is always working on old cars, and some of your memories with him invol
 
 **1. A Music Card**
 
-Your grandmother introduced you to a musician you still listen to. Maybe every visit to her house included records playing in the kitchen, or a particular song always came on during drives together. Design the card using visual clues that recall that shared ritual without simply naming the musician. Tapping reveals the song or playlist and perhaps a short message explaining what that memory means to you.
+Your grandmother introduced you to a musician you still listen to. Maybe every visit to her house included records playing in the kitchen, or a particular song always came on during drives together down the 15 freeway. Design the card using visual clues that recall that shared ritual without simply naming the musician. Tapping reveals the song or playlist and perhaps a short message explaining what that memory means to you.
 
 **2. A Memory Card**
 
-A close friend is moving away, and their dorm room or apartment has been the place where everyone gathers. They are the kind of person who saves ticket stubs, photos, notes, and other physical reminders. Build a small collage, drawing, painted surface, or other physical composition into the card. Tapping opens a much larger photo album, video collection, or set of memories that could never fit on the object itself.
+A close friend is moving away. They are the kind of person who saves ticket stubs, photos, notes, and other physical reminders. Create a small collage, drawing, or other physical composition that includes the wooden card with an NFC tag attached. Tapping it opens a much larger photo album, video collection, or set of memories of a road trip you took with them.
 
 **3. A Secret-Message Card**
 
-Your younger brother has had a difficult semester, but you know he would hate having an obviously sentimental message sitting out where everyone could see it. Design the visible card around something he genuinely likes so it can live naturally on his desk or shelf. Only when he taps it does he discover the personal message from you. NFC matters here because it lets the emotional layer remain private until he chooses to open it.
+Your younger brother has had a difficult semester, but you know he would hate having an obviously sentimental message sitting out where everyone could see it. Design the visible card around something he genuinely likes so it can live naturally on his desk or shelf. Only when he taps it does he discover the personal message from you. NFC matters here because it lets the emotional layer remain private to your "super tough" brother until he chooses to open it.
 
 **4. An Experience Card**
 
-Your mom has repeatedly told you she does not need more stuff, but some of your favorite time together has been hiking, seeing movies, exploring neighborhoods, or trying new food. Design a physical card around one of those shared interests. Tapping it reveals an outing or experience you planned for the two of you. The object is not just another possession; it becomes the invitation and a keepsake from time you will spend together.
+Your mom has repeatedly told you she does not need more stuff in her house. Some of your favorite times together have been hiking, seeing movies, exploring neighborhoods, and trying new food. Design a physical card around one of those shared interests with her. Tapping it reveals an outing or experience you planned for the two of you. The object is not just another possession for her to keep track of. It becomes a keepsake from time you will share together.
 
 **5. A LEGO Build**
 
@@ -219,17 +219,19 @@ Maybe your friends love puzzles, your younger cousins love scavenger hunts, or y
 
 One point is available in each category, for 8 points total.
 
+NOTE: LATE SUBMISSIONS are only eligible for half credit. Even if you are late by 1 minute. Seriously.
+
 **1. Designing for the Recipient**
 
-Design choices clearly reflect knowledge of the intended recipient rather than the designer’s own preferences.
+Your design choices clearly reflect knowledge of the intended recipient rather than the designer’s own preferences.
 
 **2. Physical Design and Use**
 
-Size, shape, dimensions, durability, and intended location/use make sense for the recipient.
+The object's size, shape, dimensions, durability, and intended location/use make sense for the recipient.
 
 **3. NFC Experience**
 
-The URL works for the intended recipient and the hidden digital layer adds discovery, intrigue, care, or meaning.
+The embedded link works for the intended recipient and the hidden digital layer adds discovery, intrigue, care, or meaning.
 
 **4. Laser Fabrication**
 
@@ -241,7 +243,7 @@ The acrylic hole is safely and appropriately chamfered, and hardware and NFC com
 
 **6. Creative Practices and Finish**
 
-Post-laser creative practices and finishing choices are intentional, well executed, and support the design for the recipient.
+All of your creative practices and finishing choices are intentional, well executed, and support the design for the recipient.
 
 **7. Peer Feedback and Testing**
 
