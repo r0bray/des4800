@@ -215,9 +215,9 @@ Maybe your friends love puzzles, your younger cousins love scavenger hunts, or y
 - Class presentation in a format of your choice.
 - Participation in peer feedback, URL testing, and troubleshooting.
 
-# **8 Point Rubric**
+# **16 Point Rubric**
 
-One point is available in each category, for 8 points total.
+Two points are available in each category, for 16 points total.
 
 NOTE: LATE SUBMISSIONS are only eligible for half credit. Even if you are late by 1 minute. Seriously.
 
