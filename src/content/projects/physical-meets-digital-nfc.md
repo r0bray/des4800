@@ -122,7 +122,7 @@ Using the drill press and chamfering bit as demonstrated in class, support the a
 
 ## **14. Program the NFC Tag**
 
-Use NFC Tools by Wakdev. Download only the official app from the Apple App Store or Google Play Store; do not download APKs or copies from third-party download sites. The free version is sufficient for this project.
+Use NFC Tools by Wakdev[iOS](https://www.wakdev.com/en/apps/nfc-tools-ios.html) or [Android](https://www.wakdev.com/en/apps/nfc-tools-android.html). Download only the official app from the Apple App Store or Google Play Store; do not download APKs or copies from third-party download sites. The free version is sufficient for this project.
 
 1. Open NFC Tools and choose Write.
 2. Choose Add a record.
@@ -132,7 +132,7 @@ Use NFC Tools by Wakdev. Download only the official app from the Apple App Store
 6. Move the tag away and close the app.
 7. Test the tag normally by bringing a compatible phone near it and confirming that the intended URL opens.
 
-Do not lock the tag or make it read-only. Leave it rewritable. Test the destination while logged out or in a private/incognito browser, and if possible, test it on another device.
+Do not lock the tag or make it read-only. Leave it rewritable so you can update it if needed. Test the destination while logged out or in a private/incognito browser, and if possible, test it on another device.
 
 ## **15. Install, Assemble, and Test Again**
 
