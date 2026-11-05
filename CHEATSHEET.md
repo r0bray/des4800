@@ -5,14 +5,16 @@ Quick reference for common tasks.
 ## Development
 
 ```bash
-npm run dev        # Start dev server at http://localhost:4321
-npm run build      # Build for production (output to dist/)
-npm run preview    # Preview production build locally
+npm run dev        # Sync images from R2 + start image watcher + dev server at http://localhost:4321
+npm run build      # astro check + build for production (output to dist/)
+npm run preview    # Sync images from R2, then preview production build locally
 ```
 
 ## Image Commands
 
 ```bash
+npm run sync:images:latest         # Refresh manifest from R2 and download shared images
+npm run sync:images:status         # Show missing/changed/up-to-date images (no download)
 npm run upload:images              # Upload all images in public/images/ to R2
 npm run upload:image <path>        # Upload a single image to R2
 npm run watch:images               # Watch public/images/ and auto-upload on change
@@ -74,10 +76,14 @@ npx wrangler tail des4800-robray-net-site-production               # Tail live W
 
 | What | Where |
 |------|-------|
-| Pages | `src/pages/*.astro` |
+| Pages | `src/pages/**/*.astro` |
 | Layouts | `src/layouts/*.astro` |
-| Components | `src/components/*.astro` |
-| Styles / public files | `public/` |
+| Components | `src/components/**/*.astro` |
+| Markdown content | `src/content/` (plasticity, projects) |
+| Data | `src/data/*.ts` |
+| Global styles | `src/styles/global.css` |
+| Public files | `public/` |
+| Image manifest (tracked) | `public/images-manifest.json` |
 | Images (local staging, gitignored) | `public/images/` |
 | Astro config | `astro.config.mjs` |
 | Worker config | `wrangler.toml` |
@@ -159,8 +165,8 @@ npx wrangler r2 object list static-robray-net --prefix=_astro/
 # Dev server won't start
 rm -rf node_modules .astro && npm install && npm run dev
 
-# Build fails — check for errors
-npm run astro check
+# Build fails — check for type errors (build runs this first)
+npx astro check
 
 # Not authenticated for local deploy
 npx wrangler login
@@ -201,17 +207,18 @@ GitHub Actions triggered
 | `npm run dev` | Start dev server (hot reload) |
 | `npm run build` | Build for production |
 | `npm run preview` | Preview production build |
-| `npm run deploy` | Build + deploy Worker |
+| `npm run deploy` | Quick local deploy: build + deploy Worker (code only, no images) |
 | `npm run deploy:full` | Full local deploy (use when pushing images) |
-| `npm run deploy` | Quick local deploy (code only) |
+| `npm run sync:images:latest` | Refresh manifest from R2 and download shared images |
+| `npm run sync:images:status` | Show missing/changed/up-to-date images |
 | `npm run upload:images` | Upload all `public/images/` to R2 |
 | `npm run upload:image <path>` | Upload a single image to R2 |
 | `npm run watch:images` | Watch `public/images/` and auto-upload |
 
-## GitHub Actions
+## GitHub Actions Workflow
 
 **Workflow:** `.github/workflows/deploy.yml`  
-**Trigger:** Push to `main` (doc-only changes excluded)  
+**Trigger:** Push to `main` or manual run (all docs except `README.md`, plus `.github/SECRETS.md`, are excluded)  
 **What it does:** Install deps → build → upload `_astro` to R2 → upload favicon → deploy Worker
 
 > GitHub Actions does **not** upload images (they're gitignored). Upload images locally with `npm run upload:images` or `npm run deploy:full`.

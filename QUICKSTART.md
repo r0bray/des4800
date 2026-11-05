@@ -4,9 +4,17 @@ Get your DES4800 site running in minutes!
 
 ## Installation
 
+Requires Node.js 22+ (`.nvmrc` pins 24).
+
 ```bash
 # Install dependencies
 npm install
+
+# Local environment variables (fill in Cloudflare credentials)
+cp env.example .env
+
+# Authenticate with Cloudflare (needed for image sync/upload)
+npx wrangler login
 
 # Start development server
 npm run dev
@@ -14,19 +22,28 @@ npm run dev
 
 Visit http://localhost:4321 to see your site.
 
+`npm run dev` first tries to refresh `public/images-manifest.json` from R2 and download the shared images into `public/images/` (these are gitignored), then starts an image upload watcher (requires `fswatch`: `brew install fswatch`), then starts Astro. If Cloudflare auth is missing, it prints a warning and still starts with your existing local images. To pull images on their own: `npm run sync:images:latest`.
+
 ## Project Structure
 
 ```
 des4800/
 ├── src/
+│   ├── components/              # Shared and per-section components
+│   ├── content/                 # Markdown collections (plasticity, projects)
+│   ├── data/                    # Typed data (projects, soft goods)
 │   ├── layouts/
-│   │   └── Layout.astro         # Main layout with styles
-│   ├── pages/
-│   │   └── index.astro          # Homepage
+│   │   └── Layout.astro         # Main layout
+│   ├── pages/                   # index, plasticity, projects, soft-goods, making-your-own-tools
+│   ├── styles/
+│   │   └── global.css           # Global styles
+│   ├── content.config.ts        # Content collection definitions
 │   └── env.d.ts                 # TypeScript definitions
 ├── public/
-│   └── favicon.svg              # Site icon
-├── scripts/
+│   ├── favicon.svg              # Site icon
+│   ├── images/                  # Local image staging (gitignored, synced with R2)
+│   └── images-manifest.json     # Tracked list of shared images in R2
+├── scripts/                     # Deploy, image sync/upload/watch, cache purge scripts
 │   ├── deploy.sh                # Automated deployment
 │   └── setup-r2.sh              # R2 bucket setup
 ├── .github/
@@ -34,6 +51,7 @@ des4800/
 │       └── deploy.yml           # GitHub Actions CI/CD
 ├── astro.config.mjs             # Astro + Cloudflare config
 ├── wrangler.toml                # Cloudflare Workers config
+├── env.example                  # Template for local .env
 ├── package.json                 # Dependencies
 └── tsconfig.json                # TypeScript config
 ```
@@ -41,17 +59,17 @@ des4800/
 ## Development
 
 ```bash
-# Start dev server (with hot reload)
+# Start dev server (image sync + watcher + hot reload)
 npm run dev
 
-# Build for production
+# Build for production (runs `astro check` first)
 npm run build
 
-# Preview production build locally
+# Preview production build locally (also syncs images)
 npm run preview
 
-# Type checking
-npm run astro check
+# Type checking only
+npx astro check
 ```
 
 ## Deployment
@@ -104,14 +122,19 @@ GitHub Actions will automatically:
 ## Configuration Files
 
 **astro.config.mjs**
-- Cloudflare adapter settings
+- Cloudflare adapter settings (SSR, `output: 'server'`)
 - Asset prefix for R2 (`https://static.robray.net`)
 - Site URL
 
 **wrangler.toml**
 - Worker name: `des4800-robray-net-site-production`
-- R2 bucket binding
+- `[assets]` directory (`./dist`)
+- R2 bucket binding (`STATIC_BUCKET` → `static-robray-net`)
 - Compatibility settings
+
+**.env** (local only, gitignored; copy from `env.example`)
+- `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_ZONE_ID`
+- Needed for cache purge and rebuilding the image manifest from R2
 
 ## Troubleshooting
 
@@ -140,7 +163,8 @@ npm install
 1. **Make changes** to your site:
    - Edit pages in `src/pages/`
    - Modify styles in `src/layouts/Layout.astro` or `src/styles/global.css`
-   - Add new content in `src/components/`
+   - Add components in `src/components/`
+   - Add Markdown content in `src/content/plasticity/` or `src/content/projects/`
 
 2. **Test locally:**
    ```bash
@@ -162,7 +186,7 @@ For more details, see:
 
 ## Tech Stack
 
-- **Astro 4.x** - Web framework
+- **Astro 7.x** - Web framework
 - **Cloudflare Workers** - Edge computing
 - **Cloudflare R2** - Object storage
 - **TypeScript** - Type safety
