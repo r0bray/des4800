@@ -92,12 +92,11 @@ User Browser
 **Name**: `des4800-robray-net-site-production`
 
 **Purpose**: 
-- Server-side rendering (SSR)
-- HTML generation
+- Serves the site's HTML: a few pages are server-rendered per request (e.g. the homepage); most content pages are prerendered at build time (`export const prerender = true`) and served as static files from `dist/client/`
 - Edge computing
-- Dynamic content
+- Dynamic content (404s for draft/hidden pages)
 
-**Configuration**: `wrangler.toml`
+**Configuration**: `wrangler.toml` (the Astro Cloudflare adapter generates the final Worker config at `dist/server/wrangler.json` during build)
 
 **Capabilities**:
 - Runs at Cloudflare's edge (200+ data centers)
@@ -158,8 +157,9 @@ User Browser
        │                 │                 │
        ▼                 ▼                 ▼
 ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│ _worker.js  │  │ _astro/     │  │ *.html      │
-│ (SSR)       │  │ (assets)    │  │ (templates) │
+│ server/     │  │ client/     │  │ client/     │
+│ entry.mjs   │  │ _astro/     │  │ *.html      │
+│ (SSR)       │  │ (assets)    │  │ (prerender) │
 └──────┬──────┘  └──────┬──────┘  └──────┬──────┘
        │                │                │
        │                │                │
@@ -206,31 +206,34 @@ User Browser
 
 ```
 src/
+├── components/             # Shared (SiteHeader) and per-section components
+├── content/                # Markdown collections: plasticity/, projects/
+├── data/                   # Typed data: projects.ts, soft-goods.ts
 ├── layouts/
-│   └── Layout.astro        # Base layout + styles
-├── pages/
-│   └── index.astro         # Homepage (generates /)
-│   └── about.astro         # About page (generates /about)
-└── components/
-    └── Header.astro        # Reusable components
+│   └── Layout.astro        # Base layout
+├── pages/                  # index, plasticity/, projects/, soft-goods/, making-your-own-tools/
+├── styles/global.css       # Global styles
+└── content.config.ts       # Content collection definitions
 ```
 
 ### Build Output
 
 ```
 dist/
-├── _worker.js              # SSR worker bundle
-├── _astro/
-│   ├── index.abc123.js     # JavaScript bundles
-│   └── index.xyz789.css    # CSS bundles
-├── index.html              # Pre-rendered pages (if any)
-└── favicon.svg             # Public assets
+├── client/                 # Static files (the Worker's [assets] directory)
+│   ├── _astro/             # Hashed JS/CSS bundles (also uploaded to R2)
+│   ├── <route>/index.html  # Prerendered pages
+│   ├── favicon.svg         # Public assets
+│   └── images/             # Copy of local public/images/ (images are served from R2 in production)
+└── server/
+    ├── entry.mjs           # SSR Worker entry
+    └── wrangler.json       # Generated Worker config
 ```
 
 ### Deployed Structure
 
-**Worker**: `_worker.js` + HTML templates
-**R2**: `_astro/*` + public assets
+**Worker**: `dist/server/` (SSR) + `dist/client/` (static assets/prerendered pages)
+**R2**: `_astro/*`, `favicon.svg`, and `images/*`
 
 ## Security
 
@@ -242,10 +245,7 @@ dist/
 
 ### Headers
 
-Configured in Astro/Worker:
-- Content-Security-Policy
-- X-Frame-Options
-- X-Content-Type-Options
+No custom security headers (CSP, X-Frame-Options, etc.) are currently configured in the Astro app or Worker. Cloudflare's defaults apply. Add them in Astro middleware or a Cloudflare Transform Rule if needed.
 
 ### Access Control
 
@@ -277,11 +277,8 @@ Configured in Astro/Worker:
 ### Logs
 
 ```bash
-# View Worker logs
-npx wrangler pages logs des4800-robray-net-site-production
-
-# Tail real-time logs
-npx wrangler pages logs des4800-robray-net-site-production --tail
+# Tail real-time Worker logs
+npx wrangler tail des4800-robray-net-site-production
 ```
 
 ## Cost Structure

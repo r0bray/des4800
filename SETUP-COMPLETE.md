@@ -5,10 +5,10 @@ Your DES4800 Astro website is fully configured and ready to develop and deploy.
 ## 🎯 What's Configured and Working
 
 ### ✅ Core Project
-- **Astro 5.x** with TypeScript
+- **Astro 7.x** with TypeScript
 - **Cloudflare Workers** adapter (SSR at the edge via `@astrojs/cloudflare`)
 - **R2 integration** for static assets and images
-- **`wrangler.toml`** configured with `main = "dist/_worker.js"` and `[assets] directory = "dist"`
+- **`wrangler.toml`** configured with the Worker name, `[assets] directory = "./dist"` and the `STATIC_BUCKET` R2 binding (the adapter generates `dist/server/wrangler.json` at build time)
 
 ### ✅ Deployment
 - **`npm run deploy:full`** — full deployment via `scripts/deploy.sh`: builds the site, uploads `_astro` CSS/JS, uploads public assets, uploads all images, deploys the Worker
@@ -19,6 +19,7 @@ Your DES4800 Astro website is fully configured and ready to develop and deploy.
 - `public/images/` — local staging area (gitignored)
 - Images uploaded to R2 bucket `static-robray-net`, served at `https://static.robray.net/images/...`
 - Upload scripts: `scripts/upload-images.sh`, `scripts/upload-single-image.sh`, `scripts/watch-images.sh`
+- Sync scripts: `scripts/sync-images-from-r2.sh`, `scripts/image-sync-status.sh` (driven by the tracked `public/images-manifest.json`)
 
 ### ✅ Domains
 - **`des4800.robray.net`** → Cloudflare Worker `des4800-robray-net-site-production` (Worker custom domain)
@@ -30,10 +31,13 @@ Your DES4800 Astro website is fully configured and ready to develop and deploy.
 
 ### ✅ Documentation
 - `README.md` — Main documentation
+- `QUICKSTART.md` — Get running in minutes
 - `DEPLOYMENT.md` — Full deployment guide
 - `IMAGES.md` — Image management guide
 - `CHEATSHEET.md` — Quick reference
 - `ARCHITECTURE.md` — System architecture
+- `SETUP-DNS-CORS.md` — DNS / R2 custom domain / CORS reference
+- `.github/SECRETS.md` — GitHub Actions secrets
 - `public/images/README.md` — Image directory guide
 
 ---
@@ -76,13 +80,15 @@ Available at https://static.robray.net/images/your-image.jpg
 
 ### Development
 ```bash
-npm run dev          # Start dev server at http://localhost:4321
-npm run build        # Build for production
-npm run preview      # Preview production build locally
+npm run dev          # Sync images from R2, start image watcher, start dev server at http://localhost:4321
+npm run build        # astro check + build for production
+npm run preview      # Sync images from R2, then preview production build locally
 ```
 
 ### Images
 ```bash
+npm run sync:images:latest     # Refresh manifest from R2 and download shared images
+npm run sync:images:status     # Show missing/changed/up-to-date images
 npm run upload:images          # Upload all images in public/images/ to R2
 npm run upload:image <path>    # Upload a single image to R2
 npm run watch:images           # Watch public/images/ and auto-upload on change
@@ -112,20 +118,30 @@ npm run deploy:full   # Build + upload _astro + upload images + deploy Worker
 ```
 des4800/
 ├── src/
-│   ├── pages/              # Site pages (*.astro)
-│   └── layouts/            # Reusable layouts
+│   ├── pages/              # Site pages (*.astro, incl. dynamic [slug] routes)
+│   ├── layouts/            # Reusable layouts
+│   ├── components/         # Shared and per-section components
+│   ├── content/            # Markdown content collections (plasticity, projects)
+│   ├── data/               # Typed data (projects, soft goods)
+│   ├── styles/global.css   # Global styles
+│   └── content.config.ts   # Content collection definitions
 │
 ├── public/
 │   ├── images/             # 📸 Local image staging (gitignored)
 │   │   ├── .gitkeep
 │   │   └── README.md
+│   ├── images-manifest.json  # Tracked list of shared images in R2
 │   └── favicon.svg
 │
 ├── scripts/
 │   ├── deploy.sh              # Full deployment script
+│   ├── dev-with-image-sync.sh # `npm run dev` wrapper (sync + watcher)
+│   ├── preview-with-image-sync.sh # `npm run preview` wrapper
+│   ├── sync-images-from-r2.sh # Download shared images from R2
 │   ├── upload-images.sh       # Batch image upload
 │   ├── upload-single-image.sh # Single image upload
 │   ├── watch-images.sh        # File watcher / auto-upload
+│   ├── purge-*.mjs           # Cloudflare cache purge helpers
 │   └── setup-r2.sh            # R2 bucket setup (first-time)
 │
 ├── .github/

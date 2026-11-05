@@ -2,7 +2,7 @@
   {
     "AllowedOrigins": [
       "https://des4800.robray.net",
-      "https://*.des4800-robray-net-site-production.pages.dev",
+
       "http://localhost:4321"
     ],
     "AllowedMethods": [

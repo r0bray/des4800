@@ -14,6 +14,7 @@ Complete guide to deploying the DES4800 Astro site to Cloudflare Workers with R2
 2. **Cloudflare Account**: With Workers and R2 enabled
 3. **Wrangler authenticated locally**: Run `npx wrangler login` (opens browser OAuth)
 4. **Domain**: `robray.net` configured in Cloudflare DNS
+
 ### Authenticate Wrangler (for local deployments)
 
 ```bash
@@ -82,32 +83,6 @@ That's it! GitHub Actions will automatically:
 ## Local Deployment (Alternative)
 
 If you prefer to deploy from your local machine:
-## Standard Deployment (Recommended: GitHub Actions)
-
-### Automatic Deployment via GitHub Actions ⚡ (PRIMARY METHOD)
-
-The easiest and most reliable way to deploy:
-
-```bash
-git commit -am "Your changes"
-git push origin main
-```
-
-That's it! GitHub Actions will automatically:
-1. ✅ Build the site
-2. ✅ Upload compiled CSS/JS to R2 (from `dist/client/_astro/`)
-3. ✅ Upload `favicon.svg` to R2
-4. ✅ Deploy the Worker to Cloudflare
-
-**Monitor progress:** https://github.com/r0bray/des4800/actions
-
-> **Note:** Images in `public/images/` are gitignored and must be uploaded separately using `npm run upload:images` or included in a manual `npm run deploy:full`.
-
----
-
-## Local Deployment (Alternative)
-
-If you prefer to deploy from your local machine:
 
 ### Full Local Deployment
 
@@ -121,7 +96,8 @@ This runs `scripts/deploy.sh`, which does the following in order:
 2. **Uploads `_astro` assets** — uploads all compiled CSS/JS from `dist/client/_astro/` to `static-robray-net/_astro/` in R2
 3. **Uploads public assets** — uploads `favicon.svg` and other public files to R2
 4. **Uploads images** — uploads everything in `public/images/` to `static-robray-net/images/` in R2
-5. **Deploys the Worker** — runs `npx wrangler deploy`, pushing `dist/_worker.js` to Cloudflare
+5. **Deploys the Worker** — runs `npx wrangler deploy`, pushing the built Worker (`dist/server/entry.mjs`) and static files (`dist/client/`) to Cloudflare
+6. **Purges the Cloudflare CDN cache** — runs `scripts/purge-deploy-cache.mjs` (needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ZONE_ID` in `.env`; a failure only prints a warning)
 
 ### Quick Local Deploy (code only, no image upload)
 
@@ -129,8 +105,7 @@ This runs `scripts/deploy.sh`, which does the following in order:
 npm run deploy
 ```
 
-Equivalent to `npm run build && wrangler deploy`. Use this for faster local deployment when images haven't changed.
-Equivalent to `npm run build && wrangler deploy`. Use this for faster local deployment when images haven't changed.you have no image changes and want a faster deployment.
+Equivalent to `npm run build && wrangler deploy`. Use this for a faster local deployment when you have no image changes. It does not upload `_astro` assets to R2 or purge the cache.
 
 ---
 
@@ -162,7 +137,7 @@ done
 npx wrangler deploy
 ```
 
-> **Note:** Assets are now in `dist/client/_astro/`, not `dist/_astro/` (due to Cloudflare SSR output structure).
+> **Note:** With the current Cloudflare adapter, the build outputs `dist/client/` (static files, including `_astro/`) and `dist/server/` (the Worker). Assets are in `dist/client/_astro/`, not `dist/_astro/`.
 
 ---
 
@@ -178,14 +153,14 @@ Pushes to the `main` branch trigger automatic deployment via `.github/workflows/
    - `favicon.svg`
 4. Deploys the Worker with `wrangler deploy`
 
-**Trigger:** Push to `main` (doc-only changes like README.md are excluded)
+**Trigger:** Push to `main`, or manual run via `workflow_dispatch`. Pushes that only touch `.github/SECRETS.md` or the docs `DEPLOYMENT.md`, `ARCHITECTURE.md`, `QUICKSTART.md`, `IMAGES.md`, `CHEATSHEET.md`, `SETUP-COMPLETE.md` and `SETUP-DNS-CORS.md` are skipped. Changes to `README.md` do trigger a deploy.
 
 **Required secrets** (already configured in the repository):
 - `CLOUDFLARE_API_TOKEN` — Cloudflare API token with Workers and R2 permissions
 - `CLOUDFLARE_ACCOUNT_ID` — Your Cloudflare account ID
 
 **Image uploads:** The workflow does NOT upload images (they're gitignored). To include images in deployment:
-- Use `npm run deploy:full` locally (includes image upload), then commit the manifest change
+- Use `npm run deploy:full` locally (includes image upload), then commit any change to `public/images-manifest.json`
 - Or use `npm run upload:images` to upload images separately
 
 See [IMAGES.md](./IMAGES.md) for image management details.
@@ -254,8 +229,8 @@ Then verify the custom domain is set in **Workers & Pages → des4800-robray-net
 rm -rf .astro node_modules/.astro
 npm install
 
-# Check for Astro/TypeScript errors
-npm run astro check
+# Check for Astro/TypeScript errors (npm run build runs this first)
+npx astro check
 
 # Rebuild
 npm run build
@@ -285,7 +260,7 @@ npm run deploy:full
 
 ### CORS errors for assets
 
-Configure CORS on the R2 bucket in Cloudflare Dashboard → R2 → `static-robray-net` → Settings → CORS Policy:
+Configure CORS on the R2 bucket in Cloudflare Dashboard → R2 → `static-robray-net` → Settings → CORS Policy (see [SETUP-DNS-CORS.md](./SETUP-DNS-CORS.md) and `r2-cors-config.json` for the full policy, which also allows `http://localhost:4321` for local dev):
 
 ```json
 [

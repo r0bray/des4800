@@ -17,12 +17,14 @@ A modern website built with Astro 7.x and deployed on Cloudflare Workers with as
 - Node.js 22+
 - npm or yarn
 - Cloudflare account with Workers and R2 enabled
-- Wrangler CLI authenticated
+- Wrangler CLI authenticated (`npx wrangler login`)
+- `fswatch` (macOS: `brew install fswatch`) for the image auto-upload watcher
 
 ### Installation
 
 ```bash
 npm install
+cp env.example .env   # then fill in the Cloudflare credentials
 ```
 
 ### Development
@@ -207,7 +209,7 @@ This setup deploys directly to Cloudflare Workers using `wrangler deploy`. The W
 
 Automatic deployments are handled by `.github/workflows/deploy.yml`.
 
-**Triggered on:** Push to `main` (doc-only changes are skipped)
+**Triggered on:** Push to `main` or manual run (pushes touching only `.github/SECRETS.md` or the docs other than `README.md` are skipped)
 
 **What it does:**
 1. Install dependencies

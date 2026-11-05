@@ -4,10 +4,10 @@
 
 - ✅ R2 bucket `static-robray-net` created
 - ✅ Images uploaded to R2
-- ✅ Worker deployed to Cloudflare Pages
+- ✅ Worker `des4800-robray-net-site-production` deployed to Cloudflare Workers (not Pages)
 - ✅ Compiled assets uploaded to R2
 
-**Your temporary deployment URL**: https://3c014e4e.des4800-robray-net-site-production.pages.dev
+> This guide is a reference for re-creating the Cloudflare DNS/CORS setup. Production is already live at https://des4800.robray.net and https://static.robray.net.
 
 ## 🔧 Next Steps
 
@@ -50,7 +50,7 @@ This allows des4800.robray.net to load assets from static.robray.net
   {
     "AllowedOrigins": [
       "https://des4800.robray.net",
-      "https://*.des4800-robray-net-site-production.pages.dev",
+
       "http://localhost:4321"
     ],
     "AllowedMethods": [
@@ -72,35 +72,24 @@ This allows des4800.robray.net to load assets from static.robray.net
 
 **Note**: The CORS config is also saved in `r2-cors-config.json` for reference.
 
+> If the live bucket policy still contains a `https://*.des4800-robray-net-site-production.pages.dev` origin (left over from an early Cloudflare Pages attempt), remove it in the dashboard too. The site runs on Workers and this origin is unused.
+
 ---
 
 ### Step 3: Configure Custom Domain for the Site (des4800.robray.net)
 
 This makes your site accessible at `https://des4800.robray.net`
 
-**Option A: Via Cloudflare Pages (Recommended)**
+Use a Worker custom domain (a hand-made CNAME is not needed):
 
 1. Go to **Workers & Pages** in Cloudflare Dashboard
-2. Click on **des4800-robray-net-site-production**
-3. Go to **Custom domains** tab
-4. Click **Set up a custom domain**
+2. Click on the Worker **des4800-robray-net-site-production**
+3. Go to **Settings** → **Domains & Routes**
+4. Click **Add** → **Custom Domain**
 5. Enter: `des4800.robray.net`
-6. Click **Continue**
+6. Click **Add domain**
 
-Cloudflare will automatically create the DNS record.
-
-**OR**
-
-**Option B: Manually via DNS**
-
-1. Go to **DNS** for your `robray.net` domain
-2. Click **Add record**
-3. Configure:
-   - **Type**: CNAME
-   - **Name**: des4800
-   - **Target**: `des4800-robray-net-site-production.pages.dev`
-   - **Proxy status**: Proxied (orange cloud ON)
-4. Click **Save**
+Cloudflare will automatically create the proxied DNS record and issue the certificate.
 
 Wait 2-5 minutes for DNS propagation.
 
@@ -120,9 +109,6 @@ curl -I https://static.robray.net/images/sample.svg
 ```bash
 # Visit in browser
 open https://des4800.robray.net
-
-# Or with Pages URL
-open https://3c014e4e.des4800-robray-net-site-production.pages.dev
 ```
 
 ### Test 3: Assets Loading
@@ -193,7 +179,7 @@ After completing all steps:
 1. Check DNS records are created
 2. Verify DNS is proxied (orange cloud)
 3. Wait for DNS propagation (up to 5 minutes)
-4. Try the `.pages.dev` URL first to verify worker is running
+4. Check the Worker is deployed: Workers & Pages → `des4800-robray-net-site-production` → Deployments (or run `npx wrangler deployments list`)
 
 ### SSL Certificate Errors
 
@@ -234,7 +220,6 @@ Once everything is working:
 ### Your URLs
 - **Site**: https://des4800.robray.net
 - **Assets**: https://static.robray.net
-- **Temp URL**: https://3c014e4e.des4800-robray-net-site-production.pages.dev
 
 ### Your Resources
 - **Worker**: des4800-robray-net-site-production
