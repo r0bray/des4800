@@ -4,7 +4,7 @@ slug: physical-meets-digital-nfc
 status: published
 description: 'Design and fabricate a wooden NFC card and an acrylic NFC keychain for someone else, combining intentional physical design with a hidden digital experience.'
 heroImage: 'https://static.robray.net/images/projects/roadtrip@2x.jpg'
-heroImageAlt: 'Placeholder image for Physical Meets Digital NFC project'
+heroImageAlt: 'Road trip gift with wooden card and NFC tag'
 heroImageCaption: 'A sample project idea: A close friend is moving away. They are the kind of person who saves ticket stubs, photos, notes, and other physical reminders. Create a small collage, drawing, or other physical composition that includes the wooden card with an NFC tag attached. Tapping it opens a much larger photo album, video collection, or set of memories of a road trip you took with them.'
 ---
 
@@ -122,7 +122,7 @@ Using the drill press and chamfering bit as demonstrated in class, support the a
 
 ## **14. Program the NFC Tag**
 
-Use NFC Tools by Wakdev. Download only the official app from the Apple App Store or Google Play Store; do not download APKs or copies from third-party download sites. The free version is sufficient for this project.
+Use NFC Tools by Wakdev[iOS](https://www.wakdev.com/en/apps/nfc-tools-ios.html) or [Android](https://www.wakdev.com/en/apps/nfc-tools-android.html). Download only the official app from the Apple App Store or Google Play Store; do not download APKs or copies from third-party download sites. The free version is sufficient for this project.
 
 1. Open NFC Tools and choose Write.
 2. Choose Add a record.
@@ -132,7 +132,7 @@ Use NFC Tools by Wakdev. Download only the official app from the Apple App Store
 6. Move the tag away and close the app.
 7. Test the tag normally by bringing a compatible phone near it and confirming that the intended URL opens.
 
-Do not lock the tag or make it read-only. Leave it rewritable. Test the destination while logged out or in a private/incognito browser, and if possible, test it on another device.
+Do not lock the tag or make it read-only. Leave it rewritable so you can update it if needed. Test the destination while logged out or in a private/incognito browser, and if possible, test it on another device.
 
 ## **15. Install, Assemble, and Test Again**
 
@@ -215,9 +215,9 @@ Maybe your friends love puzzles, your younger cousins love scavenger hunts, or y
 - Class presentation in a format of your choice.
 - Participation in peer feedback, URL testing, and troubleshooting.
 
-# **8 Point Rubric**
+# **16 Point Rubric**
 
-One point is available in each category, for 8 points total.
+Two points are available in each category, for 16 points total.
 
 NOTE: LATE SUBMISSIONS are only eligible for half credit. Even if you are late by 1 minute. Seriously.
 
@@ -247,7 +247,7 @@ All of your creative practices and finishing choices are intentional, well execu
 
 **7. Peer Feedback and Testing**
 
-The student gives useful feedback, helps test classmates’ URLs/designs, and uses peer testing to improve their own work.
+You give useful feedback, help test classmates’ URLs/designs, and use peer testing to improve your own work.
 
 **8. Presentation and Design Rationale**
 
